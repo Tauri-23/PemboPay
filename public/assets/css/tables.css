@@ -1,0 +1,42 @@
+/*
+|----------------------------------------
+| Tables
+|----------------------------------------
+*/
+.table1 {
+    width: 100%;
+    background: var(--white);
+    border-radius: var(--border-radius1);
+    padding: 20px;
+    overflow: auto;
+    overflow-y: hidden;
+    border: .3px solid var(--white3);
+}
+.table1-header {
+    display: flex;
+    font-size: var(--text-m2);
+    font-weight: bold;
+    padding: 0 0 20px 0;
+}
+.table1-data{
+    color: var(--black1);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 15px 0;
+    border-top: 1px solid var(--grey1);
+    
+}
+.table1-data.last {
+    border-bottom: 1px solid var(--grey1);
+}
+.table1-PFP-small {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background: var(--black2);
+}
+.table1-PFP-small-cont {
+    width: 50px;
+}
