@@ -43,4 +43,8 @@ Route::get('/TreasuryPayslip', function() {
     return view('UserTreasury.Payslip.index');
 });
 
+Route::get('/TreasuryEmployees', function() {
+    return view('UserTreasury.Employees.index');
+});
+
 

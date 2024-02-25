@@ -22,7 +22,7 @@
         <i class="fa-solid fa-receipt side-nav-icon"></i>
         Salary Slip
     </a>
-    <a class="side-nav-links  {{$activeLink == 6 ? 'active' : ''}}">
+    <a href="/TreasuryEmployees" class="side-nav-links  {{$activeLink == 6 ? 'active' : ''}}">
         <i class="bi bi-people-fill side-nav-icon"></i>
         Employees
     </a>

@@ -453,3 +453,18 @@
     font-size: var(--text-l1);
     cursor: pointer;
 }
+
+
+
+
+
+/*
+|----------------------------------------
+| Lines
+|----------------------------------------
+*/
+.line1 {
+    width: 100%;
+    height: 1px;
+    background: var(--grey1);
+}

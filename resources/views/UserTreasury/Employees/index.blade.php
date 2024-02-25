@@ -26,58 +26,37 @@
         
 
         {{-- Sidenav --}}
-        <x-sidenav activeLink="5"/>
+        <x-sidenav activeLink="6"/>
 
         {{-- nav small option --}}
         <x-NavSmallOption/>
         
 
         {{-- Navbar --}}
-        <x-navbar titleString="Payslip"/>
+        <x-navbar titleString="Employees"/>
         
 
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-x gap2 position-relative">
-            <div class="long-cont">
-                <div class="d-flex justify-content-between align-items-center">
-                    <p class="text-m1 bold">Generate Salary Slip</p>
-                    <a id="generate-salary-slip" class="primary-btn1-long">
-                        <small class="text-m2">Generate Salary Slip</small>
-                    </a>
-                </div>
-                <div class="line1 mar-top-2 mar-bottom-2"></div>
-                <div class="flex justify-content-between">
-                    <div class="flex gap3 flex-wrap-cont">
-                        <input type="text" id="SearchEmployee" class="editText3" placeholder="Employee Name" />
-                        <form method="post"></form>
-                        <select id="month" class="select-long">
-                            <option value="Jan">January</option>
-                            <option value="Feb">February</option>
-                            <option value="Mar">March</option>
-                            <option value="Apr">April</option>
-                            <option value="May">May</option>
-                            <option value="Jun">June</option>
-                            <option value="Jul">July</option>
-                            <option value="Aug">August</option>
-                            <option value="Sep">September</option>
-                            <option value="Oct">October</option>
-                            <option value="Nov">November</option>
-                            <option value="Dec">December</option>
-                        </select>
-            
-                        <select id="period" class="select-long">
-                            <option value="1-15">1-15</option>
-                            <option value="16-30">16-30</option>
-                        </select>
-            
-                        <select id="year" class="select-long">
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                        </select>
+
+            <div class="long-cont d-flex justify-content-between align-items-center">
+                <div class="d-flex gap3">
+                    <div class="d-flex position-relative align-items-center">
+                        <i class="fa-solid fa-magnifying-glass position-absolute text-m1 padding-start-4"></i>
+                        <input id="search-emp" class="edit-text-2" name="searchEmp" type="text" placeholder="Search Name or ID" autocomplete="off" />
                     </div>
+                    
+                    <select class="select-med input-light-grey">
+                        <option value="all">All</option>
+                        <option value="a-z">a-z</option>
+                        <option value="z-a">z-a</option>
+                    </select>
                 </div>
-            
+
+                <a href="" class="primary-btn1-small d-flex align-items-center">
+                    <i class="bi bi-person-fill-add mar-end-3 text-m1"></i>
+                    Add Employee
+                </a>
             </div>
             
             <div class="table1">
