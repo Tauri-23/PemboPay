@@ -2,6 +2,7 @@
     <div class="side-nav-logo">
         <img src="/assets/media/logos/Logo.png" />
     </div>
+    <div class="menu-text">Menu</div>
     <a href="/TreasuryDashboard" class="side-nav-links {{$activeLink == 1 ? 'active' : ''}}">
         <i class="bi bi-speedometer side-nav-icon"></i>
         Dashboard
@@ -26,7 +27,7 @@
         <i class="bi bi-people-fill side-nav-icon"></i>
         Employees
     </a>
-    <a class="side-nav-links  {{$activeLink == 7 ? 'active' : ''}}">
+    <a href="/TreasuryDepartments" class="side-nav-links  {{$activeLink == 7 ? 'active' : ''}}">
         <i class="bi bi-buildings-fill side-nav-icon"></i>
         Departments
     </a>

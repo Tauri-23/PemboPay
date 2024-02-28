@@ -37,7 +37,7 @@
         
 
         {{-- Content --}}
-        <div class="content-cont-1 d-flex flex-direction-x gap2 position-relative">
+        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
             <div class="long-cont text-l3 bold">
                 <div class="flex gap3">Payroll History <i class="bi bi-clock-history"></i></div>
             </div>

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
         <title>PemboPay</title>
         
@@ -23,6 +24,7 @@
     <body>
         {{-- Modals --}}
         <x-LoginModals modalType="wrong-credentials"/>
+        <x-LoginModals modalType="something-went-wrong"/>
         
         {{-- Main Content --}}
         <div class="container-box-s center-absolute-xy">
@@ -32,15 +34,17 @@
 
             <p class="text-l1 text-center bold mar-top-1">PemboPay Treasury</p>
 
-            <form method="post">
-                <input id="username" class="edit-text-1 w-100 mar-top-2" placeholder="Username" type="text" />
+            <form method="post" id="treasury-login-form">
+                @csrf
+                <input id="username" name="username" class="edit-text-1 w-100 mar-top-2" placeholder="Username" type="text" />
                 <div class="d-flex position-relative align-items-center mar-top-2">
-                    <input id="password" class="edit-text-1 w-100" placeholder="Password" type="password" />
+                    <input id="password" name="password" class="edit-text-1 w-100" placeholder="Password" type="password" />
                     <i class="fa-solid fa-eye position-absolute right3 cursor-pointer" id="show-pass-btn"></i>
                 </div>
+                <button id="login-btn" class="primary-btn1-small w-100 mar-top-1">Login</button>
             </form>
 
-            <button id="login-btn" class="primary-btn1-small w-100 mar-top-1">Login</button>
+            
 
             <div class="w-100 d-flex justify-content-center mar-top-3">
                 <a class="link-m3">Forgot Password</a>

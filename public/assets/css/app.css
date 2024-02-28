@@ -7,17 +7,17 @@
     --black1: #000;
     --black2: #434343;
     --grey1: #DDDDDD;
-    --AppBlue: #4377FE;
-    --AppBlueLight: #EBF0FF;
-    --AppBlueLight2: #B8CCFF;
+    --AppBlue: rgba(67, 119, 254, 1);
+    --AppBlueLight: rgba(235, 240, 255, 1);
+    --AppBlueLight2: rgba(184, 204, 255, 1);
     --AppBlueDark1: rgba(0, 35, 114, .5);
-    --AppBlueDark2: #191d31;
+    --AppBlueDark2: rgba(25, 29, 49, 1);
     --AppRed: #FF5B5B;
     --AppRedLight1: #ffc4c4;
     --AppGreen: #75C173;
     --AppgreenLight1: rgba(117, 193, 115, 0.13);
-    --AppGold: #FFB800;
-    --AppGoldLight1: #FCF1B7;
+    --AppGold: rgba(255, 184, 0, 1);
+    --AppGoldLight1: rgba(252, 241, 183, 1);
     --AppOrange: #FF3E00;
     --AppOrangeLight1: rgba(255, 190, 169, 1);
 
@@ -109,6 +109,9 @@ body, html {
 }
 .color-white {
     color: var(--white);
+}
+.color-white-2 {
+    color: var(--white2);
 }
 .color-black{
     color: var(--black1);
@@ -404,10 +407,10 @@ body, html {
 | Flex 
 |----------------------------------------
 */
-.flex-direction-x {
+.flex-direction-y {
     flex-direction: column;
 }
-.flex-direction-x-reverse {
+.flex-direction-y-reverse {
     flex-direction: column-reverse;
 }
 

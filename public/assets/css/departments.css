@@ -1,0 +1,42 @@
+.departments-cont-box {
+    width: calc((100% / 4) - 15px);
+    height: 200px;
+    text-decoration: none;
+    border-radius: var(--border-radius1);
+    border: .3px solid var(--white3);
+    background: var(--white1);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+}
+.department-name {
+    font-size: var(--text-m1);
+    font-weight: bold;
+    color: white;
+}
+.department-pic {
+    position: absolute;
+    width: 100%;
+    transition: all .3s ease-in-out;
+}
+.departments-cont-box:hover .department-pic {
+    transform: scale(1.1);
+}
+.deptBgOverlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba( 0, 35, 114, 0.5 );
+    backdrop-filter: blur( 1px );
+    -webkit-backdrop-filter: blur( 5px );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--text-l2);
+    color: white;
+    font-weight: bold;
+    z-index: 1;
+}

@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('treasuries', function (Blueprint $table) {
             $table->id();
-            $table->string('firstname');
-            $table->string('middlename');
-            $table->string('lastname');
-            $table->string('email');
+            $table->string('Firstname');
+            $table->string('Middlename')->nullable();
+            $table->string('Lastname');
             $table->string('username');
+            $table->string('email');
             $table->string('password');
-            $table->longText('pfp');
+            $table->string('pfp');
             $table->string('status');
             $table->timestamps();
         });

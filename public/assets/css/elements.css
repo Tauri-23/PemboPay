@@ -25,18 +25,10 @@
     overflow-y: hidden;
     border: .3px solid var(--white3);
 }
-.med-cont-1 {
-    width: 850px;
-    padding: 30px 0;
-    background: var(--white);
-    border-radius: var(--border-radius1);
-    flex-grow: 1;
-    border: .3px solid var(--white3);
-}
 .med-cont-2 {
-    width: 700px;
+    width: calc(50% - 20px);
     position: relative;
-    padding: 30px;
+    padding: 20px;
     background: var(--white);
     border-radius: var(--border-radius1);
     flex-grow: 1;
@@ -365,25 +357,33 @@
     padding: 0 0 10px 10px;
     z-index: 11;
 }
+.menu-text {
+    padding: 0 20px;
+    color: var(--grey1);
+}
 .side-nav-logo {
     height: 65px;
     padding: 0 30px 0 20px;
+    position: relative;
     display: flex;
     align-items: center;
 }
+.side-nav-logo img {
+    width: 200px;
+    height: 40px;
+}
 .side-nav-links {
     color: var(--white);
-    font-size: var(--text-l3);
+    font-size: var(--text-m1);
     padding: 10px 30px 10px 20px;
     display: flex;
-    gap: 10px;
+    gap: 20px;
     align-items: center;
     text-decoration: none;
     cursor: pointer;
 }
 .side-nav-links.active {
     color: var(--AppBlue);
-    font-size: var(--text-l3);
     border-right: 5px solid var(--AppBlue);
 }
 .nav-small-options {
@@ -467,4 +467,23 @@
     width: 100%;
     height: 1px;
     background: var(--grey1);
+}
+
+
+
+
+
+/*
+|----------------------------------------
+| Overlays
+|----------------------------------------
+*/
+.overlay-blur-dark {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba( 0, 0, 0, 0.3 );
+    backdrop-filter: blur( 1px );
+    -webkit-backdrop-filter: blur( 3px );
+    z-index: 1;
 }

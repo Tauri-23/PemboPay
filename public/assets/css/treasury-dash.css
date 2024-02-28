@@ -1,3 +1,4 @@
+/*Containers*/
 .dash-table-cont1 {
     display: flex;
     padding: 10px 0;
@@ -11,12 +12,25 @@
     overflow-y:hidden;
 }
 .small-icon-cont-circle {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items:center;
+}
+
+.dash-short-cont {
+    width: calc((100% /3) - 13px);
+    background: var(--white);
+    border-radius: var(--border-radius1);
+    padding: 20px;
+    overflow: auto;
+    overflow-y: hidden;
+    border: .3px solid var(--white3);
+}
+.dash-short-cont.active {
+    background: var(--AppBlue);
 }
 
 /*Shapes*/

@@ -37,108 +37,101 @@
         
 
         {{-- Content --}}
-        <div class="content-cont-1">
-            <div class="long-cont">
-                <div class="d-flex w-100 justify-content-between align-items-center">
-                    <small class="text-m1 bold">Payroll Period</small>
-                    <div>
-                        <select id="select-year" class="select-long">
-                            <option value="2023">2023</option>
-                            <option value="2023">2024</option>
-                            <option value="2023">2025</option>
-                            <option value="2023">2026</option>
-                            <option value="2023">2027</option>
-                        </select>
-                        <select id="select-month" class="select-long">
-                            <option value="">January</option>
-                            <option value="">February</option>
-                            <option value="">March</option>
-                            <option value="">April</option>
-                            <option value="">May</option>
-                            <option value="">June</option>
-                            <option value="">July</option>
-                            <option value="">August</option>
-                            <option value="">September</option>
-                            <option value="">October</option>
-                            <option value="">November</option>
-                            <option value="">December</option>
-                        </select>
+        <div class="content-cont-1 d-flex flex-direction-y gap2">
+            
+            <div class="long-cont d-flex justify-content-between align-items-center">
+                <div class="text-m1 fw-bold">Payroll Year</div>
+                <select id="select-year" class="select-med">
+                    <option value="all-time" selected>All time</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                </select>
+            </div>
+
+            <div class="w-100 d-flex gap2">
+                <div class="dash-short-cont">
+                    <div class="d-flex align-items-center gap2">
+                        <div class="small-icon-cont-circle bg-AppBlueLight2">
+                            <i class="bi bi-people-fill color-AppBlue"></i>
+                        </div>
+                        <div class="text-m1 fw-bold">Total Employees</div>
+                    </div>
+                    <div class="line1 mar-top-3 mar-bottom-3"></div>
+                    <div class="text-l3 fw-bold">
+                        0
                     </div>
                 </div>
-        
+
+
+                <div class="dash-short-cont">
+                    <div class="d-flex align-items-center gap2">
+                        <div class="small-icon-cont-circle bg-AppGreenLight1">
+                            <i class="bi bi-buildings-fill color-AppGreen"></i>
+                        </div>
+                        <div class="text-m1 fw-bold">Total Departments</div>
+                    </div>
+                    <div class="line1 mar-top-3 mar-bottom-3"></div>
+                    <div class="text-l3 fw-bold">
+                        0
+                    </div>
+                </div>
+
+
+                <div class="dash-short-cont">
+                    <div class="d-flex align-items-center gap2">
+                        <div class="small-icon-cont-circle bg-AppGoldLight1">
+                            <i class="bi bi-bank2 color-AppGold"></i>
+                        </div>
+                        <div class="text-m1 fw-bold">Budget</div>
+                    </div>
+                    <div class="line1 mar-top-3 mar-bottom-3"></div>
+                    <div class="text-l3 fw-bold">
+                        ₱ 1,000,000.00
+                    </div>
+                </div>
             </div>
             
-            <div class="flex-wrap-cont mar-top-2 mar-bottom-1">
-                <div class="med-cont-1">
-                    <div class="dash-table-cont1">
-        
-                        <div class="flex-grow-1 padding-x-3" style="border-right: 1px solid #DDDDDD;">
-                            <div class="small-icon-cont-circle bg-AppBlueLight2">
-                                <i class="icons1 color-AppBlue bi bi-people-fill"></i>
-                            </div>
-                            <small class="text-m1 bold" id="totalEmp">0</small><br />
-                            <small class="text-m2">Total Employees</small>
-                        </div>
-        
-                        <div class="flex-grow-1" style="padding: 0 20px; border-right: 1px solid #DDDDDD;">
-                            <div class="small-icon-cont-circle bg-AppGreenLight1">
-                                <i class="icons1 color-AppGreen bi bi-buildings-fill"></i>
-                            </div>
-                            <small class="text-m1 bold" id="totalDept">0</small><br />
-                            <small class="text-m2">Total Departments</small>
-                        </div>
-        
-                        <div class="flex-grow-1" style="padding: 0 20px;">
-                            <div class="small-icon-cont-circle bg-AppGoldLight1">
-                                <i class="icons1 color-AppGold fa-solid fa-coins"></i>
-                            </div>
-                            <small class="text-m1 bold" id="totalComp">0</small><br />
-                            <small class="text-m2">Total Compensation</small>
-                        </div>
-        
-                    </div>
-        
-                    <div class="d-flex justify-content-center align-items-center padding1">
+            <div class="flex-wrap-cont mar-bottom-1">
+                {{-- Salary Trend --}}
+                <div class="med-cont-2">
+                    <div class="d-flex justify-content-between align-items-center mar-bottom-1">
+                        <div class="text-m1 fw-bold">Salary Chart</div>
                         <div>
-                            <small class="text-m1">Next Payroll Date : </small>
-                            <small class="text-m1 bold color-AppGold">15 January, 2024</small>
-                            <div class="d-flex mar-top-3 gap2">
-                                <a asp-page="PayrollHistory/index" class="secondary-btn3-small d-flex align-items-center">
-                                    <i class="bi bi-graph-up-arrow"></i>
-                                    <small class="text-m2 mar-start-3">Payroll History</small>
-                                </a>
-                                <a asp-page="RunPayroll/index" class="primary-btn1-small d-flex align-items-center">
-                                    <small class="text-m2 color-white">Run Payroll</small>
-                                </a>
-                            </div>
+                            <select id="select-mode" class="select-med">
+                                <option value="all" selected>Gross</option>
+                                <option value="2023">Regular</option>
+                            </select>
                         </div>
                     </div>
+
+                    <canvas class="w-100" id="compentsation-chart"></canvas>
         
                 </div>
         
+                {{-- Budget Trend --}}
                 <div class="med-cont-2">
-                    <div class="d-flex w-100 justify-content-between align-items-start">
-                        <small class="text-m2 bold">Employees in Departments</small>
-                        <small class="month-year text-m3">January - 2023</small>
-                    </div>
-                </div>
-        
-                <div class="med-cont-2">
-                    <div class="flex w-100 justify-content-between align-items-start">
-                        <small class="text-m2 bold">Compensation</small>
-                        <small class="month-year text-m3">@Model.CurrentMonth - @Model.CurrentYear</small>
-                    </div>
-                    <div class="donut-chart-cont mar-top-2">
-                        <div class="text-m2 bold text-center-self h-100 @(totalCompensation > 0 ? "d-none" : "")" id="compensation-dist-null">No Data</div>
+                    <div class="d-flex justify-content-between align-items-center mar-bottom-1">
+                        <div class="text-m1 fw-bold">Budget Chart</div>
                         <div>
-                            <canvas class="@(totalCompensation > 0 ? "" : "d-none")" id="compensation-distribution-chart"></canvas>
+                            <select id="select-mode" class="select-med">
+                                <option value="all" selected>Gross</option>
+                                <option value="2023">Regular</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="mar-top-2" id="compensationDeptTotal">
-                        <small class="bold text-m1 @(totalCompensation > 0 ? "" : "d-none")">@string.Format("₱{0:N2}", totalCompensation)</small><br />
-                        <small class="text-m3 @(totalCompensation > 0 ? "" : "d-none")">Total Compensation</small>
-                    </div>
+
+                    <canvas class="w-100" id="budget-chart"></canvas>
+                </div>
         
+                {{-- Employee Trend --}}
+                <div class="med-cont-2">
+                    <div class="d-flex justify-content-between align-items-center mar-bottom-1">
+                        <div class="text-m1 fw-bold">Employee Chart</div>
+                    </div>
+
+                    <canvas class="w-100" id="employee-chart"></canvas>
                 </div>
         
                 <div class="med-cont-2">
@@ -148,7 +141,7 @@
                     </div>
                     <div class="donut-chart-cont mar-top-2">
                         <div>
-                            <canvas id="myChart3"></canvas>
+                            <canvas id=""></canvas>
                         </div>
                     </div>
                 </div>
@@ -160,5 +153,9 @@
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
+    <script src="/assets/js/treasury-dash.js"></script>
+    {{-- bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    {{-- chart.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </html>
