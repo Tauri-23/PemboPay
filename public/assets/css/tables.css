@@ -36,7 +36,21 @@
     height: 50px;
     border-radius: 100%;
     background: var(--black2);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+.table1-PFP-small img {
+    height: 100%;
+    position: absolute;
 }
 .table1-PFP-small-cont {
     width: 50px;
+}
+
+.form-data-col {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }

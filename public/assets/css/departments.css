@@ -40,3 +40,16 @@
     font-weight: bold;
     z-index: 1;
 }
+
+/* Add Departments */
+.dept-bg-select-cont {
+    width: 250px;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius2);
+    cursor: pointer;
+}
+.dept-bg-select-cont.active {
+    border: 1px solid var(--AppBlueDark1);
+}

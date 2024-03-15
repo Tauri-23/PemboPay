@@ -1,0 +1,143 @@
+/*
+|----------------------------------------
+| Navbar 
+|----------------------------------------
+*/
+.nav-bar {
+    width: calc(100% - 290px);
+    height: 65px;
+    margin-left: 290px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--white);
+    position: sticky;
+    top:0;
+    padding: 30px;
+    z-index: 10;
+    transition: all .3s ease-out;
+}
+.nav-pfp {
+    width: 45px;
+    height: 45px;
+    background: var(--AppBlue);
+    border-radius: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+.nav-pfp img {
+    height: 100%;
+}
+
+
+.side-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 290px;
+    height: 100%;
+    position: fixed;
+    background: var(--AppBlueDark2);
+    padding: 0 10px 10px 10px;
+    z-index: 11;
+    transition: all .3s ease-out;
+}
+.menu-text {
+    padding: 0 20px;
+    color: var(--grey1);
+}
+.side-nav-logo {
+    height: 65px;
+    padding: 0 30px 0 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+.side-nav-logo img {
+    width: 200px;
+    height: 40px;
+}
+.side-nav-links {
+    color: var(--white);
+    font-size: var(--text-m1);
+    width: 100%;
+    padding: 10px 0 10px 20px;
+    overflow: hidden;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    text-decoration: none;
+    border-radius: calc(var(--border-radius1) - 8px);
+    cursor: pointer;
+}
+.side-nav-links.active {
+    color: var(--AppBlueDark2);
+    background-color: var(--white);
+}
+.side-nav-icon {
+    font-size: 25px;
+}
+.sidenav-text {
+    overflow: hidden;
+}
+.nav-small-options {
+    top: 70px;
+    right: 20px;
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background: var(--white);
+    border-radius: var(--border-radius1);
+    filter: drop-shadow(0 0 0.75rem rgb(170, 170, 170));
+    z-index: 11;
+}
+.nav-small-options a {
+    display: flex;
+    padding: 5px 20px;
+    gap: 10px;
+    text-decoration: none;
+    border-radius: calc(var(--border-radius1) - 10px);
+}
+
+
+
+
+.side-nav.minimize {
+    width: 90px;
+    overflow: hidden;
+    padding: 0 10px 10px 10px;
+}
+.side-nav.minimize .menu-text {
+    padding: 0;
+    text-align: center;
+}
+.side-nav.minimize .side-nav-logo {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+.side-nav.minimize .side-nav-logo img {
+    width: 40px;
+    padding: 0;
+}
+.side-nav.minimize .sidenav-text {
+    display: none;
+}
+.side-nav.minimize .side-nav-links {
+    padding: 10px 0 10px 0;
+    display: flex;
+    justify-content: center;
+}
+.side-nav.minimize .side-nav-icon {
+    font-size: 25px;
+}
+
+.nav-bar.maximize {
+    width: calc(100% - 90px);
+    margin-left: 90px;
+}

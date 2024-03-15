@@ -35,37 +35,44 @@
         
 
         {{-- Navbar --}}
-        <x-navbar titleString="Departments" pfp="{{$loggedTreasury->pfp}}"/>
+        <x-navbar titleString="Add Departments" pfp="{{$loggedTreasury->pfp}}"/>
         
 
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
 
-            <div class="long-cont d-flex justify-content-between align-items-center">
-                <div class="d-flex gap3">
-                    <div class="d-flex position-relative align-items-center">
-                        <i class="fa-solid fa-magnifying-glass position-absolute text-m1 padding-start-4"></i>
-                        <input id="search-emp" class="edit-text-2" name="searchEmp" type="text" placeholder="Search Departments" autocomplete="off" />
+            <form method="post" class="w-100">
+                <div class="long-cont d-flex flex-direction-y gap3">
+                    <small class="text-m2 bold">Department Name</small>
+                    <input type="text" class="edit-text-1" id="dept-name-in" placeholder="Department Name" />
+                    <div class="color-AppRed" id="pcode-required">Please enter Department Name</div>
+                
+                    <input type="hidden" id="dept-bg-in" value="" placeholder="Department Background" />
+                    <div class="d-flex flex-direction-y gap3 mar-top-1">
+                        <small class="text-m2 bold">Choose Background</small>
+                        <div class="d-flex flex-wrap gap3 w-100">
+    
+                            {{-- Enclose with loop --}}
+                            @for ($i = 1; $i < 11; $i++)
+                                <div class="dept-bg-select-cont" style="">
+                                    <div class="deptBgOverlay d-none">Selected</div>
+                                    <img class="position-absolute w-100 h-100 dept-bg-pic" id="bg{{$i}}.jpg" src="/assets/media/dept-pfp/bg{{$i}}.jpg" loading="lazy" />
+                                </div>
+                            @endfor
+
+                        </div>
+                        <div class="w-100 d-flex justify-content-end">
+                            <a class="secondary-btn3-small mar-top-1 d-none" id="clear-selection">Clear Selected Background</a>
+                        </div>
+                
                     </div>
-                    
-                    <select class="select-med input-light-grey">
-                        <option value="all">All</option>
-                        <option value="a-z">a-z</option>
-                        <option value="z-a">z-a</option>
-                    </select>
+                    <div class="w-100 d-flex justify-content-end">
+                        <button class="primary-btn1-long mar-top-1" id="add-department">Add Department</button>
+                    </div>
+                
                 </div>
-
-                <a href="/TreasuryAddDepartments" class="primary-btn1-small d-flex align-items-center">
-                    <i class="bi bi-building-fill-add mar-end-3 text-m1"></i>
-                    Add Department
-                </a>
-            </div>
-
-            <div id="results-dept" class="d-flex flex-wrap-cont gap3">
-
-                {{-- Enclose this in loop --}}
-                <x-RenderDepartments :departments="$departments"/>
-            </div>
+            </form>
+            
         
         </div>
 
@@ -75,4 +82,6 @@
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script src="/assets/js/add-department.js"></script>
 </html>

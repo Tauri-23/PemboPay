@@ -1,0 +1,75 @@
+/*
+|----------------------------------------
+| Forms 
+|----------------------------------------
+|*/
+.edit-text-1 {
+    padding: 8px 10px;
+    font-size: var(--text-m2);
+    background: var(--white2);
+    border: 1px solid var(--white3);
+    outline-color: var(--AppBlue);
+    border-radius: calc(var(--border-radius1) - 8px);
+}
+.edit-text-2 {
+    width: 250px;
+    border-radius: calc(var(--border-radius1) - 8px);
+    border: .1px solid var(--grey1);
+    padding: 8px 5px 8px 40px;
+}
+.editText3 {
+    width: 300px;
+    border-radius: calc(var(--border-radius1) - 8px);
+    border: .1px solid var(--black2);
+    padding: 5px 10px;
+}
+
+
+
+
+
+/* Select */
+.select-long, .select-long2 {
+    width: 250px;
+    padding: 8px 10px;
+    border-radius: calc(var(--border-radius1) - 8px);
+}
+.select-long2, .select-auto {
+    background: var(--white2);
+    border: 1px solid var(--white3);
+    outline-color: var(--AppBlue);
+}
+.select-auto {
+    padding: 8px 10px;
+    border-radius: var(--border-radius2);
+}
+.select-med {
+    width: 200px;
+    padding: 5px 10px;
+    border-radius: var(--border-radius2);
+}
+
+
+
+
+
+.input-light-grey {
+    border: .1px solid var(--grey1);
+}
+.checkbox {
+    width: 24px;
+    height: 24px;
+}
+.checkbox2 {
+    width: 15px;
+    height: 15px;
+}
+.specialInput {
+    padding-left: 60px;
+}
+.specialInput2 {
+    padding-left: 40px;
+}
+.specialInput3 {
+    padding-left: 30px;
+}

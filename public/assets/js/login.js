@@ -19,14 +19,6 @@ $(document).ready(function() {
 
     loginBtn.click(function(event) {
         event.preventDefault();
-        
-        // if(uname.val() === 'adiawan' && pass.val() === 'ajdiawan123') {
-        //     window.location = '/TreasuryDashboard';
-        // }
-        // else {
-        //     showModal(wrongCredentialModal);
-        //     closeModal(wrongCredentialModal, false);
-        // }
 
         let formData = new FormData();
         formData.append("username", uname.val());
@@ -41,21 +33,21 @@ $(document).ready(function() {
         
 
         $.ajax({
-            url: '{{ route("auth.login") }}',
+            url: '/loginTreasury',
             method: 'POST',
             processData: false,
             contentType: false,
             data: formData,
+            // dataType: 'json',
             success: function (response) {
-                if(response) {
-                    window.location.href = '/Treasury/Index';
+                if(response.status == 200) {
+                    window.location.href = '/TreasuryDashboard';
                 } else {
                     showModal(wrongCredentialModal);
                     closeModal(wrongCredentialModal, false);
                 }
             },
             error: function (response) {
-                console.log(response);
                 showModal(somethingWentWrongModal);
                 closeModal(somethingWentWrongModal, false);
             }

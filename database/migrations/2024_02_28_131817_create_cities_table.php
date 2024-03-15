@@ -11,16 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('treasuries', function (Blueprint $table) {
+        Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->string('Firstname');
-            $table->string('Middlename')->nullable();
-            $table->string('Lastname');
-            $table->string('username');
-            $table->string('email');
-            $table->string('password');
-            $table->string('pfp');
-            $table->string('status');
+            $table->string('city');
             $table->timestamp('created_at')->useCurrent()->useCurrentOnUpdate();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
@@ -31,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('treasuries');
+        Schema::dropIfExists('cities');
     }
 };

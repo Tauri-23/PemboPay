@@ -9,6 +9,7 @@
         {{-- Styles --}}
         <link rel="stylesheet" href="/assets/css/app.css">
         <link rel="stylesheet" href="/assets/css/elements.css">
+        <link rel="stylesheet" href="/assets/css/navbar.css">
         <link rel="stylesheet" href="/assets/css/tables.css">
 
         {{-- Bootstrap --}}
@@ -33,15 +34,11 @@
         
 
         {{-- Navbar --}}
-        <x-navbar titleString="Payroll History"/>
+        <x-navbar titleString="Payroll History <i class='bi bi-clock-history mar-start-4'></i>" pfp="{{$loggedTreasury->pfp}}"/>
         
 
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
-            <div class="long-cont text-l3 bold">
-                <div class="flex gap3">Payroll History <i class="bi bi-clock-history"></i></div>
-            </div>
-
             <div class="table1">
                 <div class="table1-header">
                     <div class="w-50 flex-grow-1">Payroll Period</div>

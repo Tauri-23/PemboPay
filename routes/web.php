@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\TreasuriesController;
+use App\Http\Controllers\TreasuryDashController;
+use App\Http\Controllers\TreasuryDepartmentsController;
+use App\Http\Controllers\TreasuryEmployeesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +19,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', function () {
     return view('index');
 });
@@ -27,54 +30,43 @@ Route::get('/', function () {
 */
 
 //Login
-Route::post('/', [AuthController::class, 'login'])->name('auth.login');
+Route::post('/loginTreasury', [TreasuriesController::class, 'login']);
+Route::get('/logoutTreasury', [TreasuriesController:: class, 'logout']);
 
 
 //Home
-Route::get('/TreasuryDashboard', function() {
-    return view('UserTreasury.index');
-});
+Route::get('/TreasuryDashboard', [TreasuryDashController::class, 'home']);
 
 
 
 //Run Payroll
-Route::get('/TreasuryRunPayroll', function() {
-    return view('UserTreasury.RunPayroll.index');
-});
+Route::get('/TreasuryRunPayroll', [TreasuryDashController::class, 'runPayroll']);
 
 
 
 //Payroll History
-Route::get('/TreasuryPayrollHistory', function() {
-    return view('UserTreasury.PayrollHistory.index');
-});
+Route::get('/TreasuryPayrollHistory', [TreasuryDashController::class, 'payrollHistory']);
 
 
 
 //Reports
-Route::get('/TreasuryReports', function() {
-    return view('UserTreasury.Reports.index');
-});
+Route::get('/TreasuryReports', [TreasuryDashController::class, 'reports']);
 
 
 
 //Payslip
-Route::get('/TreasuryPayslip', function() {
-    return view('UserTreasury.Payslip.index');
-});
+Route::get('/TreasuryPayslip', [TreasuryDashController::class, 'payslip']);
 
 
 
 //Employees
-Route::get('/TreasuryEmployees', function() {
-    return view('UserTreasury.Employees.index');
-});
+Route::get('/TreasuryEmployees', [TreasuryEmployeesController::class, 'employees']);
+Route::get('/TreasuryAddEmployees', [TreasuryEmployeesController::class, 'addEmployee']);
 
 
 
 //Departments
-Route::get('/TreasuryDepartments', function() {
-    return view('UserTreasury.Departments.index');
-});
+Route::get('/TreasuryDepartments', [TreasuryDepartmentsController::class, 'departments']);
+Route::get('/TreasuryAddDepartments', [TreasuryDepartmentsController::class, 'addDepartments']);
 
 

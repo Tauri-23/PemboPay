@@ -11,18 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('treasuries', function (Blueprint $table) {
+        Schema::create('barangays', function (Blueprint $table) {
             $table->id();
-            $table->string('Firstname');
-            $table->string('Middlename')->nullable();
-            $table->string('Lastname');
-            $table->string('username');
-            $table->string('email');
-            $table->string('password');
-            $table->string('pfp');
-            $table->string('status');
+            $table->unsignedBigInteger('city')->nullable();
+            $table->string('barangay');
+            $table->string('postal_code');
             $table->timestamp('created_at')->useCurrent()->useCurrentOnUpdate();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+
+            /**
+             * Foreign Keys
+             */
+            $table->foreign('city')
+                ->references('id')
+                ->on('cities')
+                ->onDelete('set null')
+                ->onUpdate('set null');
         });
     }
 
@@ -31,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('treasuries');
+        Schema::dropIfExists('barangays');
     }
 };

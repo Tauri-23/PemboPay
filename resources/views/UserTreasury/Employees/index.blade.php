@@ -9,7 +9,9 @@
         {{-- Styles --}}
         <link rel="stylesheet" href="/assets/css/app.css">
         <link rel="stylesheet" href="/assets/css/elements.css">
+        <link rel="stylesheet" href="/assets/css/navbar.css">
         <link rel="stylesheet" href="/assets/css/tables.css">
+        <link rel="stylesheet" href="/assets/css/forms.css">
 
         {{-- Bootstrap --}}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -33,7 +35,7 @@
         
 
         {{-- Navbar --}}
-        <x-navbar titleString="Employees"/>
+        <x-navbar titleString="Employees" pfp="{{$loggedTreasury->pfp}}"/>
         
 
         {{-- Content --}}
@@ -53,41 +55,13 @@
                     </select>
                 </div>
 
-                <a href="" class="primary-btn1-small d-flex align-items-center">
+                <a href="/TreasuryAddEmployees" class="primary-btn1-small d-flex align-items-center">
                     <i class="bi bi-person-fill-add mar-end-3 text-m1"></i>
                     Add Employee
                 </a>
             </div>
             
-            <div class="table1">
-                <div class="table1-header">
-                    <small class="text-m2 flex-grow-1">Employee Name</small>
-                    <div class="table1-PFP-small-cont mar-end-1"></div>
-                    <small class="text-m2 flex-grow-1">Employee ID</small>
-                    <small class="text-m2 flex-grow-1">Employee Email</small>
-                    <small class="text-m2 flex-grow-1">Department</small>
-                    <small class="text-m2 flex-grow-1">Status</small>
-                </div>
-
-
-                {{--Data Fetched from the database this is for ui for now--}}
-                <div class="table1-data">
-                    <div class="table1-PFP-small mar-end-1"></div>
-                    <small class="text-m2 flex-grow-1">Employee Name</small>
-                    <small class="text-m2 flex-grow-1">Employee ID</small>
-                    <small class="text-m2 flex-grow-1">Employee Email</small>
-                    <small class="text-m2 flex-grow-1">Department</small>
-                    <small class="text-m2 flex-grow-1">Status</small>
-                </div>
-                <div class="table1-data last">
-                    <div class="table1-PFP-small mar-end-1"></div>
-                    <small class="text-m2 flex-grow-1">Employee Name</small>
-                    <small class="text-m2 flex-grow-1">Employee ID</small>
-                    <small class="text-m2 flex-grow-1">Employee Email</small>
-                    <small class="text-m2 flex-grow-1">Department</small>
-                    <small class="text-m2 flex-grow-1">Status</small>
-                </div>
-            </div>
+            <x-TreasuryEmloyeesTable :employees="$employees"/>
         
         </div>
 

@@ -6,18 +6,15 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class navbar extends Component
+class BrgysSelectOption extends Component
 {
     /**
      * Create a new component instance.
      */
-    public $title;
-    public $pfp;
-
-    public function __construct($titleString, $pfp)
+    public $brgy;
+    public function __construct($brgy)
     {
-        $this->title = $titleString;
-        $this->pfp = $pfp;
+        $this->brgy = $brgy;
     }
 
     /**
@@ -25,6 +22,6 @@ class navbar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.navbar');
+        return view('components.brgys-select-option');
     }
 }
