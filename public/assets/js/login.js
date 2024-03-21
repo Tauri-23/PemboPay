@@ -47,9 +47,9 @@ $(document).ready(function() {
                     closeModal(wrongCredentialModal, false);
                 }
             },
-            error: function (response) {
-                showModal(somethingWentWrongModal);
-                closeModal(somethingWentWrongModal, false);
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                alert('error');
             }
         });
     });

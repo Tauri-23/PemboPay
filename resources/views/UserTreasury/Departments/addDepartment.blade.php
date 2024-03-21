@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
         <title>PemboPay</title>
         
@@ -25,7 +26,10 @@
         
     </head>
     <body>
-        
+        {{-- Modals --}}
+        <x-modals modalType="success"/>
+        <x-modals modalType="error"/>
+        <x-modals modalType="close"/>
 
         {{-- Sidenav --}}
         <x-sidenav activeLink="7"/>
@@ -42,10 +46,11 @@
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
 
             <form method="post" class="w-100">
+                @csrf
                 <div class="long-cont d-flex flex-direction-y gap3">
                     <small class="text-m2 bold">Department Name</small>
                     <input type="text" class="edit-text-1" id="dept-name-in" placeholder="Department Name" />
-                    <div class="color-AppRed" id="pcode-required">Please enter Department Name</div>
+                    <div class="color-AppRed d-none" id="dept-name-required">Please enter Department Name</div>
                 
                     <input type="hidden" id="dept-bg-in" value="" placeholder="Department Background" />
                     <div class="d-flex flex-direction-y gap3 mar-top-1">
@@ -67,7 +72,7 @@
                 
                     </div>
                     <div class="w-100 d-flex justify-content-end">
-                        <button class="primary-btn1-long mar-top-1" id="add-department">Add Department</button>
+                        <a class="primary-btn1-long mar-top-1" id="add-department">Add Department</a>
                     </div>
                 
                 </div>

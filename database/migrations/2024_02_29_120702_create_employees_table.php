@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->string('employee_id', 6)->primary();
+            $table->string('id', 6)->primary();
             $table->string('firstname');
             $table->string('middlename')->nullable();
             $table->string('lastname');
@@ -33,7 +33,7 @@ return new class extends Migration
              * Foreign Keys
              */
             $table->foreign('department')
-                ->references('department_id')
+                ->references('id')
                 ->on('departments')
                 ->nullOnDelete()
                 ->cascadeOnUpdate();

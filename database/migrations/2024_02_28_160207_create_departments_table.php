@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('departments', function (Blueprint $table) {
-            $table->string('department_id', 6)->primary();
+            $table->string('id', 6)->primary();
             $table->string('department_name');
             $table->text('department_pfp');
             $table->timestamp('created_at')->useCurrent()->useCurrentOnUpdate();

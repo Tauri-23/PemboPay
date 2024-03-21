@@ -10,7 +10,7 @@
         <a href="" id="Department_ID" class="departments-cont-box departments">
             <div class="department-name" style="z-index: 2;">{{$dept->department_name}}</div>
             <div class="overlay-blur-dark"></div>
-            <img class="department-pic" src="/assets/media/dept-pfp/bg1.jpg" />
+            <img class="department-pic" src="/assets/media/dept-pfp/{{$dept->department_pfp}}" />
         </a>
     @endforeach
 @endif
