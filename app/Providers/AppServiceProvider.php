@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Contracts\IAuthenticateService;
 use App\Contracts\IGenerateIdService;
 use App\Contracts\ILoggedService;
+use App\Contracts\IRetrieveIdService;
 use App\Contracts\IRetrieveService;
+use App\Contracts\IRetrieveWhereService;
 use App\Services\AuthenticateService;
 use App\Services\GenerateIdService;
 use App\Services\LoggedService;
@@ -23,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
 
         //Retriever Services
         $this->app->bind(IRetrieveService::class, RetrieveService::class);
+        $this->app->bind(IRetrieveIdService::class, RetrieveService::class);
+        $this->app->bind(IRetrieveWhereService::class, RetrieveService::class);
 
         //Generate Random Ids Services
         $this->app->bind(IGenerateIdService::class, GenerateIdService::class);

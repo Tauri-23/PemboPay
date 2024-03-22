@@ -41,31 +41,39 @@
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
 
-            <div class="long-cont d-flex justify-content-between align-items-center">
-                <div class="d-flex gap3">
-                    <div class="d-flex position-relative align-items-center">
-                        <i class="fa-solid fa-magnifying-glass position-absolute text-m1 padding-start-4"></i>
-                        <input id="search-emp" class="edit-text-2" name="searchEmp" type="text" placeholder="Search Departments" autocomplete="off" />
+            <div class="department-cover-cont d-flex align-items-center">
+                <div class="mar-start-2" style="z-index: 2;">
+                    <div class="text-xl2 fw-bold color-white">{{$department->department_name}}</div>
+                    <div class="color-white d-flex flex-direction-y">
+                        <small class="text-m1">@Model.Employees.Count()</small>
+                        <small class="text-m3">@(Model.Employees.Count() > 1 ? "Employees" : "Employee")</small>
                     </div>
-                    
-                    <select class="select-med input-light-grey">
-                        <option value="all">All</option>
-                        <option value="a-z">a-z</option>
-                        <option value="z-a">z-a</option>
-                    </select>
                 </div>
+                
+                <img class="position-absolute w-100" src="/assets/media/dept-pfp/{{$department->department_pfp}}" />
+                <div class="overlay-blur-dark" style="z-index: 1;"></div>
+            </div>
 
-                <a href="/TreasuryAddDepartments" class="primary-btn1-small d-flex align-items-center">
-                    <i class="bi bi-building-fill-add mar-end-3 text-m1"></i>
-                    Add Department
+
+            <div class="w-100 d-flex justify-content-between mar-top-2 mar-bottom-3">
+                <a href="/TreasuryDepartments" class="d-flex gap3 text-black text-decoration-none align-items-center text-m1">
+                    <i class="fa-solid fa-chevron-left"></i>Back
                 </a>
+            
+                <div class="d-flex gap3">
+                    <a asp-page="EditDepartment" asp-route-id="@Model.Departments.Department_ID" id="editDepartment" class="primary-btn1-small">
+                        <i class="fa-solid fa-pen-to-square mar-end-3"></i>Edit Department
+                    </a>
+                    <a id="delDeptBtn" class="primary-btn2-small">
+                        <i class="bi bi-building-fill-x mar-end-3"></i>Delete Department
+                    </a>
+                </div>
             </div>
 
-            <div id="results-dept" class="d-flex flex-wrap-cont gap3">
 
-                {{-- Render Departments --}}
-                <x-RenderDepartments :departments="$departments"/>
-            </div>
+
+            {{-- Render Employees --}}
+            <x-TreasuryEmloyeesTable :employees="$employees"/>
         
         </div>
 

@@ -68,6 +68,7 @@ Route::get('/TreasuryAddEmployees', [TreasuryEmployeesController::class, 'addEmp
 //Departments
 Route::get('/TreasuryDepartments', [TreasuryDepartmentsController::class, 'departments']);
 Route::get('/TreasuryAddDepartments', [TreasuryDepartmentsController::class, 'addDepartments']);
+Route::get('/ViewDept/{id}', [TreasuryDepartmentsController::class, 'viewDepartment']);
 Route::post('/TreasuryAddDepartmentPost', [TreasuryDepartmentsController::class, 'addDepartmentPost']);
 
 

@@ -30,11 +30,6 @@ class Main {
         this.clearSelectionBtn = $('#clear-selection');
         this.addDepartmentBtn = $('#add-department');
 
-        //modals
-        this.successModal= $('#success-modal');
-        this.errorModal = $('#error-modal');
-        this.closeModal = $('#close-modal');
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -122,7 +117,9 @@ class FormValidator extends Main {
                     showModal($('#success-modal'));
                     closeModalRedirect($('#success-modal'), '/TreasuryDepartments');
                 } else {
-                    alert('failed');
+                    $('#error-modal').find('.modal-text').html('Failed adding department please try again later.');
+                    showModal($('#error-modal'));
+                    closeModalRedirect($('#error-modal'), '/TreasuryDepartments');
                 }
             },
             error: function (xhr, status, error) {
