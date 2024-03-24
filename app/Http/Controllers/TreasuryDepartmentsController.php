@@ -50,6 +50,25 @@ class TreasuryDepartmentsController extends Controller
     }
 
 
+    public function deleteDepartment(Request $request) {
+        $department = Departments::find($request->id);
+        
+        if(empty($department)) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'error'
+            ]);
+        }
+
+        $department->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'success'
+        ]);
+
+    }
+
+
     public function addDepartmentPost(Request $request) {
         $dept = new Departments();
         $dept->id = $this->generateId->generate(Departments::class);

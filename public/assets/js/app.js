@@ -49,7 +49,7 @@ function showModal(modal) {
 function closeModal(modal, reload) {
     let closeBtn = modal.find('#modal-close-btn');
     $(document).on('click', function (event) {
-        if (event.target === modal[0] || event.target === closeBtn[0]) {
+        if (event.target === modal[0] || event.target === closeBtn[0] || event.target === closeBtn[1]) {
             modal.addClass('d-none');
             $('body').css('overflow', 'auto');
             if (reload) {
@@ -94,15 +94,6 @@ function validationNotEmpty(inputsToValidate) {
 
 
 
-
-
-//Setup Acknowledgement Modal
-function setupAckModal(modal, title, body, titleString, bodyString, bodyColor) {
-    modal.removeClass('invisible');
-    title.text(titleString);
-    body.html(bodyString);
-    body.addClass(bodyColor !== '' ? bodyColor : '');
-}
 
 
 //Basically format the Phone Number input +63
@@ -154,3 +145,15 @@ function createLineChart(ctx, labels, data, title, backgroundColor, borderColor)
         }
     });
 }
+
+
+
+
+
+//ajax
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
+    }
+});

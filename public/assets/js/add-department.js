@@ -29,13 +29,6 @@ class Main {
         //Btns
         this.clearSelectionBtn = $('#clear-selection');
         this.addDepartmentBtn = $('#add-department');
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
-            }
-        });
     }
 }
 
