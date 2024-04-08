@@ -76,7 +76,7 @@ class SelectDept extends Main {
 
 /*
 |----------------------------------------
-|Select Dept Class
+|Form validator and add department Class
 |----------------------------------------
 */
 class FormValidator extends Main {
@@ -94,6 +94,19 @@ class FormValidator extends Main {
             return;
         }
 
+        $('#info-yn-modal').find('.modal1-txt').html('Do you want to add this department?');
+        showModal($('#info-yn-modal'));
+        closeModal($('#info-yn-modal'), false);
+
+        const yesBtn = $('.yes-btn');
+
+        yesBtn.click(()=> {
+            closeModalNoEvent($('#info-yn-modal'));
+            this.addDeptDb();
+        });
+    }
+
+    addDeptDb() {
         let formData = new FormData();
         formData.append("dept_name", this.deptnameIn.val());
         formData.append("dept_pfp", this.deptBgIn.val());
@@ -120,7 +133,6 @@ class FormValidator extends Main {
                 alert('error');
             }
         });
-
     }
 
     emptyMessagesValidator() {

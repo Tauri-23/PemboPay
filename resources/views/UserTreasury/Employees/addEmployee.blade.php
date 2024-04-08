@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
         <title>PemboPay</title>
         
@@ -26,6 +27,10 @@
     </head>
     <body>
         
+        {{-- MOdal --}}
+        <x-modals modalType="success"/>
+        <x-modals modalType="error"/>
+        <x-modals modalType="info-yn"/>
 
         {{-- Sidenav --}}
         <x-sidenav activeLink="6"/>
@@ -42,6 +47,7 @@
         <div class="content-cont-1">
 
             {{-- Personal Information --}}
+            @csrf
             <form class="d-flex flex-direction-y gap2 position-relative mar-bottom-1" method="post">
                 <div class="long-cont d-flex flex-wrap gap3">
                     <div class="w-100 text-m1 bold">Personal Information</div>
@@ -127,7 +133,7 @@
                             <x-CitiesSelectOption :cities="$cities"/>
                         </select>
 
-                        <div class="color-AppRed d-none" id="city-required">Please enter City</div>
+                        <div class="color-AppRed d-none" id="city-required">Please select City</div>
                     </div>
             
                     {{-- Barangay --}}
@@ -139,7 +145,7 @@
                             <x-BrgysSelectOption :brgy="$brgy"/>
                         </select>
 
-                        <div class="color-AppRed d-none" id="brgy-required">Please enter Barangay</div>
+                        <div class="color-AppRed d-none" id="brgy-required">Please select Barangay</div>
                     </div>
             
                     {{-- Postal Code --}}
@@ -162,7 +168,7 @@
                         <select name="Department" class="select-long2 w-100" id="department-in">
                             <option value="" selected>Select Departments</option>
                             {{-- Create loop here to generate available employees --}}
-                            <option value="@i.Department_ID">@i.Department_Name</option>
+                            <x-department_select_option :departments="$departments"/>
                         </select>
                         <div class="color-AppRed d-none" id="department-required">Please select Department</div>
                     </div>
@@ -221,6 +227,7 @@
     <script>
         // Define a JavaScript variable and initialize it with PHP data
         const brgys = {!! json_encode($brgy) !!};
+        formatPhoneNumIn($('#phone-in'));
     </script>
 
     <script src="/assets/js/add-employee.js"></script>

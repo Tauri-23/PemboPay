@@ -40,7 +40,7 @@
         
 
         {{-- Navbar --}}
-        <x-navbar titleString="Add Departments" pfp="{{$loggedTreasury->pfp}}"/>
+        <x-navbar titleString="Edit Departments" pfp="{{$loggedTreasury->pfp}}"/>
         
 
         {{-- Content --}}
@@ -50,7 +50,7 @@
                 @csrf
                 <div class="long-cont d-flex flex-direction-y gap3">
                     <small class="text-m2 bold">Department Name</small>
-                    <input type="text" class="edit-text-1" id="dept-name-in" placeholder="Department Name" />
+                    <input type="text" class="edit-text-1" id="dept-name-in" placeholder="Department Name" value="{{$department->department_name}}"/>
                     <div class="color-AppRed d-none" id="dept-name-required">Please enter Department Name</div>
                 
                     <input type="hidden" id="dept-bg-in" value="" placeholder="Department Background" />

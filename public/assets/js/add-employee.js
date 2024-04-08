@@ -188,7 +188,7 @@ class FormValidator extends Main{
             return;
         }
 
-        alert('ready for sumbit');
+        this.setupConfirmModal();
     }
 
     emptyMessagesValidator() {
@@ -216,6 +216,55 @@ class FormValidator extends Main{
         !isEmptyOrSpaces(this.phoneIn.val()) && !isEmptyOrSpaces(this.emailIn.val()) && !isEmptyOrSpaces(this.stAddressIn.val()) &&
         (this.cityIn.val() != 'invalid') && (this.brgyIn.val() != 'invalid') && (this.deptIn.val() != 'invalid') &&
         !isEmptyOrSpaces(selectedPayModeInput)
+    }
+
+    setupConfirmModal() {
+        let modalTitle = $('#info-yn-modal').find('.modal1-txt');
+        let yesBtn = $('#info-yn-modal').find('.yes-btn');
+        let formData = new FormData();
+        modalTitle.html('Add new Employee named ' + this.fnameIn.val() + ' ' + this.lnameIn.val());
+        showModal($('#info-yn-modal'));
+        closeModal($('#info-yn-modal'), false);
+
+        formData.append("emp_fname", this.fnameIn.val());
+        formData.append("emp_mname", this.mnameIn.val());
+        formData.append("emp_lname", this.lnameIn.val());
+        formData.append("emp_gender", this.genderIn.val());
+        formData.append("emp_department", this.deptIn.val());
+        formData.append("emp_city", this.cityIn.val());
+        formData.append("emp_brgy", this.brgyIn.val());
+        formData.append("emp_st_address", this.stAddressIn.val());
+        formData.append("emp_email", this.emailIn.val());
+        formData.append("emp_phone", this.phoneIn.val());
+        formData.append("emp_bdate", this.bdateIn.val());
+        formData.append("emp_hrly_mode", $('#hourly').hasClass("active") ? 'hourly' : 'salary');
+
+        yesBtn.click(function() {
+            closeModalNoEvent($('#info-yn-modal'));
+            $.ajax({
+                type: "POST",
+                url: "/TreasuryAddEmployeePost",
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(response) {
+                    if(response.status == 200) {
+                        $('#success-modal').find('.modal-text').html('Employee added successfully.');
+                        showModal($('#success-modal'));
+                        closeModalRedirect($('#success-modal'), '/TreasuryEmployees');
+                    } else {
+                        $('#error-modal').find('.modal-text').html('Failed adding employee please try again later.');
+                        showModal($('#error-modal'));
+                        closeModalRedirect($('#error-modal'), '/TreasuryEmployees');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                    alert('error');
+                }
+            });
+        });
+
     }
 
     

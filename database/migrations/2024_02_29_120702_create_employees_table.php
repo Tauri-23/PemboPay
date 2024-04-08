@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('phone');
             $table->dateTime('birth_date');
             $table->string('pfp');
-            $table->string('hourly_rate_mode');
-            $table->timestamp('created_at')->useCurrent()->useCurrentOnUpdate();
+            $table->string('hourly_rate_mode', 6)->nullable();
+            $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             /**
@@ -47,6 +47,12 @@ return new class extends Migration
             $table->foreign('barangay')
                 ->references('id')
                 ->on('barangays')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
+
+            $table->foreign('hourly_rate_mode')
+                ->references('id')
+                ->on('compensation')
                 ->nullOnDelete()
                 ->cascadeOnUpdate();
         });

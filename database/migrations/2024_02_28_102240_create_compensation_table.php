@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('compensation', function (Blueprint $table) {
             $table->string('id', 6)->primary();
-            $table->string('department_name');
-            $table->text('department_pfp');
-            $table->timestamp('created_at')->useCurrent();
+            $table->string('compentsation_type');
+            $table->float('value');
+            $table->timestamp('created_at')->useCurrent()->useCurrentOnUpdate();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
+        
     }
 
     /**
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('compensation');
     }
 };

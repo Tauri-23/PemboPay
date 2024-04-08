@@ -68,10 +68,15 @@
                 <form method="post">
                     @csrf
                     <div class="d-flex gap3">
-                        <a id="edit-dept-btn" class="primary-btn1-small">
-                            <i class="fa-solid fa-pen-to-square mar-end-3"></i>Edit Department
+                        <a href="/TreasuryAddEmployees" class="primary-btn3-small">
+                            <i class="bi bi-person-plus-fill mar-end-3"></i>Add Employee
                         </a>
-                        <button id="del-dept-btn" class="primary-btn2-small">
+
+                        <button id="edit-dept-btn" class="secondary-btn1-small">
+                            <i class="fa-solid fa-pen-to-square mar-end-3"></i>Edit Department
+                        </button>
+                        
+                        <button id="del-dept-btn" class="secondary-btn2-small">
                             <i class="bi bi-building-fill-x mar-end-3"></i>Delete Department
                         </button>
                     </div>
