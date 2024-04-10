@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="/assets/css/elements.css">
         <link rel="stylesheet" href="/assets/css/navbar.css">
         <link rel="stylesheet" href="/assets/css/departments.css">
+        <link rel="stylesheet" href="/assets/css/tables.css">
         <link rel="stylesheet" href="/assets/css/forms.css">
 
         {{-- Bootstrap --}}

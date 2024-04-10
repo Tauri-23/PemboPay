@@ -63,6 +63,7 @@ Route::get('/TreasuryPayslip', [TreasuryDashController::class, 'payslip']);
 Route::get('/TreasuryEmployees', [TreasuryEmployeesController::class, 'employees']);
 Route::get('/TreasuryAddEmployees', [TreasuryEmployeesController::class, 'addEmployee']);
 Route::post('/TreasuryAddEmployeePost', [TreasuryEmployeesController::class, 'addEmployeePost']);
+Route::get('/TreasuryViewEmployee/{id}', [TreasuryEmployeesController::class, 'viewEmployee']);
 
 
 

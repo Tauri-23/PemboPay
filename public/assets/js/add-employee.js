@@ -237,7 +237,8 @@ class FormValidator extends Main{
         formData.append("emp_email", this.emailIn.val());
         formData.append("emp_phone", this.phoneIn.val());
         formData.append("emp_bdate", this.bdateIn.val());
-        formData.append("emp_hrly_mode", $('#hourly').hasClass("active") ? 'hourly' : 'salary');
+        formData.append("emp_compensation_mode", $('#hourly').hasClass("active") ? 'hourly' : 'salary');
+        formData.append("emp_compensation_value", $('#hourly').hasClass("active") ? this.hourlyIn.val() : this.salaryIn.val()); 
 
         yesBtn.click(function() {
             closeModalNoEvent($('#info-yn-modal'));

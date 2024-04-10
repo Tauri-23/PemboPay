@@ -45,7 +45,7 @@ class TreasuryDepartmentsController extends Controller
         return view('UserTreasury.Departments.viewDepartment',
         ['loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
         'department' => $this->retrieveIdDb->retrieveId(Departments::class, $id),
-        'employees' => $this->retrieveWhereDb->retrieveWhere(Employees::class, [['department', '==', $id]])
+        'employees' => Employees::where('department', $id)->get()
         ]);
     }
 

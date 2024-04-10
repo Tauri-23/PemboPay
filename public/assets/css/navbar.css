@@ -141,3 +141,12 @@
     width: calc(100% - 90px);
     margin-left: 90px;
 }
+
+.nav-link-2 {
+    padding: 10px 20px 10px 20px;
+    cursor: pointer;
+}
+.nav-link-2.active {
+    border-bottom: 3px solid var(--AppBlue);
+    color: var(--AppBlue);
+}

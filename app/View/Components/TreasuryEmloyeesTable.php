@@ -9,6 +9,7 @@ use Illuminate\View\Component;
 class TreasuryEmloyeesTable extends Component
 {
     public $employees;
+    
     public function __construct($employees)
     {
         $this->employees = $employees;

@@ -25,6 +25,8 @@
         
     </head>
     <body>
+        {{-- Modals --}}
+        <x-modals modalType="emp-mini-profile-1"/>
         
 
         {{-- Sidenav --}}
@@ -48,7 +50,7 @@
                         <input id="search-emp" class="edit-text-2" name="searchEmp" type="text" placeholder="Search Name or ID" autocomplete="off" />
                     </div>
                     
-                    <select class="select-med input-light-grey">
+                    <select class="select-med input-light-grey" id="sort-emp">
                         <option value="all">All</option>
                         <option value="a-z">a-z</option>
                         <option value="z-a">z-a</option>
@@ -70,5 +72,11 @@
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script>
+        const employeesList = {!! json_encode($employees) !!};
+    </script>
+    <script src="/assets/js/employees.js"></script>
 </html>

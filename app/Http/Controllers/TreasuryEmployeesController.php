@@ -8,6 +8,7 @@ use App\Contracts\ILoggedService;
 use App\Contracts\IRetrieveService;
 use App\Models\Barangays;
 use App\Models\Cities;
+use App\Models\Compensation;
 use App\Models\Departments;
 use App\Models\Employees;
 use Illuminate\Http\Request;
@@ -33,6 +34,7 @@ class TreasuryEmployeesController extends Controller
             'employees' => Employees::all()
         ]);
     }
+    
 
     public function addEmployee() {
         return view('UserTreasury.Employees.addEmployee', [
@@ -43,9 +45,22 @@ class TreasuryEmployeesController extends Controller
         ]);
     }
 
+
     public function addEmployeePost(Request $request) {
+        $employeeId = $this->generateId->generate(Employees::class);
+        $compensationId = $this->generateId->generate(Compensation::class);
+
+        //Add Compensation
+        $com = new Compensation();
+        $com->id = $compensationId;
+        $com->compentsation_type = $request->emp_compensation_mode;
+        $com->value = $request->emp_compensation_value;
+        $com->save();
+
+
+        // Employee
         $emp = new Employees();
-        $emp->id = $this->generateId->generate(Employees::class);
+        $emp->id = $employeeId;
         $emp->firstname = $request->emp_fname;
         $emp->middlename = $request->emp_mname != null? $request->emp_name : null;
         $emp->lastname = $request->emp_lname;
@@ -58,7 +73,7 @@ class TreasuryEmployeesController extends Controller
         $emp->phone = $request->emp_phone;
         $emp->birth_date = $request->emp_bdate;
         $emp->pfp = "defaultPFP.png";
-        $emp->hourly_rate_mode = $request->emp_hrly_mode;
+        $emp->hourly_rate_mode = $compensationId;
 
         if($emp->save()) {
             return response()->json([
@@ -72,5 +87,14 @@ class TreasuryEmployeesController extends Controller
                 'message' => 'error'
             ]);
         }
+    }
+
+
+    public function viewEmployee($id) {
+        return view('UserTreasury.Employees.viewEmployee', [
+            'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
+            'employee' => Employees::find($id)
+        ]);
+
     }
 }

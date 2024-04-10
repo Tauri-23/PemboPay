@@ -31,4 +31,16 @@ class Employees extends Model
     {
         return $this->belongsTo(Departments::class, 'department', 'id');
     }
+
+    public function compensation() {
+        return $this->belongsTo(Compensation::class, 'hourly_rate_mode', 'id');
+    }
+
+    public function city() {
+        return $this->belongsTo(Cities::class, 'city', 'id');
+    }
+
+    public function barangay() {
+        return $this->belongsTo(Barangays::class, 'barangay', 'id');
+    }
 }

@@ -15,25 +15,25 @@
             <small class="text-m2 form-data-col">Employee ID</small>
             <small class="text-m2 form-data-col">Employee Email</small>
             <small class="text-m2 form-data-col">Department</small>
-            <small class="text-m2 form-data-col">Status</small>
+            <small class="text-m2 form-data-col">Compensation Type</small>
         </div>
 
 
         {{--Data Fetched from the database this is for ui for now--}}
         @foreach ($employees as $emp)
-            <a href="" class="table1-data {{ $loop->last ? 'last' : '' }}">
+            <div  class="table1-data {{ $loop->last ? 'last' : '' }} employee-column">
                 <div class="form-data-col">
                     <div class="table1-PFP-small mar-end-1">
-                        <img src="/assets/media/pfp/{{ $emp->pfp }}" alt="">
+                        <img class="emp-pfp" src="/assets/media/pfp/{{ $emp->pfp }}" alt="">
                     </div>
-                    <small class="text-m2">{{ $emp->firstname }} {{ $emp->lastname }}</small>
+                    <small class="text-m2 emp-name">{{ $emp->firstname }} {{ $emp->lastname }}</small>
                 </div>
-                <small class="form-data-col">{{ $emp->id }}</small>
+                <small class="form-data-col emp-id">{{ $emp->id }}</small>
                 <small class="form-data-col">{{ $emp->email }}</small>
-                <small class="form-data-col">{{ $emp->department()->first()->department_name }}</small>
+                <small class="form-data-col emp-dept">{{ $emp->department()->first()->department_name }}</small>
                 {{-- <small class="form-data-col">{{  dd($emp->toArray())  }} Debug output</small> --}}
-                <small class="form-data-col">{{ $emp->status }}</small>
-            </a>
+                <small class="form-data-col">{{ $emp->compensation()->first()->compentsation_type }}</small>
+            </div>
         @endforeach
     </div>
 @endif
