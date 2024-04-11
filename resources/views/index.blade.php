@@ -33,7 +33,7 @@
                 <img class="position-absolute w-100 h-100" src="/assets/media/logos/mwp-pembo.png" />
             </div>
 
-            <p class="text-l1 text-center bold mar-top-1">PemboPay Treasury</p>
+            <p class="text-l1 text-center bold mar-top-1">PemboPay Accountant</p>
 
             <form method="post" id="treasury-login-form">
                 @csrf

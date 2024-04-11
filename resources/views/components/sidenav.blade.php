@@ -21,7 +21,7 @@
     </a>
     <a href="/TreasuryPayslip" class="side-nav-links {{$activeLink == 5 ? 'active' : ''}}">
         <i class="fa-solid fa-receipt side-nav-icon"></i>
-        <div class="sidenav-text">Salary Slip</div>
+        <div class="sidenav-text">Pay Slip</div>
     </a>
     <a href="/TreasuryEmployees" class="side-nav-links  {{$activeLink == 6 ? 'active' : ''}}">
         <i class="bi bi-people-fill side-nav-icon"></i>
