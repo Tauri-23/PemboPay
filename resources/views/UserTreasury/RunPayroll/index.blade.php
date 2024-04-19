@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="/assets/css/elements.css">
         <link rel="stylesheet" href="/assets/css/navbar.css">
         <link rel="stylesheet" href="/assets/css/forms.css">
+        <link rel="stylesheet" href="/assets/css/tables.css">
 
         {{-- Bootstrap --}}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -24,7 +25,10 @@
         
     </head>
     <body>
-        
+        {{-- Modal --}}
+        <x-modals modalType="success"/>
+        <x-modals modalType="error"/>
+        <x-modals modalType="info-yn"/>
 
         {{-- Sidenav --}}
         <x-sidenav activeLink="2"/>
@@ -39,7 +43,7 @@
 
         {{-- Content --}}
         <div class="content-cont-1">
-            <div class="long-cont">
+            <div class="long-cont" id="run-payroll">
                 <div class="d-flex w-100 justify-content-between align-items-center">
                     <small class="text-m1 bold">Payroll Period</small>
                     <div>
@@ -64,10 +68,61 @@
                             <option value="">November</option>
                             <option value="">December</option>
                         </select>
+                        <a class="primary-btn1-small h-100" id="run-payroll-btn">Run Payroll</a>
                     </div>
                 </div>
         
             </div>
+
+            <div class="d-flex d-none gap2 flex-direction-y" id="payroll-preview">
+                <div class="long-cont">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <small class="text-m1 bold">Payroll Preview (1-15 Jan 2024)</small>
+                    </div>
+                </div>
+    
+                <div class="table1">
+                    <div class="table1-header">
+                        <small class="text-m2 form-data-col">Employee ID</small>
+                        <small class="text-m2 form-data-col">Compensation Type</small>
+                        <small class="text-m2 form-data-col">Department</small>
+                        <small class="text-m2 form-data-col">Gross Pay</small>
+                        <small class="text-m2 form-data-col">Net Pay</small>
+                    </div>
+            
+            
+                    <div  class="table1-data employee-column">
+                        <small class="form-data-col emp-id">187352</small>
+                        <small class="form-data-col emp-dept">Admin</small>
+                        <small class="form-data-col">Salary</small>
+                        <small class="form-data-col">₱ 7,000.00</small>
+                        <small class="form-data-col">₱ 6,700.00</small>
+                    </div>
+
+                    <div  class="table1-data employee-column">
+                        <small class="form-data-col emp-id">881327</small>
+                        <small class="form-data-col emp-dept">Admin</small>
+                        <small class="form-data-col">Salary</small>
+                        <small class="form-data-col">₱ 7,000.00</small>
+                        <small class="form-data-col">₱ 6,700.00</small>
+                    </div>
+
+                    <div  class="table1-data employee-column last">
+                        <small class="form-data-col emp-id">123123</small>
+                        <small class="form-data-col emp-dept">Admin</small>
+                        <small class="form-data-col">Hourly</small>
+                        <small class="form-data-col">₱ 7,000.00</small>
+                        <small class="form-data-col">₱ 6,700.00</small>
+                    </div>
+                </div>
+
+                <div class="d-flex w-100 justify-content-end gap3">
+                    <a class="primary-btn2-small" id="cancel-payroll-btn">Cancel Payroll</a>
+                    <a class="primary-btn3-small" id="approve-payroll-btn">Approve Payroll</a>
+                </div>
+                
+            </div>
+            
         </div>
 
     </body>
@@ -75,5 +130,6 @@
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
+    <script src="/assets/js/run-payroll.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </html>
