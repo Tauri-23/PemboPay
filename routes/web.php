@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\TreasuriesController;
 use App\Http\Controllers\TreasuryDashController;
 use App\Http\Controllers\TreasuryDepartmentsController;
@@ -80,3 +81,18 @@ Route::post('/TreasuryDeleteDepartment', [TreasuryDepartmentsController::class, 
 Route::get('/AccountantPayrollSettings', [TreasuryDashController::class, 'payrollSettings']);
 
 
+
+
+
+
+
+
+
+/*
+|----------------------------------------
+| Employees Time in Time out
+|----------------------------------------
+*/
+Route::get('/Employee', [EmployeesController::class, 'loginPage']);
+Route::get('/EmployeeDash', [EmployeesController::class, 'dashboard']);
+Route::post('/EmployeeLogin', [EmployeesController::class, 'login']);

@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="/assets/css/app.css">
         <link rel="stylesheet" href="/assets/css/elements.css">
         <link rel="stylesheet" href="/assets/css/navbar.css">
-        <link rel="stylesheet" href="/assets/css/payroll-settings.css">
+        <link rel="stylesheet" href="/assets/css/treasury-dash.css">
         <link rel="stylesheet" href="/assets/css/forms.css">
 
         {{-- Icon --}}
@@ -28,49 +28,36 @@
         
     </head>
     <body>
+        
 
         {{-- Sidenav --}}
-        <x-sidenav activeLink="8"/>
+        {{-- <x-sidenav activeLink="1"/> --}}
 
         {{-- nav small option --}}
-        <x-NavSmallOption/>
+        {{-- <x-NavSmallOption/> --}}
         
 
         {{-- Navbar --}}
-        <x-navbar titleString="Employees" pfp="{{$loggedTreasury->pfp}}"/>
+        {{-- <x-navbar titleString="Dashboard" pfp="{{$loggedTreasury->pfp}}"/> --}}
         
 
         {{-- Content --}}
-        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
+        <div class="content-cont-1 d-flex flex-direction-y gap2">
+            
+            <div class="container-box-s center-absolute-xy d-flex flex-direction-y gap2 align-items-center">
+                <img class="modal-pfp" src="/assets/media/pfp/{{$loggedEmployee->pfp}}" alt="pfp">
 
-            {{-- Category --}}
-            <div class="long-cont d-flex flex-direction-y gap2">
-                <div class="text-m2 bold">Category</div>
-                <div class="flex gap3">
-                    <a id="hrlyRateBtn" class="category-btn-1 active">Taxes</a>
-                    <a id="allowanceRateBtn" class="category-btn-1">Allowances</a>
-                    <a id="deductions-btn" class="category-btn-1">Deductions</a>
-                    <a id="payPeriodBtn" class="category-btn-1">Payroll Period</a>
+                <div class="d-flex flex-direction-y text-center">
+                    <div class="text-l3">Welcome {{$loggedEmployee->firstname}} {{$loggedEmployee->lastname}}</div>
+                    <div class="text-l2 fw-bold" id="dateTime"></div>
+                </div>
+    
+                <div class="d-flex gap1">
+                    <a class="primary-btn1-small">Time In</a>
+                    <a class="primary-btn1-small">Time Out</a>
                 </div>
             </div>
-
-            {{--  --}}
-            <div id="config-container" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1">
-                <div id="hourly-rate-content" class="flex flex-direction-d gap3">
-
-                    <div class="text-m2 bold"> Tax Table </div>
-                    <div class="line1 mar-bottom-3 mar-top-3"> </div>
-
-                    <div class="d-flex justify-content-between">
-                        <div class="text-m2">GSIS</div>
-                        <div class="text-m2">3%</div>
-                    </div>
-
-                    <div id="save-btn-hrly-rate" class="flex gap3 mar-top-1 justify-content-end w-100">
-                        <a id="saveSettingBtn" class="primary-btn1-long">Add Tax</a>
-                    </div>
-                </div>
-            </div>
+            
         </div>
 
     </body>
@@ -78,6 +65,7 @@
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
-    
+    <script src="/assets/js/employee-dash.js"></script>
+    {{-- bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </html>
