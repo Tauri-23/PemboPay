@@ -75,3 +75,8 @@ Route::post('/TreasuryAddDepartmentPost', [TreasuryDepartmentsController::class,
 Route::post('/TreasuryDeleteDepartment', [TreasuryDepartmentsController::class, 'deleteDepartment']);
 
 
+
+//Payroll Settings
+Route::get('/AccountantPayrollSettings', [TreasuryDashController::class, 'payrollSettings']);
+
+

@@ -1,0 +1,11 @@
+.category-btn-1 {
+    border: 1px solid var(--AppBlue);
+    padding: 5px 15px;
+    color: var(--AppBlue);
+    border-radius: var(--border-radius1);
+    text-decoration:none;
+    cursor: pointer;
+}
+.category-btn-1.active {
+    background: var(--AppBlue);
+}

@@ -31,7 +31,7 @@
         <i class="bi bi-buildings-fill side-nav-icon"></i>
         <div class="sidenav-text">Departments</div>
     </a>
-    <a class="side-nav-links  {{$activeLink == 8 ? 'active' : ''}}">
+    <a href="/AccountantPayrollSettings" class="side-nav-links  {{$activeLink == 8 ? 'active' : ''}}">
         <i class="bi bi-sliders side-nav-icon"></i>
         <div class="sidenav-text">Payroll Settings</div>
     </a>
