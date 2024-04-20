@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
         <title>PemboPay</title>
         
@@ -12,6 +13,7 @@
         <link rel="stylesheet" href="/assets/css/navbar.css">
         <link rel="stylesheet" href="/assets/css/payroll-settings.css">
         <link rel="stylesheet" href="/assets/css/forms.css">
+        <link rel="stylesheet" href="/assets/css/tables.css">
 
         {{-- Icon --}}
         <link rel="icon" href="/assets/media/logos/mwp-pembo.png" type="image/x-icon" />
@@ -28,6 +30,12 @@
         
     </head>
     <body>
+        {{-- Modals --}}
+        <x-modals modalType="add-taxes"/>
+        <x-modals modalType="add-allowance"/>
+        <x-modals modalType="add-deduction"/>
+        <x-modals modalType="success"/>
+        <x-modals modalType="error"/>
 
         {{-- Sidenav --}}
         <x-sidenav activeLink="8"/>
@@ -47,30 +55,67 @@
             <div class="long-cont d-flex flex-direction-y gap2">
                 <div class="text-m2 bold">Category</div>
                 <div class="flex gap3">
-                    <a id="hrlyRateBtn" class="category-btn-1 active">Taxes</a>
-                    <a id="allowanceRateBtn" class="category-btn-1">Allowances</a>
+                    <a id="taxes-btn" class="category-btn-1 active">Taxes</a>
+                    <a id="allowance-btn" class="category-btn-1">Allowances</a>
                     <a id="deductions-btn" class="category-btn-1">Deductions</a>
-                    <a id="payPeriodBtn" class="category-btn-1">Payroll Period</a>
+                    <a id="payperiod-btn" class="category-btn-1">Payroll Period</a>
                 </div>
             </div>
 
-            {{--  --}}
-            <div id="config-container" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1">
-                <div id="hourly-rate-content" class="flex flex-direction-d gap3">
+            {{-- Taxes --}}
+            <div id="tax-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1">
+                <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
 
-                    <div class="text-m2 bold"> Tax Table </div>
+                    <div class="text-m2 bold"> Taxes </div>
                     <div class="line1 mar-bottom-3 mar-top-3"> </div>
 
-                    <div class="d-flex justify-content-between">
-                        <div class="text-m2">GSIS</div>
-                        <div class="text-m2">3%</div>
-                    </div>
+                    {{-- Render --}}
+                    <x-render-settings-tables :elements="$taxes" elementsName="Taxes"/>
 
-                    <div id="save-btn-hrly-rate" class="flex gap3 mar-top-1 justify-content-end w-100">
-                        <a id="saveSettingBtn" class="primary-btn1-long">Add Tax</a>
+                    <div class="d-flex gap3 mar-top-1 justify-content-end w-100">
+                        <a id="add-tax-btn" class="primary-btn1-long">Add Tax</a>
                     </div>
                 </div>
             </div>
+
+
+
+            {{-- Allowances --}}
+            <div id="allowances-table" class="d-none long-cont d-flex flex-direction-y gap3 mar-bottom-1">
+                <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
+
+                    <div class="text-m2 bold"> Allowances </div>
+                    <div class="line1 mar-bottom-3 mar-top-3"> </div>
+
+                    {{-- Render --}}
+                    <x-render-settings-tables :elements="$allowances" elementsName="Allowances"/>
+
+                    <div id="save-btn-hrly-rate" class="d-flex gap3 mar-top-1 justify-content-end w-100">
+                        <a id="add-allowance-btn" class="primary-btn1-long">Add Allowance</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+            {{-- Deductions --}}
+            <div id="deductions-table" class="d-none long-cont d-flex flex-direction-y gap3 mar-bottom-1">
+                <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
+
+                    <div class="text-m2 bold"> Deductions </div>
+                    <div class="line1 mar-bottom-3 mar-top-3"> </div>
+
+                    {{-- Render --}}
+                    <x-render-settings-tables :elements="$deductions" elementsName="Deductions"/>
+
+                    <div id="save-btn-hrly-rate" class="d-flex gap3 mar-top-1 justify-content-end w-100">
+                        <a id="add-deduction-btn" class="primary-btn1-long">Add Deduction</a>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
 
     </body>
@@ -78,6 +123,7 @@
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
+    <script src="/assets/js/payroll-settings.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </html>

@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('timesheets', function (Blueprint $table) {
+        Schema::create('employee_deductions', function (Blueprint $table) {
             $table->string('id', 6)->primary();
             $table->string('employee', 6)->nullable();
-            $table->dateTime('time_in');
-            $table->dateTime('time_out')->nullable();
-            $table->date('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->string('deduction_name');
+            $table->float('deduction_price');
+            $table->string('deduction_type');
+            $table->string('deduction_period');
 
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             /**
              * Foreign Keys
@@ -36,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('timesheets');
+        Schema::dropIfExists('employee_deductions');
     }
 };

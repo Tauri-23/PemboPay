@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
         <title>PemboPay | Run Payroll</title>
         
@@ -49,30 +50,38 @@
             <div class="long-cont" id="run-payroll">
                 <div class="d-flex w-100 justify-content-between align-items-center">
                     <small class="text-m1 bold">Payroll Period</small>
-                    <div>
-                        <select id="select-year" class="select-long">
-                            <option value="2023">2023</option>
-                            <option value="2023">2024</option>
-                            <option value="2023">2025</option>
-                            <option value="2023">2026</option>
-                            <option value="2023">2027</option>
-                        </select>
-                        <select id="select-month" class="select-long">
-                            <option value="">January</option>
-                            <option value="">February</option>
-                            <option value="">March</option>
-                            <option value="">April</option>
-                            <option value="">May</option>
-                            <option value="">June</option>
-                            <option value="">July</option>
-                            <option value="">August</option>
-                            <option value="">September</option>
-                            <option value="">October</option>
-                            <option value="">November</option>
-                            <option value="">December</option>
-                        </select>
-                        <a class="primary-btn1-small h-100" id="run-payroll-btn">Run Payroll</a>
-                    </div>
+                    <form method="post">
+                        <div>
+                            <select id="select-year" class="select-long">
+                                <option value="2023">2023</option>
+                                <option value="2023">2024</option>
+                                <option value="2023">2025</option>
+                                <option value="2023">2026</option>
+                                <option value="2023">2027</option>
+                            </select>
+    
+                            <select id="select-month" class="select-long">
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
+                            </select>
+    
+                            <select id="select-period" class="select-long">
+                                <option value="1-15">1-15</option>
+                                <option value="16-30">16-30</option>
+                            </select>
+                            <a class="primary-btn1-small h-100" id="run-payroll-btn">Run Payroll</a>
+                        </div>
+                    </form>
                 </div>
         
             </div>

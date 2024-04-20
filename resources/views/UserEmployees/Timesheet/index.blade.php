@@ -35,47 +35,20 @@
         <x-modals modalType="info-yn"/>
 
         {{-- Sidenav --}}
-        <x-employee-sidenav activeLink="1"/>
+        <x-employee-sidenav activeLink="2"/>
 
         {{-- nav small option --}}
         <x-NavSmallOption/>
         
 
         {{-- Navbar --}}
-        <x-navbar titleString="Dashboard" pfp="{{$loggedEmployee->pfp}}"/>
+        <x-navbar titleString="Timesheet" pfp="{{$loggedEmployee->pfp}}"/>
         
 
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2">
             
-            <div class="container-box-s center-absolute-xy d-flex flex-direction-y gap2 align-items-center">
-                <img class="modal-pfp" src="/assets/media/pfp/{{$loggedEmployee->pfp}}" alt="pfp">
-
-                <form method="post">
-                    @csrf
-                    <div class="d-flex flex-direction-y text-center">
-                        <input type="hidden" name="emp-id" id="emp-id" value="{{session('logged_employee')}}">
-                        <div class="text-l3">Welcome {{$loggedEmployee->firstname}} {{$loggedEmployee->lastname}}</div>
-                        <div class="text-l2 fw-bold" id="dateTime"></div>
-                    </div>
-                </form>
-    
-                <div class="d-flex gap1">
-                    @if ($todayTimeIn == null)
-                        <a class="primary-btn1-small" id="time-in-btn">Time In</a>
                         
-                    @else
-                        @if ($todayTimeIn->time_in != null && $todayTimeIn->time_out == null)
-                            <a class="primary-btn1-small" id="time-out-btn">Time Out</a>
-                            <input type="hidden" name="attendance-id" id="attendance-id" value="{{$todayTimeIn->id}}">
-                        @else
-                            <div>Attendance Completed Today</div>
-                        @endif                     
-                    @endif
-                    
-                </div>
-            </div>
-            
         </div>
 
     </body>

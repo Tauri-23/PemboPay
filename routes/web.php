@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AccountantPaySettingsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\RunPayrollController;
 use App\Http\Controllers\TreasuriesController;
 use App\Http\Controllers\TreasuryDashController;
 use App\Http\Controllers\TreasuryDepartmentsController;
@@ -42,6 +44,7 @@ Route::get('/TreasuryDashboard', [TreasuryDashController::class, 'home']);
 
 //Run Payroll
 Route::get('/TreasuryRunPayroll', [TreasuryDashController::class, 'runPayroll']);
+Route::post('/AccountantProcessPayroll', [RunPayrollController::class, 'computePayroll']);
 
 
 
@@ -78,7 +81,13 @@ Route::post('/TreasuryDeleteDepartment', [TreasuryDepartmentsController::class, 
 
 
 //Payroll Settings
-Route::get('/AccountantPayrollSettings', [TreasuryDashController::class, 'payrollSettings']);
+Route::get('/AccountantPayrollSettings', [AccountantPaySettingsController::class, 'payrollSettings']);
+Route::post('/AddTaxPost', [AccountantPaySettingsController::class, 'AddTaxPost']);
+Route::post('/AddAllowancePost', [AccountantPaySettingsController::class, 'AddAllowancePost']);
+Route::post('/AddDeductionPost', [AccountantPaySettingsController::class, 'AddDeductionsPost']);
+Route::post('/DelTaxPost', [AccountantPaySettingsController::class, 'DelTaxPost']);
+Route::post('/DelAllowancenPost', [AccountantPaySettingsController::class, 'DelAllowancenPost']);
+Route::post('/DelDeductionPost', [AccountantPaySettingsController::class, 'DelDeductionPost']);
 
 
 
@@ -95,4 +104,7 @@ Route::get('/AccountantPayrollSettings', [TreasuryDashController::class, 'payrol
 */
 Route::get('/Employee', [EmployeesController::class, 'loginPage']);
 Route::get('/EmployeeDash', [EmployeesController::class, 'dashboard']);
+Route::get('EmployeeTimesheet', [EmployeesController::class, 'timesheet']);
 Route::post('/EmployeeLogin', [EmployeesController::class, 'login']);
+Route::post('/timeIn', [EmployeesController::class, 'timeIn']);
+Route::post('/timeOut', [EmployeesController::class, 'timeOut']);

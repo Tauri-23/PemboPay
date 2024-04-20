@@ -34,8 +34,4 @@ class TreasuryDashController extends Controller
         return view('UserTreasury.Payslip.index', ['loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury'))]);
     }
 
-    public function payrollSettings() {
-        return view('UserTreasury.PayrollSettings.index', ['loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury'))]);
-    }
-
 }

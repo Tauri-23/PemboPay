@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('timesheets', function (Blueprint $table) {
+        Schema::create('employee_allowances', function (Blueprint $table) {
             $table->string('id', 6)->primary();
             $table->string('employee', 6)->nullable();
-            $table->dateTime('time_in');
-            $table->dateTime('time_out')->nullable();
-            $table->date('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->string('allowance_name');
+            $table->float('allowance_price');
+            $table->string('allowance_type');
+            $table->string('allowance_period');
 
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             /**
              * Foreign Keys
@@ -36,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('timesheets');
+        Schema::dropIfExists('employee_allowances');
     }
 };
