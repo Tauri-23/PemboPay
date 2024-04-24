@@ -89,7 +89,7 @@
             <div class="d-flex d-none gap2 flex-direction-y" id="payroll-preview">
                 <div class="long-cont">
                     <div class="d-flex w-100 justify-content-between align-items-center">
-                        <small class="text-m1 bold">Payroll Preview (1-15 Jan 2024)</small>
+                        <small class="text-m1 bold" id="payroll-preview-title">Payroll Preview</small>
                     </div>
                 </div>
     
@@ -101,30 +101,31 @@
                         <small class="text-m2 form-data-col">Gross Pay</small>
                         <small class="text-m2 form-data-col">Net Pay</small>
                     </div>
-            
-            
-                    <div  class="table1-data employee-column">
-                        <small class="form-data-col emp-id">187352</small>
-                        <small class="form-data-col emp-dept">Admin</small>
-                        <small class="form-data-col">Salary</small>
-                        <small class="form-data-col">₱ 7,000.00</small>
-                        <small class="form-data-col">₱ 6,700.00</small>
-                    </div>
 
-                    <div  class="table1-data employee-column">
-                        <small class="form-data-col emp-id">881327</small>
-                        <small class="form-data-col emp-dept">Admin</small>
-                        <small class="form-data-col">Salary</small>
-                        <small class="form-data-col">₱ 7,000.00</small>
-                        <small class="form-data-col">₱ 6,700.00</small>
-                    </div>
-
-                    <div  class="table1-data employee-column last">
-                        <small class="form-data-col emp-id">123123</small>
-                        <small class="form-data-col emp-dept">Admin</small>
-                        <small class="form-data-col">Hourly</small>
-                        <small class="form-data-col">₱ 7,000.00</small>
-                        <small class="form-data-col">₱ 6,700.00</small>
+                    <div id="payroll-preview-columns">
+                        {{-- <div  class="table1-data employee-column">
+                            <small class="form-data-col emp-id">187352</small>
+                            <small class="form-data-col emp-dept">Admin</small>
+                            <small class="form-data-col">Salary</small>
+                            <small class="form-data-col">₱ 7,000.00</small>
+                            <small class="form-data-col">₱ 6,700.00</small>
+                        </div>
+    
+                        <div  class="table1-data employee-column">
+                            <small class="form-data-col emp-id">881327</small>
+                            <small class="form-data-col emp-dept">Admin</small>
+                            <small class="form-data-col">Salary</small>
+                            <small class="form-data-col">₱ 7,000.00</small>
+                            <small class="form-data-col">₱ 6,700.00</small>
+                        </div>
+    
+                        <div  class="table1-data employee-column last">
+                            <small class="form-data-col emp-id">123123</small>
+                            <small class="form-data-col emp-dept">Admin</small>
+                            <small class="form-data-col">Hourly</small>
+                            <small class="form-data-col">₱ 7,000.00</small>
+                            <small class="form-data-col">₱ 6,700.00</small>
+                        </div> --}}
                     </div>
                 </div>
 

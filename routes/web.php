@@ -45,6 +45,7 @@ Route::get('/TreasuryDashboard', [TreasuryDashController::class, 'home']);
 //Run Payroll
 Route::get('/TreasuryRunPayroll', [TreasuryDashController::class, 'runPayroll']);
 Route::post('/AccountantProcessPayroll', [RunPayrollController::class, 'computePayroll']);
+Route::post('/AccountantSaveDbPayroll', [RunPayrollController::class, 'addPayrollToDb']);
 
 
 
