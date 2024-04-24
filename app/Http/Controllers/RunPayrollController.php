@@ -13,7 +13,7 @@ class RunPayrollController extends Controller
     }
 
 
-    public function computePayroll() {
-        return $this->computePayroll()->process();
+    public function computePayroll(Request $request) {
+        return $this->computePayroll->process($request->month, $request->period, $request->year);
     }
 }

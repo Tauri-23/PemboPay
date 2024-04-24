@@ -2,5 +2,5 @@
 namespace App\Contracts;
 
 interface IComputePayrollService {
-    public function process();
+    public function process($month, $period, $year);
 }

@@ -54,25 +54,25 @@
                         <div>
                             <select id="select-year" class="select-long">
                                 <option value="2023">2023</option>
-                                <option value="2023">2024</option>
-                                <option value="2023">2025</option>
-                                <option value="2023">2026</option>
-                                <option value="2023">2027</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
                             </select>
     
                             <select id="select-month" class="select-long">
-                                <option value="January">January</option>
-                                <option value="February">February</option>
-                                <option value="March">March</option>
-                                <option value="April">April</option>
-                                <option value="May">May</option>
-                                <option value="June">June</option>
-                                <option value="July">July</option>
-                                <option value="August">August</option>
-                                <option value="September">September</option>
-                                <option value="October">October</option>
-                                <option value="November">November</option>
-                                <option value="December">December</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="11">December</option>
                             </select>
     
                             <select id="select-period" class="select-long">

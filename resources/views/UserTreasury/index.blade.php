@@ -56,7 +56,7 @@
             </div>
 
             <div class="w-100 d-flex gap2">
-                <div class="dash-short-cont">
+                <div class="dash-short-cont flex-grow-1">
                     <div class="d-flex align-items-center gap2">
                         <div class="small-icon-cont-circle bg-AppBlueLight2">
                             <i class="bi bi-people-fill color-AppBlue"></i>
@@ -65,12 +65,12 @@
                     </div>
                     <div class="line1 mar-top-3 mar-bottom-3"></div>
                     <div class="text-l3 fw-bold">
-                        0
+                        {{$employees->count()}}
                     </div>
                 </div>
 
 
-                <div class="dash-short-cont">
+                <div class="dash-short-cont flex-grow-1">
                     <div class="d-flex align-items-center gap2">
                         <div class="small-icon-cont-circle bg-AppGreenLight1">
                             <i class="bi bi-buildings-fill color-AppGreen"></i>
@@ -79,12 +79,12 @@
                     </div>
                     <div class="line1 mar-top-3 mar-bottom-3"></div>
                     <div class="text-l3 fw-bold">
-                        0
+                        {{$departments->count()}}
                     </div>
                 </div>
 
 
-                <div class="dash-short-cont">
+                {{-- <div class="dash-short-cont">
                     <div class="d-flex align-items-center gap2">
                         <div class="small-icon-cont-circle bg-AppGoldLight1">
                             <i class="bi bi-bank2 color-AppGold"></i>
@@ -95,7 +95,7 @@
                     <div class="text-l3 fw-bold">
                         ₱ 1,000,000.00
                     </div>
-                </div>
+                </div> --}}
             </div>
             
             <div class="flex-wrap-cont mar-bottom-1">
