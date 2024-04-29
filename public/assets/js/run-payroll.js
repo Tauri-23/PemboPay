@@ -117,6 +117,11 @@ function approvePayroll(response) {
             formData = new FormData();
             formData.append('temp_payroll_records', JSON.stringify(response.temp_payroll_records));
             formData.append('temp_payroll_record_summaries', JSON.stringify(response.temp_payroll_record_summaries));
+            formData.append('temp_allowance_records', JSON.stringify(response.temp_allowance_records));
+            formData.append('temp_allowance_records_employees', JSON.stringify(response.temp_allowance_records_employees));
+            formData.append('temp_deduction_records', JSON.stringify(response.temp_deduction_records));
+            formData.append('temp_deduction_records_employees', JSON.stringify(response.temp_deduction_records_employees));
+            formData.append('temp_taxes_records', JSON.stringify(response.temp_taxes_records));
             
 
             savePayrollToDB(formData, function(response) {

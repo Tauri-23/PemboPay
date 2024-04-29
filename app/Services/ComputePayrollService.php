@@ -4,6 +4,9 @@ namespace App\Services;
 use App\Contracts\IComputePayrollService;
 use App\Contracts\IGenerateIdService;
 use App\Models\AllowanceRecord;
+use App\Models\AllowanceRecordEmployee;
+use App\Models\DeductionRecord;
+use App\Models\DeductionRecordEmployee;
 use App\Models\employee_allowance;
 use App\Models\employee_deductions;
 use App\Models\Employees;
@@ -12,6 +15,8 @@ use App\Models\PayrollRecordSummary;
 use App\Models\settings_allowance;
 use App\Models\SettingsDeductions;
 use App\Models\SettingsPayrollPeriod;
+use App\Models\taxes;
+use App\Models\taxes_record;
 use App\Models\timesheet;
 use Carbon\Carbon;
 use DateTime;
@@ -30,12 +35,18 @@ class ComputePayrollService implements IComputePayrollService {
     private $selfAllowance;
     private $generalDeduction;
     private $selfDeduction;
+    private $generalTaxes;
 
     private $payrollRecordSummaries;
 
 
     private $temp_payroll_records = [];
     private $temp_payroll_record_summaries = [];
+    private $temp_allowance_records = [];
+    private $temp_allowance_records_employees = [];
+    private $temp_deduction_records = [];
+    private $temp_deduction_records_employees = [];
+    private $temp_taxes_records = [];
 
     public function __construct(IGenerateIdService $generateId) {
         $this->generateId = $generateId;
@@ -62,10 +73,16 @@ class ComputePayrollService implements IComputePayrollService {
         }
 
         $this->ProcessPayroll($computedPayrollPeriod, $payrollPeriod, $year);
+
         return response()->json([
             "status" => 200,
             "temp_payroll_records" => $this->temp_payroll_records,
             "temp_payroll_record_summaries" => $this->temp_payroll_record_summaries,
+            "temp_allowance_records" => $this->temp_allowance_records,
+            "temp_allowance_records_employees" => $this->temp_allowance_records_employees,
+            "temp_deduction_records" => $this->temp_deduction_records,
+            "temp_deduction_records_employees" => $this->temp_deduction_records_employees,
+            "temp_taxes_records" => $this->temp_taxes_records,
             "period" => $payrollPeriod
         ]);
     }
@@ -149,6 +166,7 @@ class ComputePayrollService implements IComputePayrollService {
         $this->selfAllowance = employee_allowance::all(); //Get Self Allowance
         $this->generalDeduction = SettingsDeductions::all(); //Get General Deductions
         $this->selfDeduction = employee_deductions::all(); //Get Self Deductions
+        $this->generalTaxes = taxes::all(); //Get Taxes
 
         $totalHoursWorkedSummary = 0.0;
         $totalDeductionsSummary = 0.0;
@@ -173,7 +191,8 @@ class ComputePayrollService implements IComputePayrollService {
 
             $genDeductions = $this->GetGeneralDeductions($basicPay);
             $selfDeductions = $this->GetSelfDeductions($emp->id, $basicPay);
-            $totalDeductions = $genDeductions + $selfDeductions;
+            $genTax = $this->GetGeneralTax($basicPay);
+            $totalDeductions = $genDeductions + $selfDeductions + $genTax;
 
             $grossPay = $basicPay + $totalAllowance;
             $netPay = $grossPay - $totalDeductions;
@@ -187,6 +206,7 @@ class ComputePayrollService implements IComputePayrollService {
             $totalGrossPaySummary += $grossPay;
             $totalNetPaySummary += $netPay;
             
+            //payroll record per employee
             $temp_payroll_record = [
                 "id" => $this->generateId->generate(PayrollRecord::class),
                 "payroll_period" => $payrollPeriod,
@@ -201,8 +221,13 @@ class ComputePayrollService implements IComputePayrollService {
                 "basic_pay" => $basicPay
             ];
 
-            $this->temp_payroll_records[] = $temp_payroll_record;
+            
+            $this->getAllowanceRecordEmp($emp->id, $payrollPeriod); //Allowance Record specific employee
+            $this->getDeductionRecordEmp($emp->id, $payrollPeriod); //Deduction Record specific employee
+            $this->temp_payroll_records[] = $temp_payroll_record; //Payroll Record specific employee
         }
+
+        //payroll record overall
         $temp_payroll_record_summary = [
             "id" => $this->generateId->generate(PayrollRecordSummary::class),
             "payroll_period" => $payrollPeriod,
@@ -213,6 +238,43 @@ class ComputePayrollService implements IComputePayrollService {
             "total_gross_pay" => $totalGrossPaySummary,
             "total_net_pay" => $totalNetPaySummary            
         ];
+
+        //allowance record overall
+        foreach($this->generalAllowance as $allowance) {
+            $temp_allowance_record = [
+                "id" => $this->generateId->generate(AllowanceRecord::class),
+                "payroll_period" => $payrollPeriod,
+                "allowance_name" => $allowance->name,
+                "allowance_price" => $allowance->period == "Monthly" ? $allowance->price / 2 : $allowance->price,
+                "allowance_type" => $allowance->type
+            ];
+
+            $this->temp_allowance_records[] = $temp_allowance_record;
+        }
+
+        //deduction record overall
+        foreach($this->generalDeduction as $deduction) {
+            $temp_deduction_record = [
+                "id" => $this->generateId->generate(DeductionRecord::class),
+                "payroll_period" => $payrollPeriod,
+                "deduction_name" => $deduction->name,
+                "deduction_price" => $deduction->period == "Monthly" ? $deduction->price / 2 : $deduction->price,
+                "deduction_type" => $deduction->type
+            ];
+            $this->temp_deduction_records[] = $temp_deduction_record;
+        }
+
+        //tax record overall
+        foreach($this->generalTaxes as $tax) {
+            $temp_tax_record = [
+                "id" => $this->generateId->generate(taxes_record::class),
+                "payroll_period" => $payrollPeriod,
+                "tax_name" => $tax->name,
+                "tax_price" => $tax->period == "Monthly" ? $tax->price / 2 : $tax->price,
+                "tax_type" => $tax->type
+            ];
+            $this->temp_taxes_records[] = $temp_tax_record;
+        }
 
         $this->temp_payroll_record_summaries[] = $temp_payroll_record_summary;
     }
@@ -255,7 +317,7 @@ class ComputePayrollService implements IComputePayrollService {
 
     /*
     |----------------------------------------
-    | Allowances And Deductions
+    | Allowances And Deductions | Tax for computation
     |----------------------------------------
     */
     function GetGeneralAllowance($basicPay) {
@@ -315,6 +377,25 @@ class ComputePayrollService implements IComputePayrollService {
         return $totalDeductions;
     }
 
+    function GetGeneralTax($basicPay) {
+        $totalTax = 0.0;
+
+        if($this->generalTaxes == null) {
+            return $totalTax;
+        }
+
+        foreach($this->generalTaxes as $taxes) {
+            if($taxes->type == "Amount") {
+                $totalTax += $taxes->period == "Monthly" ? $taxes->price / 2 : $taxes->price;
+            }
+            else {
+                $totalTax += $taxes->period == "Monthly" ? (($taxes->price / 2) * $basicPay) / 100 : ($taxes->price * $basicPay) / 100;
+            }
+        }
+
+        return $totalTax;
+    }
+
     function GetSelfDeductions($id, $basicPay) {
         $totalDeductions = 0.0;
 
@@ -337,4 +418,43 @@ class ComputePayrollService implements IComputePayrollService {
 
 
 
+
+    /*
+    |----------------------------------------
+    | Allowances And Deductions | Tax for Record
+    |----------------------------------------
+    */
+    function getAllowanceRecordEmp($empId, $payrollPeriod) {
+        foreach($this->selfAllowance as $allowance) {
+            if($allowance != $empId) {
+                continue;
+            }
+            $temp_allowance_record_employee = [
+                "id" => $this->generateId->generate(AllowanceRecordEmployee::class),
+                "employee" => $empId,
+                "payroll_period" => $payrollPeriod,
+                "allowance_name" => $allowance->allowance_name,
+                "allowance_price" => $allowance->allowance_period == "Monthly" ? $allowance->allowance_price / 2 : $allowance->allowance_price,
+                "allowance_type" => $allowance->allowance_type
+            ];
+            $this->temp_allowance_records_employees[] = $temp_allowance_record_employee;
+        }
+    }
+
+    function getDeductionRecordEmp($empId, $payrollPeriod) {
+        foreach($this->selfDeduction as $deduction) {
+            if($deduction != $empId) {
+                continue;
+            }
+            $temp_deduction_record_employee = [
+                "id" => $this->generateId->generate(DeductionRecordEmployee::class),
+                "employee" => $empId,
+                "payroll_period" => $payrollPeriod,
+                "deduction_name" => $deduction->deduction_name,
+                "deduction_price" => $deduction->deduction_period == "Monthly" ? $deduction->deduction_price / 2 : $deduction->deduction_price,
+                "deduction_type" => $deduction->deduction_type
+            ];
+            $this->temp_deduction_records_employees[] = $temp_deduction_record_employee;
+        }
+    }
 }

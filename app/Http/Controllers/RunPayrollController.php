@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\IComputePayrollService;
+use App\Models\AllowanceRecord;
+use App\Models\AllowanceRecordEmployee;
+use App\Models\DeductionRecord;
+use App\Models\DeductionRecordEmployee;
 use App\Models\PayrollRecord;
 use App\Models\PayrollRecordSummary;
+use App\Models\taxes_record;
 use Illuminate\Http\Request;
 
 class RunPayrollController extends Controller
@@ -23,6 +28,11 @@ class RunPayrollController extends Controller
     public function addPayrollToDb(Request $request) {
         $tempPayrollRecords = json_decode($request->input('temp_payroll_records'), true);
         $tempPayrollRecordSummaries = json_decode($request->input('temp_payroll_record_summaries'), true);
+        $tempAllowanceRecords = json_decode($request->input('temp_allowance_records'), true);
+        $tempAllowanceRecordsEmployees = json_decode($request->input('temp_allowance_records_employees'), true);
+        $tempDeductionRecords = json_decode($request->input('temp_deduction_records'), true);
+        $tempDeductionRecordsEmployees = json_decode($request->input('temp_deduction_records_employees'), true);
+        $tempTaxesRecords = json_decode($request->input('temp_taxes_records'), true);
 
         foreach($tempPayrollRecords as $tempPayroll) {
             $payrollRecords = new PayrollRecord;
@@ -51,6 +61,63 @@ class RunPayrollController extends Controller
             $payrollRecordSummaries->total_net_pay = $empPaySummaries['total_net_pay'];
             
             $payrollRecordSummaries->save();
+        }
+
+        foreach($tempAllowanceRecords as $allowanceRecord) {
+            $allowanceRecords = new AllowanceRecord;
+            $allowanceRecords->id = $allowanceRecord['id'];
+            $allowanceRecords->payroll_period = $allowanceRecord['payroll_period'];
+            $allowanceRecords->allowance_name = $allowanceRecord['allowance_name'];
+            $allowanceRecords->allowance_price = $allowanceRecord['allowance_price'];
+            $allowanceRecords->allowance_type = $allowanceRecord['allowance_type'];
+            
+            $allowanceRecords->save();
+        }
+
+        foreach($tempAllowanceRecordsEmployees as $allowanceRecordEmp) {
+            $allowanceRecordsEmp = new AllowanceRecordEmployee;
+            $allowanceRecordsEmp->id = $allowanceRecordEmp['id'];
+            $allowanceRecordsEmp->employee = $allowanceRecordEmp['employee'];
+            $allowanceRecordsEmp->payroll_period = $allowanceRecordEmp['payroll_period'];
+            $allowanceRecordsEmp->allowance_name = $allowanceRecordEmp['allowance_name'];
+            $allowanceRecordsEmp->allowance_price = $allowanceRecordEmp['allowance_price'];
+            $allowanceRecordsEmp->allowance_type = $allowanceRecordEmp['allowance_type'];
+            
+            $allowanceRecordsEmp->save();
+        }
+
+        foreach($tempDeductionRecords as $deductionRecord) {
+            $deductionRecords = new DeductionRecord;
+            $deductionRecords->id = $deductionRecord['id'];
+            $deductionRecords->payroll_period = $deductionRecord['payroll_period'];
+            $deductionRecords->deduction_name = $deductionRecord['deduction_name'];
+            $deductionRecords->deduction_price = $deductionRecord['deduction_price'];
+            $deductionRecords->deduction_type = $deductionRecord['deduction_type'];
+            
+            $deductionRecords->save();
+        }
+
+        foreach($tempDeductionRecordsEmployees as $deductionRecordEmp) {
+            $deductionRecordsEmp = new DeductionRecordEmployee;
+            $deductionRecordsEmp->id = $deductionRecordEmp['id'];
+            $deductionRecordsEmp->employee = $deductionRecordEmp['employee'];
+            $deductionRecordsEmp->payroll_period = $deductionRecordEmp['payroll_period'];
+            $deductionRecordsEmp->deduction_name = $deductionRecordEmp['deduction_name'];
+            $deductionRecordsEmp->deduction_price = $deductionRecordEmp['deduction_price'];
+            $deductionRecordsEmp->deduction_type = $deductionRecordEmp['deduction_type'];
+            
+            $deductionRecordsEmp->save();
+        }
+
+        foreach($tempTaxesRecords as $taxRecord) {
+            $taxRecords = new taxes_record;
+            $taxRecords->id = $taxRecord['id'];
+            $taxRecords->payroll_period = $taxRecord['payroll_period'];
+            $taxRecords->tax_name = $taxRecord['tax_name'];
+            $taxRecords->tax_price = $taxRecord['tax_price'];
+            $taxRecords->tax_type = $taxRecord['tax_type'];
+            
+            $taxRecords->save();
         }
         
         
