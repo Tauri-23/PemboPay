@@ -121,7 +121,7 @@
 }
 
 .secondary-btn1-small, .secondary-btn2-small, .secondary-btn3-small, .secondary-btn4-small, .secondary-btn1v2-small {
-    padding: 5px 15px;
+    padding: 8px 15px;
     text-decoration: none;
     border-radius: calc(var(--border-radius1) - 8px);
     cursor: pointer;

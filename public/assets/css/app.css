@@ -247,6 +247,23 @@ body, html {
 }
 
 
+.m-auto {
+    margin: auto;
+}
+.m-start-auto {
+    margin-left: auto;
+}
+.m-end-auto {
+    margin-right: auto;
+}
+.m-top-auto {
+    margin-top: auto;
+}
+.m-bottom-auto {
+    margin-bottom: auto;
+}
+
+
 .right1 {
     right: 30px;
 }
