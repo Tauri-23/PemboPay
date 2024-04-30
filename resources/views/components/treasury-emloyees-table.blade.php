@@ -21,7 +21,7 @@
 
         {{--Data Fetched from the database this is for ui for now--}}
         @foreach ($employees as $emp)
-            <div  class="table1-data {{ $loop->last ? 'last' : '' }} employee-column">
+            <div  class="table1-data {{ $loop->last ? 'last' : '' }} employee-column" id="{{$emp->id}}">
                 <div class="form-data-col">
                     <div class="table1-PFP-small mar-end-1">
                         <img class="emp-pfp" src="/assets/media/pfp/{{ $emp->pfp }}" alt="">

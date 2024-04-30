@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountantPaySettingsController;
+use App\Http\Controllers\AccountantPayslipController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EmployeesController;
@@ -60,7 +61,8 @@ Route::get('/TreasuryReports', [TreasuryDashController::class, 'reports']);
 
 
 //Payslip
-Route::get('/TreasuryPayslip', [TreasuryDashController::class, 'payslip']);
+Route::get('/TreasuryPayslip', [AccountantPayslipController::class, 'payslip']);
+Route::get('/AccountantGeneratePayslip/{ids}/{payrollPeriod}', [AccountantPayslipController::class, 'generatePayslip']);
 
 
 

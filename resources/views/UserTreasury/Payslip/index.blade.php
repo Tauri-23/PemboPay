@@ -28,7 +28,9 @@
         
     </head>
     <body>
-        
+        {{-- Modals --}}
+        <x-modals modalType="success"/>
+        <x-modals modalType="error"/>        
 
         {{-- Sidenav --}}
         <x-sidenav activeLink="5"/>
@@ -45,8 +47,8 @@
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
             <div class="long-cont">
                 <div class="d-flex justify-content-between align-items-center">
-                    <p class="text-m1 bold">Generate Salary Slip</p>
-                    <a id="generate-salary-slip" class="primary-btn1-long">
+                    <p class="text-m1 bold">Generate Pay Slip</p>
+                    <a id="generate-pay-slip" class="primary-btn1-long">
                         <small class="text-m2">Generate Salary Slip</small>
                     </a>
                 </div>
@@ -84,36 +86,9 @@
                 </div>
             
             </div>
-            
-            <div class="table1">
-                <div class="table1-header">
-                    <small class="text-m2 flex-grow-1">Employee Name</small>
-                    <div class="table1-PFP-small-cont mar-end-1"></div>
-                    <small class="text-m2 flex-grow-1">Employee ID</small>
-                    <small class="text-m2 flex-grow-1">Employee Email</small>
-                    <small class="text-m2 flex-grow-1">Department</small>
-                    <small class="text-m2 flex-grow-1">Status</small>
-                </div>
 
-
-                {{--Data Fetched from the database this is for ui for now--}}
-                <div class="table1-data">
-                    <div class="table1-PFP-small mar-end-1"></div>
-                    <small class="text-m2 flex-grow-1">Employee Name</small>
-                    <small class="text-m2 flex-grow-1">Employee ID</small>
-                    <small class="text-m2 flex-grow-1">Employee Email</small>
-                    <small class="text-m2 flex-grow-1">Department</small>
-                    <small class="text-m2 flex-grow-1">Status</small>
-                </div>
-                <div class="table1-data last">
-                    <div class="table1-PFP-small mar-end-1"></div>
-                    <small class="text-m2 flex-grow-1">Employee Name</small>
-                    <small class="text-m2 flex-grow-1">Employee ID</small>
-                    <small class="text-m2 flex-grow-1">Employee Email</small>
-                    <small class="text-m2 flex-grow-1">Department</small>
-                    <small class="text-m2 flex-grow-1">Status</small>
-                </div>
-            </div>
+            {{-- render employees from db --}}
+            <x-TreasuryEmloyeesTable :employees="$employees"/>
         
         </div>
 
@@ -122,5 +97,6 @@
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
+    <script src="/assets/js/payslip.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </html>

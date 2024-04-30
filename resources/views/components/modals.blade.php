@@ -40,7 +40,7 @@
 
 {{-- For Yes No Modals --}}
 @elseif($modalType == 'info-yn')
-    <div class="modal1 d-none" id="info-yn-modal">
+    <div class="modal1 d-none info-yn-modal" id="info-yn-modal">
         <div class="modal1-box-small modal-text">
             <div class="modal1-icon">
                 <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>

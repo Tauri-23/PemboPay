@@ -28,6 +28,9 @@
     border-top: 1px solid var(--grey1);
     
 }
+.employee-column.active {
+    background: var(--AppBlueLight2);
+}
 .table1-data.last {
     border-bottom: 1px solid var(--grey1);
 }

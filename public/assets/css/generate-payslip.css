@@ -1,0 +1,8 @@
+.salary-slip-cont {
+    padding: 30px;
+    background: var(--white);
+    width: 800px;
+}
+.salary-slip-inside-cont {
+    width: 350px;
+}

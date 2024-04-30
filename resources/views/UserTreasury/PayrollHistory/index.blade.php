@@ -42,43 +42,9 @@
 
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
-            <div class="table1">
-                <div class="table1-header">
-                    <div class="w-50 flex-grow-1">Payroll Period</div>
-                    <div class="w-50 flex-grow-1">Total HoursWorked</div>
-                    <div class="w-50 flex-grow-1">Total BasicPay</div>
-                    <div class="w-50 flex-grow-1">Total GrossPay</div>
-                    <div class="w-50 flex-grow-1">Total NetPay</div>
-                    <div class="w-50 flex-grow-1">Processed Date</div>
-                </div>
-
-                <a href="" class="table1-data">
-                    <div class="w-50 flex-grow-1">April 15 2023</div>
-                    <div class="w-50 flex-grow-1">₱ 0.00</div>
-                    <div class="w-50 flex-grow-1">₱ 0.00</div>
-                    <div class="w-50 flex-grow-1">₱ 0.00</div>
-                    <div class="w-50 flex-grow-1">₱ 0.00</div>
-                    <div class="w-50 flex-grow-1">MMM dd, yyyy hh:mm:ss tt</div>
-                </a>
-
-                <a href="" class="table1-data">
-                    <div class="w-50 flex-grow-1">April 15 2023</div>
-                    <div class="w-50 flex-grow-1">₱ 0.00</div>
-                    <div class="w-50 flex-grow-1">₱ 0.00</div>
-                    <div class="w-50 flex-grow-1">₱ 0.00</div>
-                    <div class="w-50 flex-grow-1">₱ 0.00</div>
-                    <div class="w-50 flex-grow-1">MMM dd, yyyy hh:mm:ss tt</div>
-                </a>
-
-                <a href="" class="table1-data last">
-                    <div class="w-50 flex-grow-1">April 15 2023</div>
-                    <div class="w-50 flex-grow-1">₱ 0.00</div>
-                    <div class="w-50 flex-grow-1">₱ 0.00</div>
-                    <div class="w-50 flex-grow-1">₱ 0.00</div>
-                    <div class="w-50 flex-grow-1">₱ 0.00</div>
-                    <div class="w-50 flex-grow-1">MMM dd, yyyy hh:mm:ss tt</div>
-                </a>
-            </div>
+            
+            {{-- Render Payroll History --}}
+            <x-RenderPayrollHistory :payrolls="$payrolls"/>
         
         </div>
 
