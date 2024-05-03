@@ -11,6 +11,9 @@ use App\Models\Cities;
 use App\Models\Compensation;
 use App\Models\Departments;
 use App\Models\Employees;
+use App\Models\Holidays;
+use App\Models\timesheet;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TreasuryEmployeesController extends Controller
@@ -91,9 +94,24 @@ class TreasuryEmployeesController extends Controller
 
 
     public function viewEmployee($id) {
+        $timesheets = timesheet::where('employee', $id)->get();
+        $holidays = Holidays::all();
+
+        // Generate a range of dates to display in the calendar (e.g., current month)
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
+        $datesInRange = [];
+
+        for($date = $startDate; $date->lte($endDate); $date->addDay()) {
+            $datesInRange[] = $date->copy();
+        }
+
         return view('UserTreasury.Employees.viewEmployee', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
-            'employee' => Employees::find($id)
+            'employee' => Employees::find($id),
+            'timesheetDates' => $timesheets,
+            'datesInRange' => $datesInRange,
+            'holidays' => $holidays
         ]);
 
     }

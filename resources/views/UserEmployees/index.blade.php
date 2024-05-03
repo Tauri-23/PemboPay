@@ -42,6 +42,10 @@
                 @csrf
                 <input id="userid" name="userid" class="edit-text-1 w-100 mar-top-2" placeholder="User Id e.g. 123123" type="text" />
                 <button id="login-btn" class="primary-btn1-small w-100 mar-top-1">Login</button>
+                <div class="w-100 d-flex flex-direction-y align-items-center mar-top-3">
+                    <a class="link-m3">System Admin Login</a>
+                    <a href="/" class="link-m3">Accountant Login</a>
+                </div>
             </form>            
         </div>
     </body>

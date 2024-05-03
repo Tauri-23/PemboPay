@@ -35,9 +35,4 @@ class TreasuryDashController extends Controller
             'payrolls' => PayrollRecordSummary::orderBy('created_at', 'DESC')->get()
         ]);
     }
-
-    public function reports() {
-        return view('UserTreasury.Reports.index', ['loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury'))]);
-    }
-
 }

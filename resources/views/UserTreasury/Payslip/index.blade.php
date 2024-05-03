@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
         <title>PemboPay</title>
         
@@ -56,7 +57,7 @@
                 <div class="flex justify-content-between">
                     <div class="flex gap3 flex-wrap-cont">
                         <input type="text" id="SearchEmployee" class="editText3" placeholder="Employee Name" />
-                        <form method="post"></form>
+                        <form method="post">@csrf</form>
                         <select id="month" class="select-long">
                             <option value="Jan">January</option>
                             <option value="Feb">February</option>

@@ -69,3 +69,9 @@
 .timesheet-table-data.bad {
     background: var(--AppRedLight1);
 }
+.timesheet-table-data.null {
+    background: var(--grey1);
+}
+.timesheet-table-data.holiday {
+    background: var(--AppBlueLight2);
+}

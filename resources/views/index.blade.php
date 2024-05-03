@@ -45,16 +45,17 @@
                     <input id="password" name="password" class="edit-text-1 w-100" placeholder="Password" type="password" />
                     <i class="fa-solid fa-eye position-absolute right3 cursor-pointer" id="show-pass-btn"></i>
                 </div>
+                <div class="w-100 d-flex justify-content-end mar-top-3">
+                    <a class="link-m3">Forgot Password</a>
+                </div>
                 <button id="login-btn" class="primary-btn1-small w-100 mar-top-1">Login</button>
             </form>
 
             
 
-            <div class="w-100 d-flex justify-content-center mar-top-3">
-                <a class="link-m3">Forgot Password</a>
-            </div>
-            <div class="w-100 d-flex justify-content-center">
+            <div class="w-100 d-flex flex-direction-y align-items-center mar-top-3">
                 <a class="link-m3">System Admin Login</a>
+                <a href="/Employee" class="link-m3">Employee Timesheet Login</a>
             </div>
             
         </div>

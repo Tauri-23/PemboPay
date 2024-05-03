@@ -187,6 +187,16 @@
                                 <select class="select-long2" id="timesheet-months">
                                     <option value="January">January</option>
                                     <option value="February">February</option>
+                                    <option value="February">March</option>
+                                    <option value="February">April</option>
+                                    <option value="February">May</option>
+                                    <option value="February">June</option>
+                                    <option value="February">July</option>
+                                    <option value="February">August</option>
+                                    <option value="February">September</option>
+                                    <option value="February">October</option>
+                                    <option value="February">November</option>
+                                    <option value="February">December</option>
                                 </select>
 
                                 <select class="select-long2" id="timesheet-year">
@@ -212,81 +222,84 @@
                             </div>
 
                             
+                            
                             <div class="week-label">Week 1</div>
+                            @php
+                                $week = 1;
+                            @endphp
+                            {{-- Loops to Date in month now --}}
+                            @foreach ($datesInRange as $date)  
 
-                            <div class="timesheet-table-data good">
-                                <small class="form-data-col">Monday</small>
-                                <small class="form-data-col">8:00 am</small>
-                                <small class="form-data-col">5:00 pm</small>
-                                <small class="form-data-col">Present</small>
-                            </div>
+                                @if ($date->format('l') == "Saturday")
+                                    @continue;
+                                @endif
 
-                            <div class="timesheet-table-data bad">
-                                <small class="form-data-col">Tuesday</small>
-                                <small class="form-data-col">--</small>
-                                <small class="form-data-col">--</small>
-                                <small class="form-data-col">Absent</small>
-                            </div>
-
-                            <div class="timesheet-table-data good">
-                                <small class="form-data-col">Wednesday</small>
-                                <small class="form-data-col">8:08 am</small>
-                                <small class="form-data-col">5:03 pm</small>
-                                <small class="form-data-col">Present</small>
-                            </div>
-
-                            <div class="timesheet-table-data good">
-                                <small class="form-data-col">Thursday</small>
-                                <small class="form-data-col">8:00 am</small>
-                                <small class="form-data-col">5:00 pm</small>
-                                <small class="form-data-col">Present</small>
-                            </div>
-
-                            <div class="timesheet-table-data good">
-                                <small class="form-data-col">Friday</small>
-                                <small class="form-data-col">8:00 am</small>
-                                <small class="form-data-col">5:00 pm</small>
-                                <small class="form-data-col">Present</small>
-                            </div>
+                                @if ($date->format('l') == "Sunday")
+                                    @php
+                                        $week ++;
+                                    @endphp
+                                    <div class="week-label">week {{$week}}</div>
+                                    @continue;
+                                @endif
 
 
+                                @php
+                                    $dateString = $date->format('Y-m-d');
+                                    $isHoliday = false;
+                                    $isPresent = false;
 
-                            <div class="week-label">Week 2</div>
+                                    // Check if date is a holiday
+                                    foreach ($holidays as $holiday) {
+                                        if ($holiday->holiday_date == $dateString) {
+                                            $isHoliday = true;
+                                            break;
+                                        }
+                                    }
 
-                            <div class="timesheet-table-data good">
-                                <small class="form-data-col">Monday</small>
-                                <small class="form-data-col">8:00 am</small>
-                                <small class="form-data-col">5:00 pm</small>
-                                <small class="form-data-col">Present</small>
-                            </div>
 
-                            <div class="timesheet-table-data good">
-                                <small class="form-data-col">Tuesday</small>
-                                <small class="form-data-col">8:08 am</small>
-                                <small class="form-data-col">5:03 pm</small>
-                                <small class="form-data-col">Present</small>
-                            </div>
+                                    // check if date hase timesheet data
+                                    foreach ($timesheetDates as $time) {
+                                        if($time->created_at->format('Y-m-d') == $dateString) {
+                                            $isPresent = true;
+                                            break;
+                                        }
+                                    }
+                                @endphp
 
-                            <div class="timesheet-table-data bad">
-                                <small class="form-data-col">Wednesday</small>
-                                <small class="form-data-col">--</small>
-                                <small class="form-data-col">--</small>
-                                <small class="form-data-col">Absent</small>
-                            </div>
+                                @if ($date->now() < $date)
+                                    <div class="timesheet-table-data null">
+                                        <small class="form-data-col">{{$date->format('M d, Y - l')}}</small>
+                                        <small class="form-data-col">-:-- --</small>
+                                        <small class="form-data-col">-:-- --</small>
+                                        <small class="form-data-col">------</small>
+                                    </div>  
+                                @else
+                                    <div class="timesheet-table-data {{$isHoliday ? 'holiday' : ($isPresent ? 'good' : 'bad')}}">
+                                        <small class="form-data-col">{{$date->format('M d, Y - l')}}</small>
+                                        @if ($isHoliday)
+                                            <small class="form-data-col">-:-- --</small>
+                                            <small class="form-data-col">-:-- --</small>
+                                            <small class="form-data-col">Holiday</small>
+                                        @elseif($isPresent)
+                                            @foreach ($timesheetDates as $time)
+                                                @if ($time->created_at->format('Y-m-d') == $dateString)
+                                                    <small class="form-data-col">{{ \Carbon\Carbon::parse($time->time_in)->format('g:i a') }}</small>
+                                                    <small class="form-data-col">{{ $time->time_out ? \Carbon\Carbon::parse($time->time_out)->format('g:i a') : '--:-- --' }}</small>
+                                                    <small class="form-data-col">Present</small>
+                                                    @break
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <small class="form-data-col">-:-- --</small>
+                                            <small class="form-data-col">-:-- --</small>
+                                            <small class="form-data-col">Absent</small>
+                                        @endif
+                                    </div>                             
+                                @endif
 
-                            <div class="timesheet-table-data good">
-                                <small class="form-data-col">Thursday</small>
-                                <small class="form-data-col">8:00 am</small>
-                                <small class="form-data-col">5:00 pm</small>
-                                <small class="form-data-col">Present</small>
-                            </div>
-
-                            <div class="timesheet-table-data good">
-                                <small class="form-data-col">Friday</small>
-                                <small class="form-data-col">8:00 am</small>
-                                <small class="form-data-col">5:00 pm</small>
-                                <small class="form-data-col">Present</small>
-                            </div>
+                                
+                                
+                            @endforeach
                             
                         </div>
                     </div>

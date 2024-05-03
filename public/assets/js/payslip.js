@@ -28,11 +28,39 @@ generatePayslipBtn.click(function() {
         closeModal(errorModal);
         return;
     }
+
+    let formData = new FormData();
+    formData.append('payPeriod', `${periodIn.val()} ${monthIn.val()} ${yearIn.val()}`);
+
+    $.ajax({
+        url: '/checkPayslipAvailability',
+        method: 'POST',
+        processData: false,
+        contentType: false,
+        data: formData,
+        // dataType: 'json',
+        success: function (response) {
+            if(response.status == 200) {
+                generatePayslip();
+            } else {
+                errorModal.find('.modal1-txt').html(`There are no payroll records for the month of ${periodIn.val()} ${monthIn.val()} ${yearIn.val()}`);
+                showModal(errorModal);
+                closeModal(errorModal);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            alert('error');
+        }
+    });
+});
+
+
+function generatePayslip() {
     let empIdsFinal = JSON.stringify(employeeIds);
     let payrollPeriod = `${periodIn.val()} ${monthIn.val()} ${yearIn.val()}`
     window.location.href = `/AccountantGeneratePayslip/${empIdsFinal}/${payrollPeriod}`;
-});
-
+}
 
 
 

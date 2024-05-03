@@ -29,11 +29,31 @@ class AccountantPayslipController extends Controller
         ]);
     }
 
+
+    public function checkPayslipExistence(Request $request) {
+        $payrollRecord = PayrollRecord::where('payroll_period', $request->payPeriod)->first();
+        
+        if(!$payrollRecord) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'error'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 200,
+                'message' => 'success'
+            ]);
+        }
+    }
+
     public function generatePayslip($ids, $payrollPeriod) {
         $employeeIds = json_decode($ids);
+
         return view('UserTreasury.Payslip.generatePayslip', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
             'payrollPeriod' => $payrollPeriod,
+            'ids' => $ids,
             "employees" => Employees::whereIn('id', $employeeIds)->get(),
             "payrollRecordsEmp" => PayrollRecord::whereIn('employee', $employeeIds)->where('payroll_period', $payrollPeriod)->get(),
             

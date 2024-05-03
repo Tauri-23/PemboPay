@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountantPaySettingsController;
 use App\Http\Controllers\AccountantPayslipController;
+use App\Http\Controllers\AccountantReportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EmployeesController;
@@ -56,13 +57,15 @@ Route::get('/TreasuryPayrollHistory', [TreasuryDashController::class, 'payrollHi
 
 
 //Reports
-Route::get('/TreasuryReports', [TreasuryDashController::class, 'reports']);
+Route::get('/TreasuryReports', [AccountantReportController::class, 'reports']);
+Route::get('/AccountantGenerateReport/{payrollPeriod}', [AccountantReportController::class, 'generateReports']);
 
 
 
 //Payslip
 Route::get('/TreasuryPayslip', [AccountantPayslipController::class, 'payslip']);
 Route::get('/AccountantGeneratePayslip/{ids}/{payrollPeriod}', [AccountantPayslipController::class, 'generatePayslip']);
+Route::post('/checkPayslipAvailability', [AccountantPayslipController::class, 'checkPayslipExistence']);
 
 
 

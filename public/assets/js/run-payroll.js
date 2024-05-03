@@ -1,5 +1,5 @@
 //Modals
-const infoYNModal = $('#info-yn-modal');
+const infoYNModals = $('.info-yn-modal');
 const successModal = $('#success-modal');
 const errorModal = $('#error-modal');
 
@@ -23,13 +23,13 @@ const payrollPreviewTitle = $('#payroll-preview-title');
 
 
 runPayrollBtn.click(() => {
-    infoYNModal.find('.modal1-txt').html(`Do you want to compute the payrol of ${monthIn.val()} ${periodIn.val()} , ${yearIn.val()}`);
-    showModal(infoYNModal);
-    closeModal(infoYNModal, false);
+    infoYNModals.eq(0).find('.modal1-txt').html(`Do you want to compute the payrol of ${monthIn.val()} ${periodIn.val()} , ${yearIn.val()}`);
+    showModal(infoYNModals.eq(0));
+    closeModal(infoYNModals.eq(0), false);
 
     //Run Payroll
-    infoYNModal.find('.yes-btn').click(() => {
-        closeModalNoEvent(infoYNModal);
+    infoYNModals.eq(0).find('.yes-btn').click(() => {
+        closeModalNoEvent(infoYNModals.eq(0));
         
 
         data = new FormData();
@@ -55,7 +55,7 @@ runPayrollBtn.click(() => {
                         <small class="form-data-col">${element.net_pay}</small>
                     </div>`);
                 });
-                approvePayroll(response)
+                approvePayroll(response);
             }
             else {
                 errorModal.find('.modal1-txt').html('There is existing payroll for this period');
@@ -106,13 +106,13 @@ function computePayroll(formData, callback) {
 function approvePayroll(response) { 
 
     approvePayrollBtn.click(()=> {
-        infoYNModal.find('.modal1-txt').html('Do you want to approve this payroll?');
-        showModal(infoYNModal);
-        closeModal(infoYNModal, false);
+        infoYNModals.eq(1).find('.modal1-txt').html('Do you want to approve this payroll?');
+        showModal(infoYNModals.eq(1));
+        closeModal(infoYNModals.eq(1), false);
     
-        infoYNModal.find('.yes-btn').click(() => {
+        infoYNModals.eq(1).find('.yes-btn').click(() => {
 
-            closeModalNoEvent(infoYNModal);
+            closeModalNoEvent(infoYNModals.eq(1));
 
             formData = new FormData();
             formData.append('temp_payroll_records', JSON.stringify(response.temp_payroll_records));

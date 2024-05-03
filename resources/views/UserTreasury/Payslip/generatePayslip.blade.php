@@ -44,17 +44,18 @@
 
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
-
-            <div class="long-cont">
-                <small class="text-m2 bold">
-                    <a asp-page="index" class="text-black text-decoration-none"><i class="fa-solid fa-chevron-left mar-end-3"></i></a>
-                    Pay Slip / @fullname
-                </small>
-            </div>
-            
             
             <div id="salary-slip-cont" class="d-flex flex-direction-y gap3 align-items-center">
                 @foreach ($employees as $emp)
+                    @php
+                        foreach ($payrollRecordsEmp as $payrecord) {
+                            if ($payrecord->employee == $emp->id) {
+                                $basicPay = $payrecord->basic_pay;
+                                $grossPay = $payrecord->gross_pay;
+                                $netPay = $payrecord->net_pay;
+                            }
+                        }
+                    @endphp
                     <div class="salary-slip-cont d-flex flex-direction-y gap1 payslip">
                 
                         <div class="d-flex gap3 align-items-center">
@@ -101,15 +102,11 @@
                                     {{-- Values --}}
                                     <div class="text-right">
                                         {{-- Basic Pay Value --}}
-                                        @foreach ($payrollRecordsEmp as $payrecord)
-                                            @if ($payrecord->employee == $emp->id)
-                                                <small>{{"₱ " . number_format($payrecord->basic_pay, 2, '.', ',')}}</small><br />
-                                            @endif
-                                        @endforeach
+                                        <small>{{"₱ " . number_format($basicPay, 2, '.', ',')}}</small><br />
 
                                         {{-- General Allowance Value --}}
                                         @foreach ($allowanceRecord as $allowance)
-                                            <small>{{$allowance->allowance_price}}</small><br />
+                                            <small>{{"₱ " . number_format($allowance->allowance_type == "Amount" ? $allowance->allowance_price : $allowance->allowance_price * $basicPay, 2, '.', ',')}}</small><br />
                                         @endforeach
 
                                         {{-- Self Allowance Value --}}
@@ -142,7 +139,7 @@
                                     <div class="text-right">
                                         {{-- Taxes Value --}}
                                         @foreach ($taxRecord as $tax)
-                                            <small>{{"₱ " . number_format($tax->tax_price, 2, '.', ',')}}</small><br />
+                                            <small>{{"₱ " . number_format($tax->tax_type == "Amount" ? $tax->tax_price : $tax->tax_price * $basicPay / 100, 2, '.', ',')}}</small><br />
                                         @endforeach
                                     </div>
                                 </div>
@@ -189,24 +186,45 @@
     <script>
         // Print the Payslip
         $(document).ready(function () {
-            const savePdfBtn = $('#print-btn');
+            const printBtn = $('#print-btn');
 
-            savePdfBtn.on('click', () => {
-                let element = $('.payslip');
-                let empId = "";
+            printBtn.on('click', () => {
+                const elements = $('.payslip');
+                const container = $('<div></div>'); // Container to hold all payslips
+
+                // Loop through each payslip element
+                elements.each(function(index) {
+                    const clonedElement = $(this).clone(); // Clone the payslip
+                    const pageBreak = $('<div style="page-break-after: always;"></div>'); // Create a page break after each payslip
+
+                    // Append the cloned payslip and page break to the container
+                    container.append(clonedElement).append(pageBreak);
+                });
+
+                // Append the container to the body (hidden) for printing
+                $('body').append(container);
+
+                let empId = {!! json_encode($ids) !!};
+                let payPeriod = {!! json_encode($payrollPeriod) !!};
 
                 // Generate a timestamp or any unique string
                 const timestamp = new Date().toISOString().replace(/[-T:Z]/g, '');
 
                 // Set the filename with the desired name and the timestamp
-                const filename = empId + "_pay_slip_" + timestamp + ".pdf";
+                const filename = `${empId}_${payPeriod}_pay_slip_${timestamp}.pdf`;
 
-                element.printThis({
-                    pageTitle: filename,
+                // Print the container
+                container.printThis({
                     importCSS: true,
                     importStyle: true,
+                    loadCSS: ['/assets/css/app.css', '/assets/css/elements.css', '/assets/css/navbar.css', '/assets/css/generate-payslip.css'],
+                    pageTitle: 'Combined Payslips',
                     beforePrint: function () {
                         document.title = filename;
+                    },
+                    afterPrint: function () {
+                        // Remove the container after printing is done
+                        container.remove();
                     }
                 });
             });
