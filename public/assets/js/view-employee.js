@@ -117,13 +117,3 @@ function removeActiveLinks() {
     personalPageLink.removeClass('active');
     timesheetPageLink.removeClass('active');
 }
-
-function checkTheChanges(inputs, toCompare) {
-    let count = 0;
-    inputs.forEach(function (element, index) {
-        if ($(element).val() !== toCompare[index]) {
-            count++;
-        }
-    });
-    return count;
-}

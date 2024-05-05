@@ -58,7 +58,7 @@ class TreasuryDepartmentsController extends Controller
     public function editDepartment($id) {
         return view('UserTreasury.Departments.editDepartment', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
-            'department' => $this->retrieveIdDb->retrieveId(Departments::class, $id),
+            'department' => Departments::find($id),
             "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
         ]);
     }
@@ -102,6 +102,34 @@ class TreasuryDepartmentsController extends Controller
             $log->id = $this->generateId->generate(AccountantLogs::class);
             $log->accountant = session('logged_treasury');
             $log->title = "Added a Department: ".$request->dept_name;
+            $log->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'success'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'error'
+            ]);
+        }
+    }
+
+
+
+    public function editDepartmentPost(Request $request) {
+        $dept = Departments::find($request->deptId);
+        $dept->department_name = $request->deptName;
+        $dept->department_pfp = $request->deptBg;
+
+        if($dept->save()) {
+            // Add logs
+            $log = new AccountantLogs;
+            $log->id = $this->generateId->generate(AccountantLogs::class);
+            $log->accountant = session('logged_treasury');
+            $log->title = "Edited a Department: ".$request->oldDeptName;
             $log->save();
 
             return response()->json([

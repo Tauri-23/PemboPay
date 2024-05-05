@@ -66,8 +66,8 @@
     
                             {{-- Enclose with loop --}}
                             @for ($i = 1; $i < 11; $i++)
-                                <div class="dept-bg-select-cont" style="">
-                                    <div class="deptBgOverlay d-none">Selected</div>
+                                <div class="dept-bg-select-cont {{$department->department_pfp == "bg".$i.".jpg" ? "active" : ""}}" style="">
+                                    <div class="deptBgOverlay {{$department->department_pfp == "bg".$i.".jpg" ? "" : "d-none"}}">Selected</div>
                                     <img class="position-absolute w-100 h-100 dept-bg-pic" id="bg{{$i}}.jpg" src="/assets/media/dept-pfp/bg{{$i}}.jpg" loading="lazy" />
                                 </div>
                             @endfor
@@ -79,7 +79,7 @@
                 
                     </div>
                     <div class="w-100 d-flex justify-content-end">
-                        <a class="primary-btn1-long mar-top-1" id="add-department">Add Department</a>
+                        <a class="primary-btn1-long mar-top-1" id="save-department">Save Changes</a>
                     </div>
                 
                 </div>
@@ -93,6 +93,12 @@
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
+    <script>
+        const oldDeptPic = {!! json_encode($department->department_pfp) !!};
+        const oldDeptName = {!! json_encode($department->department_name) !!};
+        const deptId = {!! json_encode($department->id) !!}
+    </script>
+    <script src="/assets/js/edit-department.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </html>

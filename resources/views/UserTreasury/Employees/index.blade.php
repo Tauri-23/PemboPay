@@ -66,7 +66,16 @@
                 </a>
             </div>
             
-            <x-TreasuryEmloyeesTable :employees="$employees"/>
+            <div id="original-emp-cont">
+                <x-TreasuryEmloyeesTable :employees="$employees"/>
+            </div>
+
+            <div id="sort-result-emp-cont">
+                
+            </div>
+            
+
+
         
         </div>
 

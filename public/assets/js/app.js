@@ -28,10 +28,14 @@ function getEmptyFields(modal, title, body, titleString, inputsToCheck) {
     }
 }
 
-function ifTheSameArray(array1, array2) {
-    array1.every(function (element, index) {
-        return element == array2[index]
+function checkTheChanges(inputs, toCompare) {
+    let count = 0;
+    inputs.forEach(function (element, index) {
+        if ($(element).val() !== toCompare[index]) {
+            count++;
+        }
     });
+    return count;
 }
 
 
