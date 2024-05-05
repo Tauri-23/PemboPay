@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
         <title>PemboPay - View Employee</title>
         
@@ -30,16 +31,21 @@
     </head>
     <body>
         {{-- Modals --}}
-        <x-modals modalType="emp-mini-profile-1"/>
-        <x-modals modalType="emp-edit-info-personal"/>
-        <x-modals modalType="emp-edit-info-address"/>
+        <form method="post">
+            <x-modals modalType="emp-mini-profile-1"/>
+            <x-modals modalType="emp-edit-info-personal"/>
+            <x-modals modalType="emp-edit-info-address"/>
+        </form>
+        
+        <x-modals modalType="success"/>
+        <x-modals modalType="error"/>
         
 
         {{-- Sidenav --}}
         <x-sidenav activeLink="6"/>
 
         {{-- nav small option --}}
-        <x-NavSmallOption/>
+        <x-NavSmallOption :logs="$logs"/>
         
 
         {{-- Navbar --}}
@@ -53,6 +59,8 @@
                 <div class="nav-link-2 active" id="personal-page">Personal</div>
                 <div class="nav-link-2" id="timesheet-page">Time Sheets</div>
             </div>
+
+            
 
             {{-- Personal Profile Container --}}
             <div class="d-flex gap1 h-100 mar-bottom-1" id="personal-profile-content">
@@ -85,7 +93,7 @@
                         </div>
                         <div class="d-flex flex-direction-y gap3">
                             <small class="text-m2 bold">Joined</small>
-                            <small class="text-m2">{{ $employee->created_at }}</small>
+                            <small class="text-m2">{{ \Carbon\Carbon::parse($employee->created_at)->format('M d, Y') }}</small>
                         </div>
                     </div>
                 </div>
@@ -123,7 +131,7 @@
                         </div>
                         <div class="d-flex text-m1 align-items-center gap3 mar-start-3">
                             <small class="w-50">Birth Date:</small>
-                            <small class="w-100">{{ $employee->birth_date }}</small>
+                            <small class="w-100">{{ \Carbon\Carbon::parse($employee->birth_date)->format('M d, Y') }}</small>
                         </div>
                     </div>
 
@@ -183,7 +191,7 @@
                     <div class="timesheet-cont">
                         <div class="timesheet-head">
                             <small class="text-m2 bold">Time Sheet</small>
-                            <div class="d-flex gap2">
+                            {{-- <div class="d-flex gap2">
                                 <select class="select-long2" id="timesheet-months">
                                     <option value="January">January</option>
                                     <option value="February">February</option>
@@ -206,7 +214,7 @@
                                     <option value="2026">2026</option>
                                     <option value="2027">2027</option>
                                 </select>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="line1 mar-top-3 mar-bottom-3"></div>
@@ -319,6 +327,8 @@
     <script src="/assets/js/navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
+        const empId = {!! json_encode($employee->id) !!};
+
         const oldFname = {!! json_encode($employee->firstname) !!};
         const oldMname = {!! json_encode($employee->middlename) !!};
         const oldLname = {!! json_encode($employee->lastname) !!};

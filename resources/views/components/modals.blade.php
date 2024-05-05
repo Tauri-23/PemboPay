@@ -136,7 +136,6 @@
             <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
             <div class="modal1-txt-title fw-bold text-l3" id="modal-1-title">
                 Edit Personal Information
-                <form method="post">
                     <div class="d-flex flex-direction-y gap3 mar-top-2">
                         <div class="flex-grow-1">
                             <label for="fname-in" class="text-m2 mar-bottom-3">First name</label>
@@ -171,9 +170,8 @@
                             </select>
                         </div>
                     </div>
-                </form>
             </div>
-            <button class="primary-btn1-small w-100 mar-top-1" id="save-btn">Save</button>
+            <div class="primary-btn1-small w-100 mar-top-1 d-flex justify-content-center" id="save-btn">Save</div>
         </div>
     </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\ILoggedService;
+use App\Models\AccountantLogs;
 use App\Models\AllowanceRecord;
 use App\Models\AllowanceRecordEmployee;
 use App\Models\Departments;
@@ -21,7 +22,10 @@ class AccountantReportController extends Controller
 
 
     public function reports() {
-        return view('UserTreasury.Reports.index', ['loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury'))]);
+        return view('UserTreasury.Reports.index', [
+            'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
+            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
+        ]);
     }
 
     public function generateReports($payrollPeriod) {
@@ -44,7 +48,8 @@ class AccountantReportController extends Controller
             'totalAllowance' => $totalAllowance,
             'totalDeduction' => $totalDeduction,
             'totalCompensation' => $totalCompensation,
-            'payrollRecordSummary' => PayrollRecordSummary::where('payroll_period', $payrollPeriod)
+            'payrollRecordSummary' => PayrollRecordSummary::where('payroll_period', $payrollPeriod),
+            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
         ]);
     }
 }

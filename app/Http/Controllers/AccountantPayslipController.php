@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\ILoggedService;
+use App\Models\AccountantLogs;
 use App\Models\AllowanceRecord;
 use App\Models\AllowanceRecordEmployee;
 use App\Models\DeductionRecord;
@@ -25,7 +26,8 @@ class AccountantPayslipController extends Controller
     public function payslip() {
         return view('UserTreasury.Payslip.index', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
-            "employees" => Employees::inRandomOrder()->get()
+            "employees" => Employees::inRandomOrder()->get(),
+            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
         ]);
     }
 
@@ -52,6 +54,7 @@ class AccountantPayslipController extends Controller
 
         return view('UserTreasury.Payslip.generatePayslip', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
+            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get(),
             'payrollPeriod' => $payrollPeriod,
             'ids' => $ids,
             "employees" => Employees::whereIn('id', $employeeIds)->get(),

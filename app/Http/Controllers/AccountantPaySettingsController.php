@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\IGenerateIdService;
 use App\Contracts\ILoggedService;
+use App\Models\AccountantLogs;
 use App\Models\settings_allowance;
 use App\Models\SettingsDeductions;
 use App\Models\taxes;
@@ -24,7 +25,8 @@ class AccountantPaySettingsController extends Controller
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
             'taxes' => taxes::all(),
             'allowances' => settings_allowance::all(),
-            'deductions' => SettingsDeductions::all()
+            'deductions' => SettingsDeductions::all(),
+            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
         ]);
     }
 

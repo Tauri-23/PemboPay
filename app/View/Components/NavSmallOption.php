@@ -8,12 +8,11 @@ use Illuminate\View\Component;
 
 class NavSmallOption extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+    public $logs;
+
+    public function __construct($logs)
     {
-        //
+        $this->logs = $logs;
     }
 
     /**

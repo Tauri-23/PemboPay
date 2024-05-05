@@ -34,7 +34,7 @@
         <x-sidenav activeLink="1"/>
 
         {{-- nav small option --}}
-        <x-NavSmallOption/>
+        <x-NavSmallOption :logs="$logs"/>
         
 
         {{-- Navbar --}}

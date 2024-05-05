@@ -40,7 +40,7 @@
         <x-sidenav activeLink="7"/>
 
         {{-- nav small option --}}
-        <x-NavSmallOption/>
+        <x-NavSmallOption :logs="$logs"/>
         
 
         {{-- Navbar --}}
@@ -76,13 +76,13 @@
                             <i class="bi bi-person-plus-fill mar-end-3"></i>Add Employee
                         </a>
 
-                        <button id="edit-dept-btn" class="secondary-btn1-small">
+                        <a href="/AccountantEditDepartment/{{$department->id}}" class="secondary-btn1-small">
                             <i class="fa-solid fa-pen-to-square mar-end-3"></i>Edit Department
-                        </button>
+                        </a>
                         
-                        <button id="del-dept-btn" class="secondary-btn2-small">
+                        <div id="del-dept-btn" class="secondary-btn2-small">
                             <i class="bi bi-building-fill-x mar-end-3"></i>Delete Department
-                        </button>
+                        </div>
                     </div>
                 </form>
             </div>

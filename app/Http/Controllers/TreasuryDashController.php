@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\ILoggedService;
+use App\Models\AccountantLogs;
 use App\Models\Departments;
 use App\Models\Employees;
 use App\Models\PayrollRecordSummary;
@@ -21,18 +22,23 @@ class TreasuryDashController extends Controller
         return view('UserTreasury.index', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
             "employees" => Employees::all(),
-            "departments" => Departments::all()
+            "departments" => Departments::all(),
+            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
         ]);
     }
 
     public function runPayroll() {
-        return view('UserTreasury.RunPayroll.index', ['loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury'))]);
+        return view('UserTreasury.RunPayroll.index', [
+            'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
+            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
+        ]);
     }
 
     public function payrollHistory() {
         return view('UserTreasury.PayrollHistory.index', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
-            'payrolls' => PayrollRecordSummary::orderBy('created_at', 'DESC')->get()
+            'payrolls' => PayrollRecordSummary::orderBy('created_at', 'DESC')->get(),
+            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
         ]);
     }
 }

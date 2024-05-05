@@ -6,6 +6,7 @@ use App\Contracts\IAuthenticateService;
 use App\Contracts\IGenerateIdService;
 use App\Contracts\ILoggedService;
 use App\Contracts\IRetrieveService;
+use App\Models\AccountantLogs;
 use App\Models\Barangays;
 use App\Models\Cities;
 use App\Models\Compensation;
@@ -34,7 +35,8 @@ class TreasuryEmployeesController extends Controller
 
         return view('UserTreasury.Employees.index', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
-            'employees' => Employees::all()
+            'employees' => Employees::all(),
+            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
         ]);
     }
     
@@ -44,7 +46,8 @@ class TreasuryEmployeesController extends Controller
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
             'cities' => $this->retrieveDb->retrieve(Cities::class),
             'brgy' => $this->retrieveDb->retrieve(Barangays::class),
-            'departments' => $this->retrieveDb->retrieve(Departments::class)
+            'departments' => $this->retrieveDb->retrieve(Departments::class),
+            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
         ]);
     }
 
@@ -79,6 +82,13 @@ class TreasuryEmployeesController extends Controller
         $emp->hourly_rate_mode = $compensationId;
 
         if($emp->save()) {
+            // Add logs
+            $log = new AccountantLogs;
+            $log->id = $this->generateId->generate(AccountantLogs::class);
+            $log->accountant = session('logged_treasury');
+            $log->title = "Added an Employee: ".$request->emp_fname." ".$request->emp_mname." ".$request->emp_lname;
+            $log->save();
+
             return response()->json([
                 'status' => 200,
                 'message' => 'success'
@@ -108,11 +118,45 @@ class TreasuryEmployeesController extends Controller
 
         return view('UserTreasury.Employees.viewEmployee', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
+            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get(),
             'employee' => Employees::find($id),
             'timesheetDates' => $timesheets,
             'datesInRange' => $datesInRange,
             'holidays' => $holidays
         ]);
 
+    }
+
+
+
+    public function editEmployee(Request $request) {
+        $employee = Employees::find($request->emp_id);
+        if($request->editType == "Personal Information") {
+            $employee->firstname = $request->fname;
+            $employee->middlename = $request->mname;
+            $employee->lastname = $request->lname;
+            $employee->phone = $request->phone;
+            $employee->gender = $request->gender;
+        }
+
+        if($employee->save()) {
+            // Add logs
+            $log = new AccountantLogs;
+            $log->id = $this->generateId->generate(AccountantLogs::class);
+            $log->accountant = session('logged_treasury');
+            $log->title = "Edited Employee's ".$request->editType.": ".$request->old_fullname;
+            $log->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'success'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'error'
+            ]);
+        }
     }
 }
