@@ -45,6 +45,54 @@ sortEmp.change(function() {
 
     if(value == 'a-z') {
         
+        origEmpCont.addClass('d-none');
+        sortEmpCont.removeClass('d-none');
+
+        sortAscending();
+
+        employeesList.forEach(employee => {
+            console.log(employee);
+        });
+        
+        sortEmpCont.append(`
+        <div class="table1">
+            <div class="table1-header">
+                <div class="form-data-col">
+                    <small class="text-m2">Employee Name</small>
+                    <div class="table1-PFP-small-cont mar-end-1"></div>
+                </div>
+                <small class="text-m2 form-data-col">Employee ID</small>
+                <small class="text-m2 form-data-col">Employee Email</small>
+                <small class="text-m2 form-data-col">Department</small>
+                <small class="text-m2 form-data-col">Compensation Type</small>
+            </div>
+        </div>
+        `);
+        employeesList.forEach(employee => {
+            // Construct the HTML for each employee row
+            const employeeRowHtml = `
+                <div class="table1-data employee-column" id="${employee.id}">
+                    <div class="form-data-col">
+                        <div class="table1-PFP-small mar-end-1">
+                            <img class="emp-pfp" src="/assets/media/pfp/${employee.pfp}" alt="">
+                        </div>
+                        <small class="text-m2 emp-name">${employee.firstname} ${employee.lastname}</small>
+                    </div>
+                    <small class="text-m2 form-data-col">${employee.id}</small>
+                    <small class="text-m2 form-data-col">${employee.email}</small>
+                    <small class="text-m2 form-data-col">${employee.department.department_name}</small>
+                    <small class="text-m2 form-data-col">${employee.compensation.compentsation_type}</small>
+                </div>
+            `;
+    
+            // Append the employee row HTML to sortEmpCont
+            sortEmpCont.find('.table1').append(employeeRowHtml);
+        });
+    }
+
+    else if(value == 'all') {
+        origEmpCont.removeClass('d-none');
+        sortEmpCont.addClass('d-none');
     }
 });
 

@@ -35,7 +35,7 @@ class TreasuryEmployeesController extends Controller
 
         return view('UserTreasury.Employees.index', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
-            'employees' => Employees::all(),
+            'employees' => Employees::with('department', 'compensation')->get(),
             "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
         ]);
     }
