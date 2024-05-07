@@ -77,6 +77,7 @@ Route::get('/TreasuryViewEmployee/{id}', [TreasuryEmployeesController::class, 'v
 Route::post('/AccountantEditEmpInfo', [TreasuryEmployeesController::class, 'editEmployee']);
 Route::post('/UploadEmpPfp', [TreasuryEmployeesController::class, 'UploadPfpToStorage']);
 Route::post('/UploadEmpPfpToDb', [TreasuryEmployeesController::class, 'UploadpPfpToDb']);
+Route::post('/DeleteEmployee', [TreasuryEmployeesController::class, 'deleteEmpPost']);
 
 
 
@@ -87,7 +88,7 @@ Route::get('/ViewDept/{id}', [TreasuryDepartmentsController::class, 'viewDepartm
 Route::get('/AccountantEditDepartment/{id}', [TreasuryDepartmentsController::class, 'editDepartment']);
 Route::post('/TreasuryAddDepartmentPost', [TreasuryDepartmentsController::class, 'addDepartmentPost']);
 Route::post('/TreasuryDeleteDepartment', [TreasuryDepartmentsController::class, 'deleteDepartment']);
-Route::post('AccountantEditDeptPost', [TreasuryDepartmentsController::class, 'editDepartmentPost']);
+Route::post('/AccountantEditDeptPost', [TreasuryDepartmentsController::class, 'editDepartmentPost']);
 
 
 

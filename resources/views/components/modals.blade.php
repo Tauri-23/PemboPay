@@ -56,7 +56,7 @@
     </div>
 
 @elseif($modalType == 'error-yn')
-    <div class="modal1 d-none" id="error-yn-modal">
+    <div class="modal1 d-none error-yn-modal" id="error-yn-modal">
         <div class="modal1-box-small modal-text">
             <div class="modal1-icon">
                 <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
@@ -72,7 +72,7 @@
     </div>
 
 @elseif($modalType == 'close-yn')
-    <div class="modal1 d-none" id="close-yn-modal">
+    <div class="modal1 d-none close-yn-modal" id="close-yn-modal">
         <div class="modal1-box-small modal-text">
             <div class="modal1-icon">
                 <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
@@ -88,13 +88,17 @@
     </div>
 
 @elseif($modalType == 'warning-yn')
-    <div class="modal1 d-none" id="warning-yn-modal">
+    <div class="modal1 d-none warning-yn-modal" id="warning-yn-modal">
         <div class="modal1-box-small modal-text">
             <div class="modal1-icon">
                 <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
                 <img src="/assets/media/icons/crisis.svg"/>
             </div>
             <div class="modal1-txt text-center">
+            </div>
+            <div class="d-flex justify-content-center gap1 mar-top-2">
+                <a class="primary-btn2-small" id="modal-close-btn">No</a>
+                <a class="yes-btn primary-btn3-small">Yes</a>
             </div>
         </div>
     </div>
@@ -115,6 +119,7 @@
                 </div>
     
                 <div class="mini-profile-infos">
+                    <input type="hidden" class="mini-profile-id">
                     <small class="text-l3 mini-profile-name">Name</small><br>
                     <small class="text-m3 mini-profile-dept">Department</small>
                 </div>
@@ -123,7 +128,7 @@
             
 
             <div class="mini-profile-btns d-flex justify-content-center gap3">
-                <button class="primary-btn2-small"><i class="bi bi-x-circle-fill mar-end-3"></i>Remove</button>
+                <button class="primary-btn2-small" id="del-emp-btn"><i class="bi bi-x-circle-fill mar-end-3"></i>Remove</button>
                 <button class="primary-btn1-small" id="view-full-profile-btn"><i class="bi bi-arrows-fullscreen mar-end-3"></i> View full Profile</button>
             </div>
             

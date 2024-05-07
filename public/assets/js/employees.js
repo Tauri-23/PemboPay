@@ -1,8 +1,11 @@
 //modals
 const miniProfileModal = $("#emp-mini-profile-1-modal");
+const warningYNModal = $('#warning-yn-modal');
+const successModal = $('#success-modal');
 
 //btns
 const viewFullProfileBtn = $('#view-full-profile-btn');
+const delEmpBtn = $('#del-emp-btn');
 
 //dropdowns
 const sortEmp = $('#sort-emp');
@@ -115,6 +118,7 @@ function empColumnEvent(empColumn) {
     const empPfp = empColumn.find('.emp-pfp').attr('src');
 
     // Update mini-profile modal with employee data
+    miniProfileModal.find('.mini-profile-id').val(empId);
     miniProfileModal.find('.mini-profile-name').html(empName);
     miniProfileModal.find('.mini-profile-dept').html(empDept);
     miniProfileModal.find('.emp-mini-profile-pfp').attr('src', empPfp);
@@ -124,10 +128,56 @@ function empColumnEvent(empColumn) {
     closeModal(miniProfileModal, false);
 
     // Handle viewFullProfileBtn click within the modal
-    viewFullProfileBtn.off('click').on('click', function() {
+    viewFullProfileBtn.on('click', function() {
         window.location.href = "/TreasuryViewEmployee/" + empId;
     });
 }
+
+delEmpBtn.click(function() {
+    const empId = miniProfileModal.find('.mini-profile-id').val();
+    const empName = miniProfileModal.find('.mini-profile-name').html();
+    const yesBtn = warningYNModal.find('.yes-btn');
+
+    warningYNModal.find('.modal1-txt').html(`Do you want to delete Employee named ${empName} (${empId})?`);
+
+    closeModalNoEvent(miniProfileModal);
+    showModal(warningYNModal);
+    closeModal(warningYNModal, false);
+
+    yesBtn.click(() => {
+        alert(`deleting employee ${empId}`);
+        let formData = new FormData();
+        formData.append('empId' , empId);
+        formData.append('empName', empName);
+
+        $.ajax({
+            type: "POST",
+            url: "/DeleteEmployee",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (response) {
+                if(response.status == 200) {
+                    successModal.find('.modal-text').html('Employee Deleted.');
+                    closeModalNoEvent(warningYNModal);
+                    showModal(successModal);
+                    closeModal(successModal, true);
+                } else {
+                    errorModal.find('.modal-text').html('Failed to delete employee.');
+                    closeModalNoEvent(warningYNModal);
+                    showModal(errorModal);
+                    closeModal(errorModal, false);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                alert('error');
+            }
+        });
+    });
+
+    
+});
 
 function sortAscending() {
     employeesList.sort(function(a, b) {

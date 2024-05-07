@@ -265,4 +265,29 @@ class TreasuryEmployeesController extends Controller
         }
 
     }
+
+
+    public function deleteEmpPost(Request $request) {
+        $employee = Employees::find($request->empId);
+
+        if(empty($employee)) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'no department'
+            ]);
+        }
+
+        // Add logs
+        $log = new AccountantLogs;
+        $log->id = $this->generateId->generate(AccountantLogs::class);
+        $log->accountant = session('logged_treasury');
+        $log->title = "Deleted an Employee: ".$request->empName;
+        $log->save();
+
+        $employee->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'success'
+        ]);
+    }
 }

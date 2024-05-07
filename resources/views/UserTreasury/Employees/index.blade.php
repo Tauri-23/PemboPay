@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
         <title>PemboPay</title>
         
@@ -30,6 +31,8 @@
     <body>
         {{-- Modals --}}
         <x-modals modalType="emp-mini-profile-1"/>
+        <x-modals modalType="warning-yn"/>
+        <x-modals modalType="success"/>
         
 
         {{-- Sidenav --}}
