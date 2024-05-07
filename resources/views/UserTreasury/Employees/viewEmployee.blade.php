@@ -32,9 +32,9 @@
     <body>
         {{-- Modals --}}
         <form method="post">
-            <x-modals modalType="emp-mini-profile-1"/>
-            <x-modals modalType="emp-edit-info-personal"/>
-            <x-modals modalType="emp-edit-info-address"/>
+            <x-editEmployeeProfileModal modalType="emp-edit-info-compensation" :cities="$cities" :brgys="$brgys"/>
+            <x-editEmployeeProfileModal modalType="emp-edit-info-personal" :cities="$cities" :brgys="$brgys"/>
+            <x-editEmployeeProfileModal modalType="emp-edit-info-address" :cities="$cities" :brgys="$brgys"/>
         </form>
         
         <x-modals modalType="success"/>
@@ -168,7 +168,7 @@
                         <div class="mar-bottom-2">
                             <div class="mar-start-3 text-m1 mar-bottom-2">Compensation Type: {{ $employee->compensation()->first()->compentsation_type }}</div>
                             <div class="flex text-m1 align-items-center gap3 mar-start-3 mar-top-3">
-                                <button id="edit-hourly-rate" class="primary-btn1-small position-absolute right1 text-m2">
+                                <button id="edit-compensation-btn" class="primary-btn1-small position-absolute right1 text-m2">
                                     <i class="fa-solid fa-pen-to-square mar-end-3"></i>Edit {{ $employee->compensation()->first()->compentsation_type }}
                                 </button>
                                 <small class="w-50">{{ $employee->compensation()->first()->compentsation_type }}:</small>
@@ -334,7 +334,16 @@
         const oldLname = {!! json_encode($employee->lastname) !!};
         const oldPhone = {!! json_encode($employee->phone) !!};
         const oldGender = {!! json_encode($employee->gender) !!};
+
         const oldStreetAddress = {!! json_encode($employee->street_address) !!};
+        const oldCity = {!! json_encode($employee->city) !!};
+        const oldBrgy = {!! json_encode($employee->barangay) !!};
+
+        const brgys = {!! json_encode($brgys) !!};
+
+        const oldCompensationType = {!! json_encode($employee->compensation()->first()->compentsation_type) !!};
+        const oldCompensationPrice = {!! json_encode($employee->compensation()->first()->value) !!};
+        const compensationId = {!! json_encode($employee->compensation()->first()->id) !!};
     </script>
     <script src="/assets/js/view-employee.js"></script>
 </html>

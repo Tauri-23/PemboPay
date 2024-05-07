@@ -2,15 +2,15 @@
 
 namespace App\Providers;
 
-use App\Contracts\IAuthenticateService;
 use App\Contracts\IComputePayrollService;
+use App\Contracts\IGenerateFilenameService;
 use App\Contracts\IGenerateIdService;
 use App\Contracts\ILoggedService;
 use App\Contracts\IRetrieveIdService;
 use App\Contracts\IRetrieveService;
 use App\Contracts\IRetrieveWhereService;
-use App\Services\AuthenticateService;
 use App\Services\ComputePayrollService;
+use App\Services\GenerateFilenameService;
 use App\Services\GenerateIdService;
 use App\Services\LoggedService;
 use App\Services\RetrieveService;
@@ -32,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
 
         //Generate Random Ids Services
         $this->app->bind(IGenerateIdService::class, GenerateIdService::class);
+        $this->app->bind(IGenerateFilenameService::class, GenerateFilenameService::class);
 
         //Process Payroll
         $this->app->bind(IComputePayrollService::class, ComputePayrollService::class);

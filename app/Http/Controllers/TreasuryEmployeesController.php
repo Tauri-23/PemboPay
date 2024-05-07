@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\IAuthenticateService;
+use App\Contracts\IGenerateFilenameService;
 use App\Contracts\IGenerateIdService;
 use App\Contracts\ILoggedService;
 use App\Contracts\IRetrieveService;
@@ -16,17 +17,21 @@ use App\Models\Holidays;
 use App\Models\timesheet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class TreasuryEmployeesController extends Controller
 {
     protected $loggedService; //service to retrieve logged accountant data
     protected $retrieveDb; // service to retrieve all from specific table in database
     protected $generateId;
+    protected $generateFilename;
 
-    public function __construct(ILoggedService $loggedService, IRetrieveService $retrieveDb, IGenerateIdService $generateId) {
+    public function __construct(ILoggedService $loggedService, IRetrieveService $retrieveDb, IGenerateIdService $generateId, IGenerateFilenameService $generateFilename) {
         $this->loggedService = $loggedService;
         $this->retrieveDb = $retrieveDb;
         $this->generateId = $generateId;
+        $this->generateFilename = $generateFilename;
     }
 
 
@@ -120,6 +125,8 @@ class TreasuryEmployeesController extends Controller
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
             "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get(),
             'employee' => Employees::find($id),
+            'cities' => Cities::all(),
+            'brgys' => Barangays::all(),
             'timesheetDates' => $timesheets,
             'datesInRange' => $datesInRange,
             'holidays' => $holidays
@@ -130,13 +137,32 @@ class TreasuryEmployeesController extends Controller
 
 
     public function editEmployee(Request $request) {
-        $employee = Employees::find($request->emp_id);
+        $employee = Employees::where('id', $request->emp_id)->with('compensation')->first();
         if($request->editType == "Personal Information") {
             $employee->firstname = $request->fname;
             $employee->middlename = $request->mname;
             $employee->lastname = $request->lname;
             $employee->phone = $request->phone;
             $employee->gender = $request->gender;
+        }
+        else if($request->editType == "Address Information") {
+            $employee->street_address = $request->street_address;
+            $employee->city = $request->city;
+            $employee->barangay = $request->brgy;
+        }
+        else if($request->editType == "Pay Information") {
+            if ($employee->compensation) {
+                // Update compensation attributes if the relationship exists
+                $employee->compensation->compentsation_type = $request->compensation_type;
+                $employee->compensation->value = $request->price;
+                $employee->compensation->save();
+            } else {
+                // Create a new compensation record if it does not exist
+                $compensation = new Compensation();
+                $compensation->compentsation_type = $request->compensation_type;
+                $compensation->value = $request->price;
+                $employee->compensation()->save($compensation);
+            }
         }
 
         if($employee->save()) {
@@ -158,5 +184,85 @@ class TreasuryEmployeesController extends Controller
                 'message' => 'error'
             ]);
         }
+    }
+
+
+
+    public function UploadPfpToStorage(Request $request) {
+
+        if(!$request->hasFile('file')) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'No file uploaded'
+            ]);
+        }
+
+        $file = $request->file('file');
+
+        if(!$file->isValid()) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Invalid file'
+            ]);
+        }
+
+        try {
+            $targetDirectory = 'assets/media/pfp';
+
+            $newFilename = $this->generateFilename->generate($file, $targetDirectory);
+
+            //upload the file to the public directory
+            $file->move(public_path($targetDirectory), $newFilename);
+
+            $filePath = '/' . $targetDirectory . '/' . $newFilename;
+
+            // Return a success response
+            return response()->json([
+                'status' => 200, 
+                'filePath' => $filePath,
+                'filename' => $newFilename
+            ]);
+
+        } catch(\Exception $ex) {
+            return response()->json([
+                'status' => 500,
+                'message' =>'Failed to upload file: ' . $ex->getMessage()
+            ]);
+        }
+    }
+
+
+    public function UploadpPfpToDb(Request $request) {
+        $employee = Employees::find($request->id);
+
+        if($employee == null) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'No Employee'
+            ]);
+        }
+
+        $employee->pfp = $request->pfp;
+
+        if($employee->save()) {
+            // Add logs
+            $log = new AccountantLogs;
+            $log->id = $this->generateId->generate(AccountantLogs::class);
+            $log->accountant = session('logged_treasury');
+            $log->title = "Edited Employee's Profile Picture: ". $employee->firstname . " " . $employee->lastname;
+            $log->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'success'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'error'
+            ]);
+        }
+
     }
 }

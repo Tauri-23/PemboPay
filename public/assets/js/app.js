@@ -31,7 +31,7 @@ function getEmptyFields(modal, title, body, titleString, inputsToCheck) {
 function checkTheChanges(inputs, toCompare) {
     let count = 0;
     inputs.forEach(function (element, index) {
-        if ($(element).val() !== toCompare[index]) {
+        if ($(element).val() != toCompare[index]) {
             count++;
         }
     });
