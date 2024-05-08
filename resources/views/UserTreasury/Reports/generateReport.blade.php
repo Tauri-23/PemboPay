@@ -85,7 +85,7 @@
                             Departments
                         </div>
                         @foreach ($departments as $dept)
-                            @php
+                            {{-- @php
                                 $totalCompensation = 0.0;
                         
                                 foreach ($payrollRecords as $pay) {
@@ -94,7 +94,7 @@
                                     }
                                     
                                 }
-                            @endphp
+                            @endphp --}}
                             <div class="text-m2 d-flex flex-direction-y gap4">
                                 <small class="bold mar-start-3">{{$dept->department_name}}</small>
                                 <div class="d-flex justify-content-between mar-start-2">
