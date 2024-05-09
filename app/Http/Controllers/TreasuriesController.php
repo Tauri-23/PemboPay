@@ -12,8 +12,12 @@ class TreasuriesController extends Controller
         return view('index');
     }
 
+    public function loginTreasury() {
+        return view('login-admin');
+    }
 
-    public function login(Request $request) {
+
+    public function loginAccountantPost(Request $request) {
         $treasury = Treasuries::where('username', $request->username)
                        ->where('password', $request->password)
                        ->first();

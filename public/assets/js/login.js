@@ -33,7 +33,7 @@ $(document).ready(function() {
         
 
         $.ajax({
-            url: '/loginTreasury',
+            url: '/loginAccountantPost',
             method: 'POST',
             processData: false,
             contentType: false,

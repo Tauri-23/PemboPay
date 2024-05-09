@@ -35,7 +35,8 @@ Route::get('/', function () {
 */
 
 //Login
-Route::post('/loginTreasury', [TreasuriesController::class, 'login']);
+Route::post('/loginAccountantPost', [TreasuriesController::class, 'loginAccountantPost']);
+Route::get('/loginTreasury', [TreasuriesController::class, 'loginTreasury']);
 Route::get('/logoutTreasury', [TreasuriesController:: class, 'logout']);
 
 
