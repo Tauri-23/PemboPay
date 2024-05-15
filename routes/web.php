@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountantPaySettingsController;
 use App\Http\Controllers\AccountantPayslipController;
+use App\Http\Controllers\AccountantProfileController;
 use App\Http\Controllers\AccountantReportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
@@ -42,6 +43,13 @@ Route::get('/logoutTreasury', [TreasuriesController:: class, 'logout']);
 
 //Home
 Route::get('/TreasuryDashboard', [TreasuryDashController::class, 'home']);
+
+
+
+
+// Profile
+Route::get('/AccountantViewProfile/{id}', [AccountantProfileController::class, 'index']);
+Route::post('/AccountantEditProfile', [AccountantProfileController::class, 'editProfilePost']);
 
 
 
