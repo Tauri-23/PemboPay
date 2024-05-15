@@ -1,16 +1,22 @@
 //modals
 const editPersonalModal = $('#acc-edit-personal-modal');
+const editPasswordModal = $('#acc-edit-password-modal');
 
 const successModal = $('#success-modal');
 const errorModal = $('#error-modal');
 
 //btns
 const editPersonalBtn = $('#edit-personal');
+const editPasswordBtn = $('#edit-credential');
 
 //input
 const fnameIn = editPersonalModal.find('#fname-in');
 const mnameIn = editPersonalModal.find('#mname-in');
 const lnameIn = editPersonalModal.find('#lname-in');
+
+const newPassIn = $('#new-pass-in');
+const conPassIn = $('#con-pass-in');
+const oldPassIn = $('#old-pass-in');
 
 
 editPersonalBtn.click(() => {
@@ -38,6 +44,54 @@ editPersonalModal.find('#save-btn').click(() => {
         EditEmpProfileAjax(formData)
     }
 });
+
+
+editPasswordBtn.click(() => {
+    newPassIn.val('');
+    conPassIn.val('');
+    oldPassIn.val('');
+    showModal(editPasswordModal);
+    closeModal(editPasswordModal, false);
+});
+
+editPasswordModal.find('#save-btn').click(() => {
+    if(isEmptyOrSpaces(newPassIn.val()) || isEmptyOrSpaces(conPassIn.val()) || isEmptyOrSpaces(oldPassIn.val())) {
+        return;
+    }
+
+    if(newPassIn.val() != conPassIn.val()) {
+        errorModal.find('.modal-text').html(`Confirm password doesn't match.`);
+        showModal(errorModal);
+        closeModal(errorModal, false);
+        return;
+    }
+
+    if(oldPassIn.val() != oldPassword) {
+        errorModal.find('.modal-text').html(`Old password incorrect.`);
+        showModal(errorModal);
+        closeModal(errorModal, false);
+        return;
+    }
+
+    if(newPassIn.val() == oldPassword) {
+        errorModal.find('.modal-text').html(`New password cannot be the old one.`);
+        showModal(errorModal);
+        closeModal(errorModal, false);
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append('accId', AccId);
+    formData.append('password', newPassIn.val());
+    formData.append('editType', 'Password');
+
+    EditEmpProfileAjax(formData)
+});
+
+
+
+
+
 
 
 function EditEmpProfileAjax(formData) {

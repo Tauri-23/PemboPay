@@ -36,6 +36,7 @@
         {{-- Modals --}}
         <form method="post">
             <x-edit_accountant_profile_modals modalType="acc-edit-info-personal" />
+            <x-edit_accountant_profile_modals modalType="acc-edit-password" />
             {{-- <x-editEmployeeProfileModal modalType="emp-edit-info-personal" :cities="$cities" :brgys="$brgys"/>
             <x-editEmployeeProfileModal modalType="emp-edit-info-address" :cities="$cities" :brgys="$brgys"/> --}}
         </form>
@@ -124,7 +125,7 @@
                         </a>
                         <div class="d-flex text-m1 align-items-center gap3 mar-start-3 mar-top-3">
                             <small class="w-50">Password:</small>
-                            <input type="password" class="edit-text-1 disabled" value="{{$accountant->password}}" id="" disabled>
+                            <input type="password" class="edit-text-1 disabled w-100" value="{{$accountant->password}}" id="" disabled>
                         </div>
                     </div>
 

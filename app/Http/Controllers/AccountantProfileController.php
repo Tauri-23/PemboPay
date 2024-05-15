@@ -26,6 +26,9 @@ class AccountantProfileController extends Controller
             $accountant->Middlename = $request->mname;
             $accountant->Lastname = $request->lname;
         }
+        else if($request->editType == "Password") {
+            $accountant->password = $request->password;
+        }
 
 
         if($accountant->save()) {
