@@ -18,7 +18,13 @@ const newPassIn = $('#new-pass-in');
 const conPassIn = $('#con-pass-in');
 const oldPassIn = $('#old-pass-in');
 
+const editPfpBtn = $('#change-pfp-btn');
 
+
+
+
+
+// Edit Personal Info
 editPersonalBtn.click(() => {
     fnameIn.val(oldFname);
     mnameIn.val(oldMname);
@@ -46,6 +52,10 @@ editPersonalModal.find('#save-btn').click(() => {
 });
 
 
+
+
+
+// Edit Password
 editPasswordBtn.click(() => {
     newPassIn.val('');
     conPassIn.val('');
@@ -92,6 +102,35 @@ editPasswordModal.find('#save-btn').click(() => {
 
 
 
+// Edit PFP
+editPfpBtn.click(function(e) {
+    var fileDialog = $('<input type="file" accept="image/*">');
+    fileDialog.click();
+    fileDialog.on("change", onFileSelected);
+    return false;
+});
+
+var onFileSelected = function (e) {
+    var selectedFiles = $(this)[0].files;
+    var fileName = $(this)[0].files[0].name;
+    
+    
+    if (selectedFiles.length > 0) {
+        var formData = new FormData();
+        formData.append('accId', AccId);
+        formData.append("file", selectedFiles[0]);
+        formData.append('editType', 'PFP');
+
+        EditEmpProfileAjax(formData);
+        
+    } else {
+        console.log("No file selected.");
+    }
+};
+
+
+
+
 
 
 function EditEmpProfileAjax(formData) {
@@ -118,3 +157,6 @@ function EditEmpProfileAjax(formData) {
         }
     });   
 }
+
+
+
