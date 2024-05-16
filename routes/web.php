@@ -142,3 +142,10 @@ Route::post('/timeOut', [EmployeesController::class, 'timeOut']);
 */
 // Dashboard
 Route::get('/AdminDashboard', [AdminDashController::class, 'index']);
+
+// Accountants
+Route::get('/AdminAccountants', [AdminDashController::class, 'AccountantIndex']);
+Route::get('/AdminViewAccountantProfile/{id}', [AdminDashController::class, 'AccountantView']);
+Route::post('/AdminAddAccountant', [AdminDashController::class, 'AddAccountantPost']);
+Route::post('/AdminDelAccountant', [AdminDashController::class, 'DelAccountant']);
+Route::get('/AdminAccountantLogs', [AdminDashController::class, 'AccountantLogs']);

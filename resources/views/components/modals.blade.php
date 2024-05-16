@@ -24,7 +24,7 @@
 
 @elseif($modalType == 'close')
     <div class="modal1 d-none" id="close-modal">
-        <div class="modal1-box-small modal-text">
+        <div class="modal1-box-small">
             <div class="modal1-icon">
                 <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
                 <img src="/assets/media/icons/close.svg"/>
@@ -41,7 +41,7 @@
 {{-- For Yes No Modals --}}
 @elseif($modalType == 'info-yn')
     <div class="modal1 d-none info-yn-modal" id="info-yn-modal">
-        <div class="modal1-box-small modal-text">
+        <div class="modal1-box-small">
             <div class="modal1-icon">
                 <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
                 <img src="/assets/media/icons/information.svg"/>
@@ -57,7 +57,7 @@
 
 @elseif($modalType == 'error-yn')
     <div class="modal1 d-none error-yn-modal" id="error-yn-modal">
-        <div class="modal1-box-small modal-text">
+        <div class="modal1-box-small">
             <div class="modal1-icon">
                 <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
                 <img src="/assets/media/icons/error.svg"/>
@@ -73,7 +73,7 @@
 
 @elseif($modalType == 'close-yn')
     <div class="modal1 d-none close-yn-modal" id="close-yn-modal">
-        <div class="modal1-box-small modal-text">
+        <div class="modal1-box-small">
             <div class="modal1-icon">
                 <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
                 <img src="/assets/media/icons/close.svg"/>
@@ -89,7 +89,7 @@
 
 @elseif($modalType == 'warning-yn')
     <div class="modal1 d-none warning-yn-modal" id="warning-yn-modal">
-        <div class="modal1-box-small modal-text">
+        <div class="modal1-box-small">
             <div class="modal1-icon">
                 <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
                 <img src="/assets/media/icons/crisis.svg"/>
@@ -252,6 +252,75 @@
                 </form>
             </div>
             <button class="primary-btn1-small w-100 mar-top-1" id="add-deduction">Add</button>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    {{-- Add Accountant Admin --}}
+@elseif($modalType == 'add-accountant')
+    <div class="modal1 d-none" id="add-accountant-modal">
+        <div class="modal1-box-flexible">
+            <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
+            <div class="modal1-txt-title fw-bold text-l3" id="modal-1-title">
+                Add Accountant
+                <form method="post">
+                    <div class="d-flex flex-direction-y gap3 mar-top-2">
+                        <div class="d-flex gap3">
+                            <div class="w-100">
+                                <label for="fname-in" class="text-m2 mar-bottom-3">Firstname</label>
+                                <input class="edit-text-1 w-100" id="fname-in" type="text"/>
+                            </div>
+                            <div class="w-100">
+                                <label for="mname-in" class="text-m2 mar-bottom-3">Middlename <span class="text-m3">optional</span></label>
+                                <input class="edit-text-1 w-100" id="mname-in" type="text"/>
+                            </div>
+                            <div class="w-100">
+                                <label for="lname-in" class="text-m2 mar-bottom-3">Lastname</label>
+                                <input class="edit-text-1 w-100" id="lname-in" type="text"/>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <label for="gender-in" class="text-m2 mar-bottom-3">Gender</label>
+                            <select class="edit-text-1 w-100" id="gender-in">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <label for="uname-in" class="text-m2 mar-bottom-3">Username</label>
+                            <input class="edit-text-1 w-100" id="uname-in" type="text"/>
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <label for="email-in" class="text-m2 mar-bottom-3">Email</label>
+                            <input class="edit-text-1 w-100" id="email-in" type="text"/>
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <label for="phone-in" class="text-m2 mar-bottom-3">Phone</label>
+                            <input class="edit-text-1 w-100" maxlength="10" id="phone-in" type="text"/>
+                        </div>
+
+                        <div class="flex flex-direction-d mar-top-2">
+                            <small class="text-m2">Note: </small>
+                            <small class="text-m3">The password is auto generated and will be sent to the email you provided.</small>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+            <button class="primary-btn1-small w-100 mar-top-1" id="add-accountant">Add Accountant</button>
         </div>
     </div>
 

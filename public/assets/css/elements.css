@@ -296,6 +296,12 @@
     background: var(--white);
     position: relative;
 }
+.modal1-box-flexible {
+    padding: 30px 50px;
+    border-radius: var(--border-radius1);
+    background: var(--white);
+    position: relative;
+}
 .modal1-icon {
     margin: 0 auto 20px auto;
     width: 48px;

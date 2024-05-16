@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
         <title>PemboPay | Admin</title>
         
@@ -32,55 +33,33 @@
         
     </head>
     <body>
+        {{-- Modals --}}
+        <x-modals modalType="add-accountant"/>
         
+        <x-modals modalType="info-yn"/>
+        <x-modals modalType="warning-yn"/>
+        
+        <x-modals modalType="success"/>
+        <x-modals modalType="error"/>
 
         {{-- Sidenav --}}
-        <x-admin_side_nav activeLink="1"/>
+        <x-admin_side_nav activeLink="3"/>
         
 
         {{-- Navbar --}}
-        <x-admin_navbar title="Dashboard"/>
+        <x-admin_navbar title="Accountant Logs"/>
         
 
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2">
-
-            <div class="w-100 d-flex gap2">
-                <div class="dash-short-cont flex-grow-1">
-                    <div class="d-flex align-items-center gap2">
-                        <div class="text-m1 fw-bold">Total Accountants</div>
-                    </div>
-                    <div class="line1 mar-top-3 mar-bottom-3"></div>
-                    <div class="text-l3 fw-bold">
-                        {{$accountants->count()}}
-                    </div>
-                </div>
-
-
-                <div class="dash-short-cont flex-grow-1">
-                    <div class="d-flex align-items-center gap2">
-                        <div class="text-m1 fw-bold">Total Accountant Logs</div>
-                    </div>
-                    <div class="line1 mar-top-3 mar-bottom-3"></div>
-                    <div class="text-l3 fw-bold">
-                        {{$logs->count()}}
-                    </div>
-                </div>
-            </div>
             
             {{-- Accountants --}}
-            <div class="long-cont">
-                <div class="d-flex justify-content-between align-items-center mar-bottom-1">
-                    <div class="text-m1 fw-bold">Accountants</div>
-                </div>
-                <x-render_accountant :accountants="$accountants" count="10"/>
+            <div class="long-cont d-flex justify-content-between align-items-center">
+                <div class="text-m1 fw-bold">Accountant Logs</div>
             </div>
 
             <div class="long-cont">
-                <div class="d-flex justify-content-between align-items-center mar-bottom-1">
-                    <div class="text-m1 fw-bold">Accountant Logs</div>
-                </div>
-                <x-render_accountant_logs :logs="$logs" count="10"/>
+                <x-render_accountant_logs :logs="$logs" count="null"/>
             </div>
         </div>
 
@@ -89,9 +68,7 @@
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
-    <script src="/assets/js/treasury-dash.js"></script>
+
     {{-- bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    {{-- chart.js --}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </html>

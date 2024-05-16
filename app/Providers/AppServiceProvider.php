@@ -9,11 +9,13 @@ use App\Contracts\ILoggedService;
 use App\Contracts\IRetrieveIdService;
 use App\Contracts\IRetrieveService;
 use App\Contracts\IRetrieveWhereService;
+use App\Contracts\ISendEmailService;
 use App\Services\ComputePayrollService;
 use App\Services\GenerateFilenameService;
 use App\Services\GenerateIdService;
 use App\Services\LoggedService;
 use App\Services\RetrieveService;
+use App\Services\SendEmailService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,6 +38,9 @@ class AppServiceProvider extends ServiceProvider
 
         //Process Payroll
         $this->app->bind(IComputePayrollService::class, ComputePayrollService::class);
+
+        // Emails
+        $this->app->bind(ISendEmailService::class, SendEmailService::class);
 
     }
 
