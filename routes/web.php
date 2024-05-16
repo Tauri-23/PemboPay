@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountantPaySettingsController;
 use App\Http\Controllers\AccountantPayslipController;
 use App\Http\Controllers\AccountantProfileController;
 use App\Http\Controllers\AccountantReportController;
+use App\Http\Controllers\AdminDashController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EmployeesController;
@@ -129,3 +130,15 @@ Route::get('EmployeeTimesheet', [EmployeesController::class, 'timesheet']);
 Route::post('/EmployeeLogin', [EmployeesController::class, 'login']);
 Route::post('/timeIn', [EmployeesController::class, 'timeIn']);
 Route::post('/timeOut', [EmployeesController::class, 'timeOut']);
+
+
+
+
+
+/*
+|----------------------------------------
+| Admin
+|----------------------------------------
+*/
+// Dashboard
+Route::get('/AdminDashboard', [AdminDashController::class, 'index']);

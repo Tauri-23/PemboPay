@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\admin;
 use App\Models\Treasuries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -19,12 +20,24 @@ class TreasuriesController extends Controller
 
     public function loginAccountantPost(Request $request) {
         $treasury = Treasuries::where('username', $request->username)
-                       ->where('password', $request->password)
-                       ->first();
+            ->where('password', $request->password)
+            ->first();
+
+        $admin = admin::where('username', $request->username)
+            ->where('password', $request->password)
+            ->first();
+
         if(!$treasury) {
+            if(!$admin) {
+                return response()->json([
+                    'status' => 401,
+                    'message' => 'error'
+                ]);
+            }
+            $request->session()->put('logged_Admin', $admin->id);
             return response()->json([
-                'status' => 401,
-                'message' => 'error'
+                'status' => 201,
+                'message' => 'success admin'
             ]);
         }
         else {

@@ -80,7 +80,7 @@ class AccountantProfileController extends Controller
             $log = new AccountantLogs;
             $log->id = $this->generateId->generate(AccountantLogs::class);
             $log->accountant = session('logged_treasury');
-            $log->title = "Updated their profile";
+            $log->title = "Updated ". ($accountant->gender == "Male" ? "his" : "her") ." profile";
             $log->save();
 
             return response()->json([

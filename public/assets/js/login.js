@@ -22,15 +22,7 @@ $(document).ready(function() {
 
         let formData = new FormData();
         formData.append("username", uname.val());
-        formData.append("password", pass.val());
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val()
-            }
-        });
-        
+        formData.append("password", pass.val());        
 
         $.ajax({
             url: '/loginAccountantPost',
@@ -42,6 +34,9 @@ $(document).ready(function() {
             success: function (response) {
                 if(response.status == 200) {
                     window.location.href = '/TreasuryDashboard';
+                }
+                else if(response.status == 201) {
+                        window.location.href = '/AdminDashboard';
                 } else {
                     showModal(wrongCredentialModal);
                     closeModal(wrongCredentialModal, false);

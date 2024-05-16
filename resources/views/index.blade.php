@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
-        <title>PemboPay | Login Accountant</title>
+        <title>PemboPay | Login</title>
         
         {{-- Styles --}}
         <link rel="stylesheet" href="/assets/css/app.css">
@@ -36,7 +36,7 @@
                 <img class="position-absolute w-100 h-100" src="/assets/media/logos/mwp-pembo.png" />
             </div>
 
-            <p class="text-l1 text-center bold mar-top-1">PemboPay Accountant</p>
+            <p class="text-l1 text-center bold mar-top-1">PemboPay</p>
 
             <form method="post" id="treasury-login-form">
                 @csrf
@@ -54,7 +54,6 @@
             
 
             <div class="w-100 d-flex flex-direction-y align-items-center mar-top-3">
-                <a href="/loginTreasury" class="link-m3">Treasury Login</a>
                 <a href="/Employee" class="link-m3">Employee Timesheet Login</a>
             </div>
             
