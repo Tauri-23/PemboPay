@@ -23,14 +23,14 @@
         @endphp
         <div class="notification-box">
             <div class="notification-pfp">
-                <img class="position-absolute h-100" src="/assets/media/pfp/{{$log->accountant()->first()->pfp}}" alt="pfp">
+                <img class="position-absolute h-100" src="/assets/media/pfp/{{$log->accountant == null ?  "defaultPFP.png" : $log->accountant()->first()->pfp}}" alt="pfp">
             </div>
             <div class="notification-texts">
                 <div class="d-flex w-100 justify-content-between align-items-center">
                     @if ($log->accountant == session('logged_treasury'))
                         <div class="text-l3 fw-bold">Just You</div> 
                     @else
-                        <div class="text-l3 fw-bold">{{$log->accountant()->first()->Firstname}}</div>  
+                        <div class="text-l3 fw-bold">{{$log->accountant == null ? "Deleted Account" : $log->accountant()->first()->Firstname}}</div>  
                     @endif
                 </div>
 
