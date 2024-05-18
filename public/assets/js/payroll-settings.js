@@ -96,13 +96,11 @@ addDeductionsBtn.click(() => {
 
 //function for add form processing
 addTaxModal.find('#add-tax').click(() => {
-    if(isEmptyOrSpaces(taxNameIn.val()) || isEmptyOrSpaces(taxPriceIn.val())) {
+    if(isEmptyOrSpaces(taxNameIn.val())) {
         return;
     }
     formData = new FormData();
     formData.append('name', taxNameIn.val());
-    formData.append('type', taxTypeIn.val());
-    formData.append('price', taxPriceIn.val());
     formData.append('period', taxPeriodIn.val());
 
     DbAjax(formData, "/AddTaxPost", function(response) {

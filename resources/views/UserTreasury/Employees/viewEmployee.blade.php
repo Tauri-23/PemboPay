@@ -172,7 +172,7 @@
                                     <i class="fa-solid fa-pen-to-square mar-end-3"></i>Edit {{ $employee->compensation()->first()->compentsation_type }}
                                 </button>
                                 <small class="w-50">{{ $employee->compensation()->first()->compentsation_type }}:</small>
-                                <small class="w-100">{{ $employee->compensation()->first()->value }}</small>
+                                <small class="w-100">{{ "₱ " . number_format($employee->compensation()->first()->value, 2, '.', ',') }}</small>
                             </div>
                         </div>
                     </div>

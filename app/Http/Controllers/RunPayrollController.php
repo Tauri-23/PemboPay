@@ -9,6 +9,7 @@ use App\Models\DeductionRecord;
 use App\Models\DeductionRecordEmployee;
 use App\Models\PayrollRecord;
 use App\Models\PayrollRecordSummary;
+use App\Models\tax_record_employees;
 use App\Models\taxes_record;
 use Illuminate\Http\Request;
 
@@ -32,7 +33,7 @@ class RunPayrollController extends Controller
         $tempAllowanceRecordsEmployees = json_decode($request->input('temp_allowance_records_employees'), true);
         $tempDeductionRecords = json_decode($request->input('temp_deduction_records'), true);
         $tempDeductionRecordsEmployees = json_decode($request->input('temp_deduction_records_employees'), true);
-        $tempTaxesRecords = json_decode($request->input('temp_taxes_records'), true);
+        $tempTaxesRecordEmployees = json_decode($request->input('temp_taxes_record_employees'), true);
 
         foreach($tempPayrollRecords as $tempPayroll) {
             $payrollRecords = new PayrollRecord;
@@ -109,13 +110,13 @@ class RunPayrollController extends Controller
             $deductionRecordsEmp->save();
         }
 
-        foreach($tempTaxesRecords as $taxRecord) {
-            $taxRecords = new taxes_record;
+        foreach($tempTaxesRecordEmployees as $taxRecord) {
+            $taxRecords = new tax_record_employees;
             $taxRecords->id = $taxRecord['id'];
+            $taxRecords->employee = $taxRecord['employee'];
             $taxRecords->payroll_period = $taxRecord['payroll_period'];
             $taxRecords->tax_name = $taxRecord['tax_name'];
             $taxRecords->tax_price = $taxRecord['tax_price'];
-            $taxRecords->tax_type = $taxRecord['tax_type'];
             
             $taxRecords->save();
         }

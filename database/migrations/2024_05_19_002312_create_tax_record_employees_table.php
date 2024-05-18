@@ -11,13 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('taxes', function (Blueprint $table) {
+        Schema::create('tax_record_employees', function (Blueprint $table) {
             $table->string('id', 6)->primary();
-            $table->string('name');
-            $table->string('period');
+            $table->string('employee', 6)->nullable();
+            $table->string('payroll_period');
+            $table->string('tax_name');
+            $table->float('tax_price');
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+
+            /**
+             * Foreign Keys
+             */
+            $table->foreign('employee')
+                ->references('id')
+                ->on('employees')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
         });
     }
 
@@ -26,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('taxes');
+        Schema::dropIfExists('tax_record_employees');
     }
 };

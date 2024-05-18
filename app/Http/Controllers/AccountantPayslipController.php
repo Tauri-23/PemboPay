@@ -10,6 +10,7 @@ use App\Models\DeductionRecord;
 use App\Models\DeductionRecordEmployee;
 use App\Models\Employees;
 use App\Models\PayrollRecord;
+use App\Models\tax_record_employees;
 use App\Models\taxes_record;
 use Illuminate\Http\Request;
 
@@ -67,7 +68,7 @@ class AccountantPayslipController extends Controller
             //Deductions and Taxes
             "deductionRecord" => DeductionRecord::where('payroll_period', $payrollPeriod)->get(),
             "deductionRecordSelf" => DeductionRecordEmployee::whereIn('employee', $employeeIds)->where('payroll_period', $payrollPeriod)->get(),
-            "taxRecord" => taxes_record::where('payroll_period', $payrollPeriod)->get()
+            "taxRecord" => tax_record_employees::where('payroll_period', $payrollPeriod)->get()
         ]);
     }
 }

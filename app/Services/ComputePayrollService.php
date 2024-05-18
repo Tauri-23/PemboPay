@@ -15,8 +15,10 @@ use App\Models\PayrollRecordSummary;
 use App\Models\settings_allowance;
 use App\Models\SettingsDeductions;
 use App\Models\SettingsPayrollPeriod;
+use App\Models\tax_record_employees;
 use App\Models\taxes;
 use App\Models\taxes_record;
+use App\Models\TaxValues;
 use App\Models\timesheet;
 use Carbon\Carbon;
 use DateTime;
@@ -46,7 +48,7 @@ class ComputePayrollService implements IComputePayrollService {
     private $temp_allowance_records_employees = [];
     private $temp_deduction_records = [];
     private $temp_deduction_records_employees = [];
-    private $temp_taxes_records = [];
+    private $temp_taxes_record_employees = [];
 
     public function __construct(IGenerateIdService $generateId) {
         $this->generateId = $generateId;
@@ -82,7 +84,7 @@ class ComputePayrollService implements IComputePayrollService {
             "temp_allowance_records_employees" => $this->temp_allowance_records_employees,
             "temp_deduction_records" => $this->temp_deduction_records,
             "temp_deduction_records_employees" => $this->temp_deduction_records_employees,
-            "temp_taxes_records" => $this->temp_taxes_records,
+            "temp_taxes_record_employees" => $this->temp_taxes_record_employees,
             "period" => $payrollPeriod
         ]);
     }
@@ -221,6 +223,42 @@ class ComputePayrollService implements IComputePayrollService {
                 "basic_pay" => $basicPay
             ];
 
+            // TODO::
+            //All Tax Record Per Employee
+            foreach($this->generalTaxes as $tax) {
+                $totalTax = 0.0;
+
+                if($this->generalTaxes == null) {
+                    $totalTax = 0.0;
+                }
+
+                foreach($this->generalTaxes as $taxes) {
+                    $taxTable = TaxValues::where('tax', $taxes->id)->get(); // Get the tax table in the tax
+
+                    $excessTaxable = 0;
+
+                    foreach($taxTable as $taxTbl) {
+                        
+                        if($basicPay > $taxTbl->threshold_min && $basicPay < $taxTbl->threshold_max) {
+                            $excessTaxable = $basicPay - $taxTbl->threshold_min;
+                            $totalTax += ($excessTaxable * ($taxTbl->price_percent / 100)) - $taxTbl->price_amount;
+                        }
+                    }
+
+                }
+
+
+                $temp_tax_record_employee = [
+                    "id" => $this->generateId->generate(tax_record_employees::class),
+                    "employee" => $emp->id,
+                    "payroll_period" => $payrollPeriod,
+                    "tax_name" => $tax->name,
+                    "tax_price" => $totalTax,
+                ];
+
+                $this->temp_taxes_record_employees[] = $temp_tax_record_employee;
+            }
+
             
             $this->getAllowanceRecordEmp($emp->id, $payrollPeriod); //Allowance Record specific employee
             $this->getDeductionRecordEmp($emp->id, $payrollPeriod); //Deduction Record specific employee
@@ -262,18 +300,6 @@ class ComputePayrollService implements IComputePayrollService {
                 "deduction_type" => $deduction->type
             ];
             $this->temp_deduction_records[] = $temp_deduction_record;
-        }
-
-        //tax record overall
-        foreach($this->generalTaxes as $tax) {
-            $temp_tax_record = [
-                "id" => $this->generateId->generate(taxes_record::class),
-                "payroll_period" => $payrollPeriod,
-                "tax_name" => $tax->name,
-                "tax_price" => $tax->period == "Monthly" ? $tax->price / 2 : $tax->price,
-                "tax_type" => $tax->type
-            ];
-            $this->temp_taxes_records[] = $temp_tax_record;
         }
 
         $this->temp_payroll_record_summaries[] = $temp_payroll_record_summary;
@@ -385,12 +411,17 @@ class ComputePayrollService implements IComputePayrollService {
         }
 
         foreach($this->generalTaxes as $taxes) {
-            if($taxes->type == "Amount") {
-                $totalTax += $taxes->period == "Monthly" ? $taxes->price / 2 : $taxes->price;
+            $taxTable = TaxValues::where('tax', $taxes->id)->get();
+
+            $excessTaxable = 0;
+            foreach($taxTable as $taxTbl) {
+                
+                if($basicPay > $taxTbl->threshold_min && $basicPay < $taxTbl->threshold_max) {
+                    $excessTaxable = $basicPay - $taxTbl->threshold_min;
+                    $totalTax += ($excessTaxable * ($taxTbl->price_percent / 100)) - $taxTbl->price_amount;
+                }
             }
-            else {
-                $totalTax += $taxes->period == "Monthly" ? (($taxes->price / 2) * $basicPay) / 100 : ($taxes->price * $basicPay) / 100;
-            }
+
         }
 
         return $totalTax;

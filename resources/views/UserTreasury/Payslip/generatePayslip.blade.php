@@ -133,13 +133,17 @@
                                     <div>
                                         {{-- Taxes names --}}
                                         @foreach ($taxRecord as $tax)
-                                            <small>{{$tax->tax_name}}</small><br />
+                                            @if ($tax->employee == $emp->id)
+                                                <small>{{$tax->tax_name}}</small><br />
+                                            @endif                                            
                                         @endforeach
                                     </div>
                                     <div class="text-right">
                                         {{-- Taxes Value --}}
                                         @foreach ($taxRecord as $tax)
-                                            <small>{{"₱ " . number_format($tax->tax_type == "Amount" ? $tax->tax_price : $tax->tax_price * $basicPay / 100, 2, '.', ',')}}</small><br />
+                                            @if ($tax->employee == $emp->id)
+                                                <small>{{"₱ " . number_format($tax->tax_price, 2, '.', ',')}}</small><br />
+                                            @endif  
                                         @endforeach
                                     </div>
                                 </div>

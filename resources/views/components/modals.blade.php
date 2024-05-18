@@ -151,25 +151,67 @@
                         <div class="flex-grow-1">
                             <label for="tax-name-in" class="text-m2 mar-bottom-3">Tax name</label>
                             <input name="tax-name-in" class="edit-text-1 w-100" id="tax-name-in" type="text" placeholder="Tax Name" />
-                            <div class="color-AppRed d-none" id="taxname-required">Please enter Taxt name</div>
-                        </div>
-
-                        <div class="d-flex align-items-center position-relative gap3">
-                            <select id="tax-type-in" class="edit-text-1">
-                                <option value="Percent">%</option>
-                                <option value="Amount">₱</option>
-                            </select>
-                            <input type="number" id="tax-price-in" step="any" class="edit-text-1 w-100" placeholder="Tax Value" />
+                            <div class="color-AppRed d-none" id="taxname-required">Please enter Tax name</div>
                         </div>
 
                         <div class="d-flex flex-direction-y gap3 mar-top-3">
-                            <label for="tax-period-in" class="text-m2 mar-bottom-3">Period</label>
+                            <label for="tax-period-in" class="text-m2">Period</label>
                             <select id="tax-period-in" class="edit-text-1 w-100">
                                 <option value="Quarterly">Quarterly</option>
                                 <option value="Monthly">Montly</option>
                             </select>
                         </div>
 
+
+                    </div>
+                </form>
+            </div>
+            <button class="primary-btn1-small w-100 mar-top-1" id="add-tax">Add</button>
+        </div>
+    </div>
+
+
+@elseif($modalType == 'add-tax-column')
+    <div class="modal1 d-none" id="add-tax-column-modal">
+        <div class="modal1-box-flexible">
+            <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
+            <div class="modal1-txt-title fw-bold text-l3" id="modal-1-title">
+                Add Tax Column
+                <form method="post">
+                    <div class="d-flex flex-direction-y gap3 mar-top-2">
+                        <div class="flex-grow-1">
+                            <label for="tax-name-in" class="text-m2 mar-bottom-3">Value in Percent</label>
+                            <div class="d-flex align-items-center gap3">
+                                <input class="edit-text-1 w-100" id="val-percent-in" min="0" type="number" step="any"/>
+                                <div>%</div>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <label for="tax-name-in" class="text-m2 mar-bottom-3">Value in Amount</label>
+                            <div class="d-flex align-items-center gap3">
+                                <div>₱</div>
+                                <input class="edit-text-1 w-100" id="val-amount-in" min="0" type="number" step="any"/>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow-1 d-flex gap1">
+                            <div>
+                                <label for="tax-name-in" class="text-m2 mar-bottom-3">Threshold min</label>
+                                <div class="d-flex align-items-center gap3">
+                                    <div>₱</div>
+                                    <input class="edit-text-1 w-100" id="threshold-min-in" min="0" type="number" step="any"/>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="tax-name-in" class="text-m2 mar-bottom-3">Threshold max</label>
+                                <div class="d-flex align-items-center gap3">
+                                    <div>₱</div>
+                                    <input class="edit-text-1 w-100" id="threshold-max-in" min="0" type="number" step="any"/>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </form>
