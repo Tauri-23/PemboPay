@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="/assets/css/navbar.css">
         <link rel="stylesheet" href="/assets/css/treasury-dash.css">
         <link rel="stylesheet" href="/assets/css/forms.css">
+        <link rel="stylesheet" href="/assets/css/tables.css">
+        <link rel="stylesheet" href="/assets/css/view-employee.css">
 
         {{-- Icon --}}
         <link rel="icon" href="/assets/media/logos/mwp-pembo.png" type="image/x-icon" />
@@ -30,15 +32,17 @@
     </head>
     <body>
         {{-- MOdal --}}
+        <x-modals modalType="info-yn"/>
+
         <x-modals modalType="success"/>
         <x-modals modalType="error"/>
-        <x-modals modalType="info-yn"/>
+        
 
         {{-- Sidenav --}}
         <x-employee-sidenav activeLink="2"/>
 
         {{-- nav small option --}}
-        <x-NavSmallOption/>
+        <x-employee_nav_small_option/>
         
 
         {{-- Navbar --}}
@@ -47,8 +51,133 @@
 
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2">
-            
-                        
+            <div class="mar-bottom-1" id="timesheet-cont">
+                <div class="d-flex flex-direction-d gap3">
+                    <div class="timesheet-cont">
+                        <div class="timesheet-head">
+                            <small class="text-m2 bold">Time Sheet</small>
+                            {{-- <div class="d-flex gap2">
+                                <select class="select-long2" id="timesheet-months">
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="February">March</option>
+                                    <option value="February">April</option>
+                                    <option value="February">May</option>
+                                    <option value="February">June</option>
+                                    <option value="February">July</option>
+                                    <option value="February">August</option>
+                                    <option value="February">September</option>
+                                    <option value="February">October</option>
+                                    <option value="February">November</option>
+                                    <option value="February">December</option>
+                                </select>
+
+                                <select class="select-long2" id="timesheet-year">
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2027">2027</option>
+                                </select>
+                            </div> --}}
+                        </div>
+
+                        <div class="line1 mar-top-3 mar-bottom-3"></div>
+
+
+                        <div id="timesheet-canvas">
+
+                            <div class="timesheet-table-header">
+                                <small class="form-data-col fw-bold">Day</small>
+                                <small class="form-data-col fw-bold">Time-in</small>
+                                <small class="form-data-col fw-bold">Time-out</small>
+                                <small class="form-data-col fw-bold">Status</small>
+                            </div>
+
+                            
+                            
+                            <div class="week-label">Week 1</div>
+                            @php
+                                $week = 1;
+                            @endphp
+                            {{-- Loops to Date in month now --}}
+                            @foreach ($datesInRange as $date)  
+
+                                @if ($date->format('l') == "Saturday")
+                                    @continue;
+                                @endif
+
+                                @if ($date->format('l') == "Sunday")
+                                    @php
+                                        $week ++;
+                                    @endphp
+                                    <div class="week-label">week {{$week}}</div>
+                                    @continue;
+                                @endif
+
+
+                                @php
+                                    $dateString = $date->format('Y-m-d');
+                                    $isHoliday = false;
+                                    $isPresent = false;
+
+                                    // Check if date is a holiday
+                                    foreach ($holidays as $holiday) {
+                                        if ($holiday->holiday_date == $dateString) {
+                                            $isHoliday = true;
+                                            break;
+                                        }
+                                    }
+
+
+                                    // check if date hase timesheet data
+                                    foreach ($timesheetDates as $time) {
+                                        if($time->created_at->format('Y-m-d') == $dateString) {
+                                            $isPresent = true;
+                                            break;
+                                        }
+                                    }
+                                @endphp
+
+                                @if ($date->now() < $date)
+                                    <div class="timesheet-table-data null">
+                                        <small class="form-data-col">{{$date->format('M d, Y - l')}}</small>
+                                        <small class="form-data-col">-:-- --</small>
+                                        <small class="form-data-col">-:-- --</small>
+                                        <small class="form-data-col">------</small>
+                                    </div>  
+                                @else
+                                    <div class="timesheet-table-data {{$isHoliday ? 'holiday' : ($isPresent ? 'good' : 'bad')}}">
+                                        <small class="form-data-col">{{$date->format('M d, Y - l')}}</small>
+                                        @if ($isHoliday)
+                                            <small class="form-data-col">-:-- --</small>
+                                            <small class="form-data-col">-:-- --</small>
+                                            <small class="form-data-col">Holiday</small>
+                                        @elseif($isPresent)
+                                            @foreach ($timesheetDates as $time)
+                                                @if ($time->created_at->format('Y-m-d') == $dateString)
+                                                    <small class="form-data-col">{{ \Carbon\Carbon::parse($time->time_in)->format('g:i a') }}</small>
+                                                    <small class="form-data-col">{{ $time->time_out ? \Carbon\Carbon::parse($time->time_out)->format('g:i a') : '--:-- --' }}</small>
+                                                    <small class="form-data-col">Present</small>
+                                                    @break
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <small class="form-data-col">-:-- --</small>
+                                            <small class="form-data-col">-:-- --</small>
+                                            <small class="form-data-col">Absent</small>
+                                        @endif
+                                    </div>                             
+                                @endif
+
+                                
+                                
+                            @endforeach
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </body>

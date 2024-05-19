@@ -7,12 +7,13 @@ const successModal = $('#success-modal');
 const errorModal = $('#error-modal')
 
 timeInBtn.click(() => {
-    let timedIn = new Date().toISOString().slice(0, 19).replace('T', ' ');
-
+    let timedIn = formatDate(new Date());
 
     let formData = new FormData;
     formData.append('empId', $('#emp-id').val());
     formData.append('timein', timedIn);
+
+    //alert(timedIn);
 
     $.ajax({
         type: "POST",
@@ -40,7 +41,7 @@ timeInBtn.click(() => {
 });
 
 timeOutBtn.click(() => {
-    let timedOut = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    let timedOut = formatDate(new Date());
 
     let formData = new FormData();
     formData.append('attendanceId', $('#attendance-id').val());

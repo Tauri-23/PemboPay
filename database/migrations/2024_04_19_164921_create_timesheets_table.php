@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('timesheets', function (Blueprint $table) {
-            $table->string('id', 6)->primary();
+            $table->id();
             $table->string('employee', 6)->nullable();
             $table->dateTime('time_in');
             $table->dateTime('time_out')->nullable();

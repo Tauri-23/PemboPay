@@ -132,7 +132,7 @@ Route::post('/DelDeductionPost', [AccountantPaySettingsController::class, 'DelDe
 */
 Route::get('/Employee', [EmployeesController::class, 'loginPage']);
 Route::get('/EmployeeDash', [EmployeesController::class, 'dashboard']);
-Route::get('EmployeeTimesheet', [EmployeesController::class, 'timesheet']);
+Route::get('/EmployeeTimesheet', [EmployeesController::class, 'timesheet']);
 Route::post('/EmployeeLogin', [EmployeesController::class, 'login']);
 Route::post('/timeIn', [EmployeesController::class, 'timeIn']);
 Route::post('/timeOut', [EmployeesController::class, 'timeOut']);

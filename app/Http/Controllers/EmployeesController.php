@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\IGenerateIdService;
 use App\Models\Employees;
+use App\Models\Holidays;
 use App\Models\timesheet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,8 +30,24 @@ class EmployeesController extends Controller
     }
 
     public function timesheet() {
+        $timesheets = timesheet::where('employee', session('logged_employee'))->get();
+        $holidays = Holidays::all();
+
+        // Generate a range of dates to display in the calendar (e.g., current month)
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
+        $datesInRange = [];
+
+        for($date = $startDate; $date->lte($endDate); $date->addDay()) {
+            $datesInRange[] = $date->copy();
+        }
+
+
         return view('UserEmployees.Timesheet.index', [
-            'loggedEmployee' => Employees::find(session('logged_employee'))
+            'loggedEmployee' => Employees::find(session('logged_employee')),
+            'timesheetDates' => $timesheets,
+            'datesInRange' => $datesInRange,
+            'holidays' => $holidays
         ]);
     }
 
