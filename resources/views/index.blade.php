@@ -29,15 +29,22 @@
         {{-- Modals --}}
         <x-LoginModals modalType="wrong-credentials"/>
         <x-LoginModals modalType="something-went-wrong"/>
+
+        <x-modals modalType="success"/>
+        <x-modals modalType="error"/>
         
         {{-- Main Content --}}
-        <div class="container-box-s center-absolute-xy">
+
+        {{-- Login --}}
+        <div class="container-box-s center-absolute-xy" id="login-box">
+
             <div class="logo-l logo-login">
                 <img class="position-absolute w-100 h-100" src="/assets/media/logos/mwp-pembo.png" />
             </div>
 
             <p class="text-l1 text-center bold mar-top-1">PemboPay</p>
 
+            
             <form method="post" id="treasury-login-form">
                 @csrf
                 <input id="username" name="username" class="edit-text-1 w-100 mar-top-2" placeholder="Username" type="text" />
@@ -46,22 +53,92 @@
                     <i class="fa-solid fa-eye position-absolute right3 cursor-pointer" id="show-pass-btn"></i>
                 </div>
                 <div class="w-100 d-flex justify-content-end mar-top-3">
-                    <a class="link-m3">Forgot Password</a>
+                    <a class="link-m3" id="forgot-pass-btn">Forgot Password</a>
                 </div>
                 <button id="login-btn" class="primary-btn1-small w-100 mar-top-1">Login</button>
             </form>
-
-            
 
             <div class="w-100 d-flex flex-direction-y align-items-center mar-top-3">
                 <a href="/Employee" class="link-m3">Employee Timesheet Login</a>
             </div>
             
         </div>
+
+
+        {{-- Forgot Password 1 --}}
+        <div class="container-box-s center-absolute-xy d-none" id="forgot-password-email-cont">
+
+            <div class="logo-l logo-login">
+                <img class="position-absolute w-100 h-100" src="/assets/media/logos/mwp-pembo.png" />
+            </div>
+
+            <p class="text-l1 text-center bold mar-top-1">Forgot Password</p>
+
+            
+            <form method="post" id="treasury-login-form">
+                @csrf
+                <input id="forgot-pass-email-in" class="edit-text-1 w-100 mar-top-2" placeholder="Email" type="text" />
+                <div id="next-btn" class="primary-btn1-small w-100 mar-top-1">Next</div>
+            </form>
+            
+        </div>
+
+
+        {{-- Forgot Password 2 --}}
+        <div class="container-box-s center-absolute-xy d-none" id="forgot-password-otp-cont">
+
+            <div class="logo-l logo-login">
+                <img class="position-absolute w-100 h-100" src="/assets/media/logos/mwp-pembo.png" />
+            </div>
+
+            <p class="text-l1 text-center bold mar-top-1">Forgot Password</p>
+
+            
+            <form method="post" id="treasury-login-form">
+                @csrf
+                <input id="forgot-pass-otp-in" class="edit-text-1 w-100 mar-top-2" placeholder="OTP" type="text" />
+                <div id="next-btn" class="primary-btn1-small w-100 mar-top-1">Next</div>
+            </form>
+            
+        </div>
+
+
+        {{-- Forgot Password 3 --}}
+        <div class="container-box-s center-absolute-xy d-none" id="forgot-password-change-cont">
+
+            <div class="logo-l logo-login">
+                <img class="position-absolute w-100 h-100" src="/assets/media/logos/mwp-pembo.png" />
+            </div>
+
+            <p class="text-l1 text-center bold mar-top-1">Forgot Password</p>
+
+            
+            <form method="post" id="treasury-login-form">
+                @csrf
+                <div class="d-flex position-relative align-items-center mar-top-2">
+                    <input id="new-pass-in" class="edit-text-1 w-100" placeholder="New Password" type="password" />
+                    <i class="fa-solid fa-eye position-absolute right3 cursor-pointer" id="show-pass-btn-newpass"></i>
+                </div>
+                <div class="d-flex position-relative align-items-center mar-top-2">
+                    <input id="con-new-pass-in" class="edit-text-1 w-100" placeholder="Confirm Password" type="password" />
+                    <i class="fa-solid fa-eye position-absolute right3 cursor-pointer" id="show-pass-btn-conpass"></i>
+                </div>
+                <div id="change-pass-btn" class="primary-btn1-small w-100 mar-top-1">Change Password</div>
+            </form>
+            
+        </div>
+
+
+
+
+
+
+
     </body>
 
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/login.js"></script>
+    <script src="/assets/js/forgot-pass.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </html>

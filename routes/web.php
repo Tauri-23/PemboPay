@@ -5,15 +5,13 @@ use App\Http\Controllers\AccountantPayslipController;
 use App\Http\Controllers\AccountantProfileController;
 use App\Http\Controllers\AccountantReportController;
 use App\Http\Controllers\AdminDashController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\RunPayrollController;
 use App\Http\Controllers\TreasuriesController;
 use App\Http\Controllers\TreasuryDashController;
 use App\Http\Controllers\TreasuryDepartmentsController;
 use App\Http\Controllers\TreasuryEmployeesController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +38,8 @@ Route::get('/', function () {
 Route::post('/loginAccountantPost', [TreasuriesController::class, 'loginAccountantPost']);
 Route::get('/loginTreasury', [TreasuriesController::class, 'loginTreasury']);
 Route::get('/logoutTreasury', [TreasuriesController:: class, 'logout']);
+
+Route::post('/forgotPassword', [ForgotPasswordController::class, 'forgotPasswordPost']);
 
 
 //Home
