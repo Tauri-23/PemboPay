@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\IGenerateFilenameService;
+use App\Contracts\ISaveAccountantLogsDBService;
 use App\Models\AccountantLogs;
 use App\Models\Treasuries;
 use App\Services\GenerateIdService;
@@ -12,10 +13,12 @@ class AccountantProfileController extends Controller
 {
     protected $generateFilename;
     protected $generateId;
+    protected $saveLogDb;
 
-    public function __construct(IGenerateFilenameService $generateFilename, GenerateIdService $generateId) {
+    public function __construct(IGenerateFilenameService $generateFilename, GenerateIdService $generateId, ISaveAccountantLogsDBService $saveLogDb) {
         $this->generateFilename = $generateFilename;
         $this->generateId = $generateId;
+        $this->saveLogDb = $saveLogDb;
     }
 
     public function index($id) {
@@ -77,11 +80,7 @@ class AccountantProfileController extends Controller
         // If success Save
         if($accountant->save()) {
             // Add logs
-            $log = new AccountantLogs;
-            $log->id = $this->generateId->generate(AccountantLogs::class);
-            $log->accountant = session('logged_treasury');
-            $log->title = "Updated ". ($accountant->gender == "Male" ? "his" : "her") ." profile";
-            $log->save();
+            $this->saveLogDb->saveLog("Updated ". ($accountant->gender == "Male" ? "his" : "her") ." profile");
 
             return response()->json([
                 'status' => 200,

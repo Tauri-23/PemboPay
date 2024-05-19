@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\IComputePayrollService;
+use App\Contracts\ISaveAccountantLogsDBService;
 use App\Models\AllowanceRecord;
 use App\Models\AllowanceRecordEmployee;
 use App\Models\DeductionRecord;
@@ -16,8 +17,11 @@ use Illuminate\Http\Request;
 class RunPayrollController extends Controller
 {
     protected $computePayroll;
-    public function __construct(IComputePayrollService $computePayroll) {
+    protected $saveLogDb;
+
+    public function __construct(IComputePayrollService $computePayroll, ISaveAccountantLogsDBService $saveLogDb) {
         $this->computePayroll = $computePayroll;
+        $this->saveLogDb = $saveLogDb;
     }
 
 
@@ -121,6 +125,7 @@ class RunPayrollController extends Controller
             $taxRecords->save();
         }
         
+        $this->saveLogDb->saveLog("Proccessed the payroll for the period of ". $tempPayroll['payroll_period']);
         
         return response()->json([
             "status" => 200

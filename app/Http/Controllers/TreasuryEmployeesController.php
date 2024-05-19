@@ -7,6 +7,7 @@ use App\Contracts\IGenerateFilenameService;
 use App\Contracts\IGenerateIdService;
 use App\Contracts\ILoggedService;
 use App\Contracts\IRetrieveService;
+use App\Contracts\ISaveAccountantLogsDBService;
 use App\Models\AccountantLogs;
 use App\Models\Barangays;
 use App\Models\Cities;
@@ -26,12 +27,16 @@ class TreasuryEmployeesController extends Controller
     protected $retrieveDb; // service to retrieve all from specific table in database
     protected $generateId;
     protected $generateFilename;
+    protected $saveLogDb;
 
-    public function __construct(ILoggedService $loggedService, IRetrieveService $retrieveDb, IGenerateIdService $generateId, IGenerateFilenameService $generateFilename) {
+    public function __construct(ILoggedService $loggedService, IRetrieveService $retrieveDb, 
+        IGenerateIdService $generateId, IGenerateFilenameService $generateFilename,
+        ISaveAccountantLogsDBService $saveLogDb) {
         $this->loggedService = $loggedService;
         $this->retrieveDb = $retrieveDb;
         $this->generateId = $generateId;
         $this->generateFilename = $generateFilename;
+        $this->saveLogDb = $saveLogDb;
     }
 
 
@@ -88,11 +93,7 @@ class TreasuryEmployeesController extends Controller
 
         if($emp->save()) {
             // Add logs
-            $log = new AccountantLogs;
-            $log->id = $this->generateId->generate(AccountantLogs::class);
-            $log->accountant = session('logged_treasury');
-            $log->title = "Added an Employee: ".$request->emp_fname." ".$request->emp_mname." ".$request->emp_lname;
-            $log->save();
+            $this->saveLogDb->saveLog("Added an Employee: ".$request->emp_fname." ".$request->emp_mname." ".$request->emp_lname);
 
             return response()->json([
                 'status' => 200,
@@ -167,11 +168,7 @@ class TreasuryEmployeesController extends Controller
 
         if($employee->save()) {
             // Add logs
-            $log = new AccountantLogs;
-            $log->id = $this->generateId->generate(AccountantLogs::class);
-            $log->accountant = session('logged_treasury');
-            $log->title = "Edited Employee's ".$request->editType.": ".$request->old_fullname;
-            $log->save();
+            $this->saveLogDb->saveLog("Edited Employee's ".$request->editType.": ".$request->old_fullname);
 
             return response()->json([
                 'status' => 200,
@@ -246,11 +243,7 @@ class TreasuryEmployeesController extends Controller
 
         if($employee->save()) {
             // Add logs
-            $log = new AccountantLogs;
-            $log->id = $this->generateId->generate(AccountantLogs::class);
-            $log->accountant = session('logged_treasury');
-            $log->title = "Edited Employee's Profile Picture: ". $employee->firstname . " " . $employee->lastname;
-            $log->save();
+            $this->saveLogDb->saveLog("Edited Employee's Profile Picture: ". $employee->firstname . " " . $employee->lastname);
 
             return response()->json([
                 'status' => 200,
@@ -278,11 +271,7 @@ class TreasuryEmployeesController extends Controller
         }
 
         // Add logs
-        $log = new AccountantLogs;
-        $log->id = $this->generateId->generate(AccountantLogs::class);
-        $log->accountant = session('logged_treasury');
-        $log->title = "Deleted an Employee: ".$request->empName;
-        $log->save();
+        $this->saveLogDb->saveLog("Deleted an Employee: ".$request->empName);
 
         $employee->delete();
         return response()->json([

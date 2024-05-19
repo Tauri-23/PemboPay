@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\IGenerateIdService;
 use App\Contracts\ILoggedService;
+use App\Contracts\ISaveAccountantLogsDBService;
 use App\Models\AccountantLogs;
 use App\Models\settings_allowance;
 use App\Models\SettingsDeductions;
@@ -16,11 +17,15 @@ class AccountantPaySettingsController extends Controller
 {
     protected $loggedService;
     protected $generateId;
+    protected $saveLogDb;
 
-    public function __construct(ILoggedService $loggedService, IGenerateIdService $generateId) {
+    public function __construct(ILoggedService $loggedService, IGenerateIdService $generateId, ISaveAccountantLogsDBService $saveLogDb) {
         $this->loggedService = $loggedService;
         $this->generateId = $generateId;
+        $this->saveLogDb = $saveLogDb;
     }
+
+
     public function payrollSettings() {
         return view('UserTreasury.PayrollSettings.index', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
@@ -51,6 +56,7 @@ class AccountantPaySettingsController extends Controller
         $taxes->period = $request->period;
 
         if($taxes->save()) {
+            $this->saveLogDb->saveLog("Add a tax table".$request->name." table."); // Add logs to db
             return response()->json([
                 'status' => 200,
                 'message' => 'success'
@@ -83,12 +89,7 @@ class AccountantPaySettingsController extends Controller
         $taxCol->threshold_max = $request->thresholdMax;
 
         if($taxCol->save()) {
-            // Add logs
-            $log = new AccountantLogs;
-            $log->id = $this->generateId->generate(AccountantLogs::class);
-            $log->accountant = session('logged_treasury');
-            $log->title = "Add a tax column in ".$taxTable->name." table.";
-            $log->save();
+            $this->saveLogDb->saveLog("Add a tax column in ".$taxTable->name." table."); // Add logs to db
 
             return response()->json([
                 'status' => 200,
@@ -103,23 +104,97 @@ class AccountantPaySettingsController extends Controller
         }
     }
 
+
+    public function editTaxColumnPost(Request $request) {
+        $taxTable = taxes::find($request->taxId);
+
+        if(!$taxTable) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Invalid Tax Table please try again later.'
+            ]);
+        }
+
+        $taxCol = TaxValues::find($request->taxColId);
+        $taxCol->price_percent = $request->valuePercent;
+        $taxCol->price_amount = $request->valueAmt;
+        $taxCol->threshold_min = $request->thresholdMin;
+        $taxCol->threshold_max = $request->thresholdMax;
+
+        if($taxCol->save()) {
+            // Add logs
+            $this->saveLogDb->saveLog("Edited a tax column in ".$taxTable->name." table."); // Add logs to db
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Tax column has been successfully edited.'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Failed editing tax column please try again later.'
+            ]);
+        }
+    }
+
+    public function delTaxColumnPost(Request $request) {
+        $taxTable = taxes::find($request->taxId);
+
+        if(!$taxTable) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Invalid Tax Table please try again later.'
+            ]);
+        }
+
+        $taxCol = TaxValues::find($request->taxColId);
+
+        if($taxCol->delete()) {
+            // Add logs
+            $this->saveLogDb->saveLog("Deleted a tax column in ".$taxTable->name." table."); // Add logs to db
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Tax column has been successfully edited.'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Failed editing tax column please try again later.'
+            ]);
+        }
+    }
+
+
+
+
+
+
     public function AddAllowancePost(Request $request) {
+        $this->saveLogDb->saveLog("Added an Allowance ". $request->name); // Add logs to db
         return $this->AddToDb($request, new settings_allowance);
+        
     }
 
     public function AddDeductionsPost(Request $request) {
+        $this->saveLogDb->saveLog("Added a Deduction ". $request->name); // Add logs to db
         return $this->AddToDb($request, new SettingsDeductions);
     }
 
     public function DelTaxPost(Request $request) {
+        $this->saveLogDb->saveLog("Removed a tax table".$request->id); // Add logs to db
         return $this->DelToDb($request, new taxes);
     }
 
     public function DelAllowancenPost(Request $request) {
+        $this->saveLogDb->saveLog("Removed an Allowance ". $request->id); // Add logs to db
         return $this->DelToDb($request, new settings_allowance);
     }
 
     public function DelDeductionPost(Request $request) {
+        $this->saveLogDb->saveLog("Removed a Deduction ". $request->id); // Add logs to db
         return $this->DelToDb($request, new SettingsDeductions);
     }
 

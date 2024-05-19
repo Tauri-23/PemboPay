@@ -38,7 +38,7 @@
         <x-employee-sidenav activeLink="1"/>
 
         {{-- nav small option --}}
-        <x-NavSmallOption/>
+        <x-employee_nav_small_option/>
         
 
         {{-- Navbar --}}
@@ -49,7 +49,10 @@
         <div class="content-cont-1 d-flex flex-direction-y gap2">
             
             <div class="container-box-s center-absolute-xy d-flex flex-direction-y gap2 align-items-center">
-                <img class="modal-pfp" src="/assets/media/pfp/{{$loggedEmployee->pfp}}" alt="pfp">
+                <div class="modal-pfp">
+                    <img class="position-absolute h-100" src="/assets/media/pfp/{{$loggedEmployee->pfp}}" alt="pfp">
+                </div>
+                
 
                 <form method="post">
                     @csrf

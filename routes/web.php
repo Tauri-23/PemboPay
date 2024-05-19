@@ -105,8 +105,12 @@ Route::post('/AccountantEditDeptPost', [TreasuryDepartmentsController::class, 'e
 //Payroll Settings
 Route::get('/AccountantPayrollSettings', [AccountantPaySettingsController::class, 'payrollSettings']);
 Route::get('/viewTaxTable/{id}', [AccountantPaySettingsController::class, 'viewTaxTable']);
+
 Route::post('/AddTaxPost', [AccountantPaySettingsController::class, 'AddTaxPost']);
 Route::post('/AccountantAddTaxCol', [AccountantPaySettingsController::class, 'addTaxColumnPost']);
+Route::post('/AccountantEditTaxCol', [AccountantPaySettingsController::class, 'editTaxColumnPost']);
+Route::post('/AccountantDelTaxCol', [AccountantPaySettingsController::class, 'delTaxColumnPost']);
+
 Route::post('/AddAllowancePost', [AccountantPaySettingsController::class, 'AddAllowancePost']);
 Route::post('/AddDeductionPost', [AccountantPaySettingsController::class, 'AddDeductionsPost']);
 Route::post('/DelTaxPost', [AccountantPaySettingsController::class, 'DelTaxPost']);

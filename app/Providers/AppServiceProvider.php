@@ -9,12 +9,14 @@ use App\Contracts\ILoggedService;
 use App\Contracts\IRetrieveIdService;
 use App\Contracts\IRetrieveService;
 use App\Contracts\IRetrieveWhereService;
+use App\Contracts\ISaveAccountantLogsDBService;
 use App\Contracts\ISendEmailService;
 use App\Services\ComputePayrollService;
 use App\Services\GenerateFilenameService;
 use App\Services\GenerateIdService;
 use App\Services\LoggedService;
 use App\Services\RetrieveService;
+use App\Services\SaveAccountantLogsDBService;
 use App\Services\SendEmailService;
 use Illuminate\Support\ServiceProvider;
 
@@ -41,6 +43,9 @@ class AppServiceProvider extends ServiceProvider
 
         // Emails
         $this->app->bind(ISendEmailService::class, SendEmailService::class);
+
+        // Add Logs To DB
+        $this->app->bind(ISaveAccountantLogsDBService::class, SaveAccountantLogsDBService::class);
 
     }
 

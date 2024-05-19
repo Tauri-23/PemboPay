@@ -17,7 +17,6 @@
             </div>
         
         
-            {{--Data Fetched from the database this is for ui for now--}}
             @foreach ($elements as $elm)
                 <div  class="table1-data {{ $loop->last ? 'last' : '' }}">
                     <small class="form-data-col">{{$elm->name}}</small>
@@ -25,9 +24,6 @@
                     <div class="form-data-col d-flex justify-content-end gap3">
                         <a class="primary-btn2-small {{"del-btn-".$elementsName}}" id="{{$elm->id}}">
                             <i class="bi bi-trash"></i>
-                        </a>
-                        <a class="primary-btn3-small {{"edit-btn-".$elementsName}}" id="{{$elm->id}}">
-                            <i class="bi bi-pen"></i>
                         </a>
                         <a href="/viewTaxTable/{{$elm->id}}" class="primary-btn1-small" id="{{$elm->id}}">
                             <i class="bi bi-table"></i>
@@ -39,7 +35,7 @@
     @else
         <div class="table1">
             <div class="table1-header">
-                <small class="text-m2 form-data-col">Tax name</small>
+                <small class="text-m2 form-data-col">{{$elementsName}} name</small>
                 <small class="text-m2 form-data-col">Amount</small>
                 <small class="text-m2 form-data-col">Period</small>
                 <small class="text-m2 form-data-col d-flex justify-content-end">Action</small>

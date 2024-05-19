@@ -32,6 +32,8 @@
     <body>
         {{-- Modals --}}
         <x-modals modalType="add-tax-column"/>
+        <x-modals modalType="edit-tax-column"/>
+        <x-modals modalType="warning-yn"/>
         <x-modals modalType="success"/>
         <x-modals modalType="error"/>
 
@@ -76,6 +78,7 @@
     <script src="/assets/js/navbar.js"></script>
     <script>
         const taxId = {!! json_encode($tax->id) !!};
+        const taxColumns = {!! json_encode($taxCol) !!};
     </script>
     <script src="/assets/js/tax-table.js"></script>
     

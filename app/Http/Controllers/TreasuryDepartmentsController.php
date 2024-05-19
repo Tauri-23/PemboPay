@@ -7,6 +7,7 @@ use App\Contracts\ILoggedService;
 use App\Contracts\IRetrieveIdService;
 use App\Contracts\IRetrieveService;
 use App\Contracts\IRetrieveWhereService;
+use App\Contracts\ISaveAccountantLogsDBService;
 use App\Models\AccountantLogs;
 use App\Models\Departments;
 use App\Models\Employees;
@@ -20,12 +21,17 @@ class TreasuryDepartmentsController extends Controller
     protected $retrieveWhereDb; //retriever using WHERE
     protected $generateId;
 
-    public function __construct(ILoggedService $loggedService, IRetrieveService $retrieveDb, IRetrieveIdService $retrieveIdDb, IRetrieveWhereService $retrieveWhereDb, IGenerateIdService $generateId) {
+    protected $saveLogDb;
+
+    public function __construct(ILoggedService $loggedService, IRetrieveService $retrieveDb, 
+    IRetrieveIdService $retrieveIdDb, IRetrieveWhereService $retrieveWhereDb, 
+    IGenerateIdService $generateId, ISaveAccountantLogsDBService $saveLogDb) {
         $this->loggedService = $loggedService;
         $this->retrieveDb = $retrieveDb;
         $this->retrieveIdDb = $retrieveIdDb;
         $this->retrieveWhereDb = $retrieveWhereDb;
         $this->generateId = $generateId;
+        $this->saveLogDb = $saveLogDb;
     }
 
     public function departments() {
@@ -75,11 +81,7 @@ class TreasuryDepartmentsController extends Controller
         }
 
         // Add logs
-        $log = new AccountantLogs;
-        $log->id = $this->generateId->generate(AccountantLogs::class);
-        $log->accountant = session('logged_treasury');
-        $log->title = "Deleted a Department: ".$department->department_name;
-        $log->save();
+        $this->saveLogDb->saveLog("Deleted a Department: ".$department->department_name);
 
         $department->delete();
         return response()->json([
@@ -98,11 +100,7 @@ class TreasuryDepartmentsController extends Controller
 
         if($dept->save()) {
             // Add logs
-            $log = new AccountantLogs;
-            $log->id = $this->generateId->generate(AccountantLogs::class);
-            $log->accountant = session('logged_treasury');
-            $log->title = "Added a Department: ".$request->dept_name;
-            $log->save();
+            $this->saveLogDb->saveLog("Added a Department: ".$request->dept_name);
 
             return response()->json([
                 'status' => 200,
@@ -126,11 +124,7 @@ class TreasuryDepartmentsController extends Controller
 
         if($dept->save()) {
             // Add logs
-            $log = new AccountantLogs;
-            $log->id = $this->generateId->generate(AccountantLogs::class);
-            $log->accountant = session('logged_treasury');
-            $log->title = "Edited a Department: ".$request->oldDeptName;
-            $log->save();
+            $this->saveLogDb->saveLog("Edited a Department: ".$request->oldDeptName);
 
             return response()->json([
                 'status' => 200,

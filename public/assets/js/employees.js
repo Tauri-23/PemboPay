@@ -62,13 +62,78 @@ sortEmp.change(function() {
 
 searchEmp.on('input',function() {
     const searchValue = $(this).val();
-
-    console.log(searchValue);
-
-    employeeColumn.each(function() {
-        employeeColumn.find()
-    });
+    if(!isEmptyOrSpaces(searchValue)) {
+        origEmpCont.addClass('d-none');
+        sortEmpCont.removeClass('d-none');
+        processSearch(searchValue);
+    }
+    else {
+        origEmpCont.removeClass('d-none');
+        sortEmpCont.addClass('d-none'); 
+    }
 });
+
+
+function processSearch(value) {
+    const filteredEmployeeList = employeesList.filter(emp => {
+        const lowerCaseValue = value.toLowerCase();
+        return emp.firstname.toLowerCase().includes(lowerCaseValue) 
+            || (emp.middlename != null ? emp.middlename.toLowerCase().includes(lowerCaseValue) : false)  
+            || emp.lastname.toLowerCase().includes(lowerCaseValue) 
+            || emp.id.toString().includes(lowerCaseValue);
+    });
+    
+
+    sortEmpCont.html('');
+
+    if(filteredEmployeeList.length > 0) {
+        sortEmpCont.append(`
+            <div class="table1">
+                <div class="table1-header">
+                    <div class="form-data-col">
+                        <small class="text-m2">Employee Name</small>
+                        <div class="table1-PFP-small-cont mar-end-1"></div>
+                    </div>
+                    <small class="text-m2 form-data-col">Employee ID</small>
+                    <small class="text-m2 form-data-col">Employee Email</small>
+                    <small class="text-m2 form-data-col">Department</small>
+                    <small class="text-m2 form-data-col">Compensation Type</small>
+                </div>
+            </div>
+            `);
+
+            filteredEmployeeList.forEach(employee => {
+            const employeeRowHtml = `
+                <div class="table1-data employee-column" id="${employee.id}">
+                    <div class="form-data-col">
+                        <div class="table1-PFP-small mar-end-1">
+                            <img class="emp-pfp" src="/assets/media/pfp/${employee.pfp}" alt="">
+                        </div>
+                        <small class="text-m2 emp-name">${employee.firstname} ${employee.lastname}</small>
+                    </div>
+                    <small class="text-m3 form-data-col emp-id">${employee.id}</small>
+                    <small class="text-m3 form-data-col">${employee.email}</small>
+                    <small class="text-m3 form-data-col emp-dept">${employee.department.department_name}</small>
+                    <small class="text-m3 form-data-col">${employee.compensation.compentsation_type}</small>
+                </div>
+            `;
+
+            sortEmpCont.find('.table1').append(employeeRowHtml);
+        });
+    }
+    else {
+        sortEmpCont.append(`
+        <div class="placeholder-illustrations">
+            <div class="d-flex flex-direction-y gap2">
+                <img src="/assets/media/illustrations/no-data.svg" alt="" srcset="">  
+                <div class="text-l3 text-center">No Result</div>
+            </div>
+        </div>
+        `);
+    }
+
+    
+}
 
 
 
