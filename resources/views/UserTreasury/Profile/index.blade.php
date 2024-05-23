@@ -136,7 +136,7 @@
                     {{-- Personal Activities --}}
                     <div class="long-cont3 d-flex flex-direction-y gap1 position-relative">
                         <div class="text-l3 mar-bottom-3 bold">Your Latest Logs</div>
-                        <x-render_accountant_logs :logs="$logs" count="null"/>
+                        <x-render_accountant_logs :logs="$selfLogs" count="null"/>
                     </div>
 
 
