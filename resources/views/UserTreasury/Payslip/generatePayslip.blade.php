@@ -137,6 +137,11 @@
                                                 <small>{{$tax->tax_name}}</small><br />
                                             @endif                                            
                                         @endforeach
+
+                                        {{-- Deductions names --}}
+                                        @foreach ($deductions as $deduction)
+                                            <small>{{$deduction->deduction_name}}</small><br />                                         
+                                        @endforeach
                                     </div>
                                     <div class="text-right">
                                         {{-- Taxes Value --}}
@@ -144,6 +149,11 @@
                                             @if ($tax->employee == $emp->id)
                                                 <small>{{"₱ " . number_format($tax->tax_price, 2, '.', ',')}}</small><br />
                                             @endif  
+                                        @endforeach
+
+                                        {{-- Deductions value --}}
+                                        @foreach ($deductions as $deduction)
+                                            <small>{{"₱ " . number_format($deduction->deduction_price, 2, '.', ',')}}</small><br />                                       
                                         @endforeach
                                     </div>
                                 </div>

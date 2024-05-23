@@ -68,7 +68,8 @@ class AccountantPayslipController extends Controller
             //Deductions and Taxes
             "deductionRecord" => DeductionRecord::where('payroll_period', $payrollPeriod)->get(),
             "deductionRecordSelf" => DeductionRecordEmployee::whereIn('employee', $employeeIds)->where('payroll_period', $payrollPeriod)->get(),
-            "taxRecord" => tax_record_employees::where('payroll_period', $payrollPeriod)->get()
+            "taxRecord" => tax_record_employees::where('payroll_period', $payrollPeriod)->get(),
+            "deductions" => DeductionRecord::where('payroll_period', $payrollPeriod)->get()
         ]);
     }
 }
