@@ -5,6 +5,8 @@ use App\Http\Controllers\AccountantPayslipController;
 use App\Http\Controllers\AccountantProfileController;
 use App\Http\Controllers\AccountantReportController;
 use App\Http\Controllers\AdminDashController;
+use App\Http\Controllers\AdminDepartmentsController;
+use App\Http\Controllers\AdminEmployeesController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\RunPayrollController;
@@ -155,3 +157,11 @@ Route::get('/AdminViewAccountantProfile/{id}', [AdminDashController::class, 'Acc
 Route::post('/AdminAddAccountant', [AdminDashController::class, 'AddAccountantPost']);
 Route::post('/AdminDelAccountant', [AdminDashController::class, 'DelAccountant']);
 Route::get('/AdminAccountantLogs', [AdminDashController::class, 'AccountantLogs']);
+
+
+//Employees
+Route::get('/AdminEmployees', [AdminEmployeesController::class, 'index']);
+
+
+// Departments
+Route::get('/AdminDepartments', [AdminDepartmentsController::class, 'index']);

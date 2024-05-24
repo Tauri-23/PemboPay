@@ -56,7 +56,7 @@
             {{-- Accountants --}}
             <div class="long-cont d-flex justify-content-between align-items-center">
                 <div class="text-m1 fw-bold">Accountants</div>
-                <div class="primary-btn1-small" id="add-accountant-btn">Add Accountant</div>
+                <div class="primary-btn1-small" id="add-accountant-btn"><i class="bi bi-person-fill-add mar-end-3 text-m1"></i>Add Accountant</div>
             </div>
 
             <x-render_accountant :accountants="$accountants" count="null"/>
