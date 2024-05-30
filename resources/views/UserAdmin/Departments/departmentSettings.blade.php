@@ -37,9 +37,10 @@
         <x-modals modalType="add-dept-position"/>
         <x-modals modalType="edit-dept-position"/>
 
+        <x-modals modalType="warning-yn"/>
         <x-modals modalType="success"/>
         <x-modals modalType="error"/>
-        <x-modals modalType="warning-yn"/>
+        
 
         {{-- Sidenav --}}
         <x-admin_side_nav activeLink="4"/>
@@ -52,23 +53,55 @@
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
 
-            <div class="department-cover-cont d-flex align-items-center">
+            {{-- <div class="department-cover-cont d-flex align-items-center">
                 <div class="mar-start-2" style="z-index: 2;">
                     <div class="text-xl2 fw-bold color-white">{{$department->department_name}} ({{$department->department_tag}})</div>
                 </div>
                 
                 <img class="position-absolute w-100" src="/assets/media/dept-pfp/{{$department->department_pfp}}" />
                 <div class="overlay-blur-dark" style="z-index: 1;"></div>
+            </div> --}}
+
+            {{-- Information --}}
+            <div class="d-flex flex-direction-y gap2" id="position-cont">
+                <div class="long-cont d-flex flex-direction-y gap2">
+                    <div class="text-l2">Department Informations</div>
+                    <div>
+                        <div class="text-m3">Department Name</div>
+                        <div class="d-flex gap2 align-items-center">
+                            <div class="text-l3">{{$department->department_name}}</div>
+                            <i class="bi bi-pencil-square" id="edit-dept-name"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-m3">Department Tag</div>
+                        <div class="text-l3">{{$department->department_tag}}</div>
+                    </div>
+
+                    <div>
+                        <div class="text-m3">Department Picture</div>
+                        <div class="d-flex gap2">
+                            <div class="dept-bg-select-cont">
+                                <img class="position-absolute w-100 h-100 dept-bg-pic" src="/assets/media/dept-pfp/{{$department->department_pfp}}" alt="" srcset="">
+                            </div>
+                            <i class="bi bi-pencil-square" id="edit-dept-pic"></i>  
+                        </div>                    
+                    </div>
+                </div>
             </div>
 
-            <div class="long-cont d-flex align-items-center justify-content-between">
-                <div class="text-l2">Department Positions</div>
-                <div class="primary-btn1-small" id="add-position"><i class="bi bi-plus-square-fill mar-end-3"></i>Add Position</div>
-            </div>
 
-            {{-- Render Positions --}}
-            <div class="">
-                <x-admin_render_dept_pos :positions="$positions"/>
+            {{-- Positions --}}
+            <div class="d-flex flex-direction-y gap2" id="position-cont">
+                <div class="long-cont d-flex align-items-center justify-content-between">
+                    <div class="text-l2">Department Positions</div>
+                    <div class="primary-btn1-small" id="add-position"><i class="bi bi-plus-square-fill mar-end-3"></i>Add Position</div>
+                </div>
+    
+                {{-- Render Positions --}}
+                <div class="">
+                    <x-admin_render_dept_pos :positions="$positions"/>
+                </div>
             </div>
         
         </div>

@@ -121,6 +121,7 @@ class AdminDepartmentsController extends Controller
         }
     }
 
+
     public function addDeptPos(Request $request) {
         $isPosExist = department_positions::where('department', $request->dept)->where('position', $request->position)->first();
 
@@ -150,8 +151,12 @@ class AdminDepartmentsController extends Controller
             ]);
         }
     }
+
     public function editDeptPos(Request $request) {
-        $isPosExist = department_positions::where('department', $request->dept)->where('position', $request->position)->first();
+        $isPosExist = department_positions::where('department', $request->dept)
+        ->where('position', $request->position)
+        ->whereNot('id', $request->id)
+        ->first();
 
         if($isPosExist) {
             return response()->json([
@@ -178,7 +183,21 @@ class AdminDepartmentsController extends Controller
             ]);
         }
     }
+
     public function delDeptPos(Request $request) {
-        
+        $position = department_positions::find($request->id);
+
+        if($position->delete()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Position deleted successfully.'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Something went wrong please try again later.'
+            ]);
+        }
     }
 }
