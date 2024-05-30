@@ -17,6 +17,7 @@ class Main {
     constructor() {
         //inputs
         this.deptnameIn = $('#dept-name-in');
+        this.deptTagIn = $('#dept-tag-in');
         this.deptBgIn = $('#dept-bg-in');
 
         //department bg choices
@@ -25,6 +26,8 @@ class Main {
 
         //Messages (For empty fields)
         this.deptMsg = $('#dept-name-required');
+        this.deptTagMsg = $('#dept-tag-required');
+        this.deptPicMsg = $('#dept-pic-required');
 
         //Btns
         this.clearSelectionBtn = $('#clear-selection');
@@ -108,24 +111,25 @@ class FormValidator extends Main {
 
     addDeptDb() {
         let formData = new FormData();
-        formData.append("dept_name", this.deptnameIn.val());
-        formData.append("dept_pfp", this.deptBgIn.val());
+        formData.append('name', this.deptnameIn.val());
+        formData.append('tag', this.deptTagIn.val().toUpperCase());
+        formData.append('pfp', this.deptBgIn.val());
 
         $.ajax({
             type: "POST",
-            url: "/TreasuryAddDepartmentPost",
+            url: "/AdminAddDepartmentPost",
             processData: false,
             contentType: false,
             data: formData,
             success: function (response) {
                 if(response.status == 200) {
-                    $('#success-modal').find('.modal-text').html('Department added successfully.');
+                    $('#success-modal').find('.modal-text').html(response.message);
                     showModal($('#success-modal'));
-                    closeModalRedirect($('#success-modal'), '/TreasuryDepartments');
+                    closeModalRedirect($('#success-modal'), '/AdminDepartments');
                 } else {
-                    $('#error-modal').find('.modal-text').html('Failed adding department please try again later.');
+                    $('#error-modal').find('.modal-text').html(response.message);
                     showModal($('#error-modal'));
-                    closeModalRedirect($('#error-modal'), '/TreasuryDepartments');
+                    closeModal($('#error-modal'), false);
                 }
             },
             error: function (xhr, status, error) {
@@ -137,9 +141,12 @@ class FormValidator extends Main {
 
     emptyMessagesValidator() {
         this.deptMsg.toggleClass('d-none', !isEmptyOrSpaces(this.deptnameIn.val()));
+        this.deptTagMsg.toggleClass('d-none', !isEmptyOrSpaces(this.deptTagIn.val()));
+        this.deptPicMsg.toggleClass('d-none', !isEmptyOrSpaces(this.deptBgIn.val()));
     }
 
     ifReadyToSubmit() {
-        return !isEmptyOrSpaces(this.deptnameIn.val());
+        return !isEmptyOrSpaces(this.deptnameIn.val()) && !isEmptyOrSpaces(this.deptTagIn.val())
+                && !isEmptyOrSpaces(this.deptBgIn.val());
     }
 }

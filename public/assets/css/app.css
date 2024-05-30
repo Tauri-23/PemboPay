@@ -448,4 +448,14 @@ body, html {
 
 
 
-
+/*
+|----------------------------------------
+| Form Input 
+|----------------------------------------
+*/
+.text-form-lc {
+    text-transform: lowercase;
+}
+.text-form-uc {
+    text-transform: uppercase;
+}

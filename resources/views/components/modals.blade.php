@@ -139,7 +139,124 @@
 
 
 
+{{-- Modals for Department Settings --}}
+@elseif($modalType == 'add-dept-position')
+    <div class="modal1 d-none" id="add-dept-position-modal">
+        <div class="modal1-box-flexible">
+            <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
+            <div class="modal1-txt-title fw-bold text-l3" id="modal-1-title">
+                Add Department Position
+                <form method="post">
+                    <div class="d-flex flex-direction-y gap3 mar-top-2">
+                        <div>
+                            <label for="position-in" class="text-m2 mar-bottom-3">Position</label>
+                            <input type="text" class="edit-text-1 w-100" name="" id="position-in">
+                        </div>
+
+                        <div>
+                            <label for="sal-grade-in" class="text-m2 mar-bottom-3">Salary Grade</label>
+                            <select class="edit-text-1 w-100" name="" id="sal-grade-in">
+
+                            </select>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="primary-btn1-small w-100 mar-top-1 text-center" id="add-dept-position">Add</div>
+        </div>
+    </div>
+
+@elseif($modalType == 'edit-dept-position')
+    <div class="modal1 d-none" id="edit-dept-position-modal">
+        <div class="modal1-box-flexible">
+            <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
+            <div class="modal1-txt-title fw-bold text-l3" id="modal-1-title">
+                Edit Department Position
+                <form method="post">
+                    <div class="d-flex flex-direction-y gap3 mar-top-2">
+                        <div>
+                            <label for="position-in" class="text-m2 mar-bottom-3">Position</label>
+                            <input type="text" class="edit-text-1 w-100" name="" id="position-in">
+                        </div>
+
+                        <div>
+                            <label for="sal-grade-in" class="text-m2 mar-bottom-3">Salary Grade</label>
+                            <select class="edit-text-1 w-100" name="" id="sal-grade-in">
+
+                            </select>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="primary-btn1-small w-100 mar-top-1 text-center" id="edit-dept-position">Save</div>
+        </div>
+    </div>
+
+
+
+
+
 {{-- Modals for Payroll Settings --}}
+@elseif($modalType == 'add-sal-grade')
+    <div class="modal1 d-none" id="add-sal-grade-modal">
+        <div class="modal1-box-flexible">
+            <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
+            <div class="modal1-txt-title fw-bold text-l3" id="modal-1-title">
+                Add Salary Grade
+                <form method="post">
+                    <div class="d-flex flex-direction-y gap3 mar-top-2">
+                        <div class="flex-grow-1">
+                            <label for="grade-in" class="text-m2 mar-bottom-3">Grade</label>
+                            <input type="text" class="edit-text-1 w-100" name="" id="grade-in">
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <label for="value-in" class="text-m2 mar-bottom-3">Value</label>
+                            <div class="d-flex align-items-center gap3">
+                                <div>₱</div>
+                                <input class="edit-text-1 w-100" id="value-in" min="0" type="number" step="any"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="primary-btn1-small w-100 mar-top-1 text-center" id="add-sal-grade">Add</div>
+        </div>
+    </div>
+@elseif($modalType == 'edit-sal-grade')
+    <div class="modal1 d-none" id="edit-sal-grade-modal">
+        <div class="modal1-box-flexible">
+            <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
+            <div class="modal1-txt-title fw-bold text-l3" id="modal-1-title">
+                Edit Salary Grade
+                <form method="post">
+                    <div class="d-flex flex-direction-y gap3 mar-top-2">
+                        <div class="flex-grow-1">
+                            <label for="grade-in" class="text-m2 mar-bottom-3">Grade</label>
+                            <input type="text" class="edit-text-1 w-100" name="" id="grade-in">
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <label for="value-in" class="text-m2 mar-bottom-3">Value</label>
+                            <div class="d-flex align-items-center gap3">
+                                <div>₱</div>
+                                <input class="edit-text-1 w-100" id="value-in" min="0" type="number" step="any"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="primary-btn1-small w-100 mar-top-1 text-center" id="edit-sal-grade">Save</div>
+        </div>
+    </div>
+
+
+
+
 @elseif($modalType == 'add-taxes')
     <div class="modal1 d-none" id="add-taxes-modal">
         <div class="modal1-box-small">

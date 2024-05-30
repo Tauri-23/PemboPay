@@ -42,17 +42,17 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "/TreasuryDeleteDepartment",
+            url: "/AdminDeleteDepartment",
             processData: false,
             contentType: false,
             data: formData,
             success: function (response) {
                 if(response.status == 200) {
-                    successModal.find('.modal-text').html('Department successfully deleted.');
+                    successModal.find('.modal-text').html(response.message);
                     showModal(successModal);
-                    closeModalRedirect(successModal, '/TreasuryDepartments');
+                    closeModalRedirect(successModal, '/AdminDepartments');
                 } else {
-                    errorModal.find('.modal-text').html('Failed deleting department please try again later.');
+                    errorModal.find('.modal-text').html(response.message);
                     showModal(errorModal);
                     closeModal(errorModal, false);
                 }

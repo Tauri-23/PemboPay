@@ -7,6 +7,7 @@ use App\Http\Controllers\AccountantReportController;
 use App\Http\Controllers\AdminDashController;
 use App\Http\Controllers\AdminDepartmentsController;
 use App\Http\Controllers\AdminEmployeesController;
+use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\RunPayrollController;
@@ -161,7 +162,22 @@ Route::get('/AdminAccountantLogs', [AdminDashController::class, 'AccountantLogs'
 
 //Employees
 Route::get('/AdminEmployees', [AdminEmployeesController::class, 'index']);
+Route::get('/AdminAddEmployees', [AdminEmployeesController::class, 'addEmployee']);
 
 
 // Departments
 Route::get('/AdminDepartments', [AdminDepartmentsController::class, 'index']);
+Route::get('/AdminAddDepartment', [AdminDepartmentsController::class, 'addDepartment']);
+Route::get('/adminViewDept/{id}', [AdminDepartmentsController::class, 'viewDepartment']);
+Route::get('/AdminDeptSettings/{id}', [AdminDepartmentsController::class, 'departmentSettings']);
+Route::post('/AdminAddDepartmentPost', [AdminDepartmentsController::class, 'addDepartmentPost']);
+Route::post('/AdminDeleteDepartment', [AdminDepartmentsController::class, 'deleteDepartment']);
+Route::post('/adminAddDeptPos', [AdminDepartmentsController::class, 'addDeptPos']);
+Route::post('/adminEditDeptPos', [AdminDepartmentsController::class, 'editDeptPos']);
+Route::post('/adminDelDeptPos', [AdminDepartmentsController::class, 'delDeptPos']);
+
+// Settings
+Route::get('/AdminSettings', [AdminSettingsController::class, 'index']);
+Route::post('/adminAddSalGrade', [AdminSettingsController::class, 'addSalGradePost']);
+Route::post('/adminEditSalGrade', [AdminSettingsController::class, 'editSalGradePost']);
+Route::post('/adminDelSalGrade', [AdminSettingsController::class, 'deleteSalGradePost']);

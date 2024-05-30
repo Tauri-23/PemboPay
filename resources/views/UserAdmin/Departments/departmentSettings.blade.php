@@ -5,12 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
-        <title>PemboPay | Admin</title>
+        <title>PemboPay</title>
         
         {{-- Styles --}}
         <link rel="stylesheet" href="/assets/css/app.css">
         <link rel="stylesheet" href="/assets/css/elements.css">
         <link rel="stylesheet" href="/assets/css/navbar.css">
+        <link rel="stylesheet" href="/assets/css/departments.css">
         <link rel="stylesheet" href="/assets/css/tables.css">
         <link rel="stylesheet" href="/assets/css/forms.css">
 
@@ -33,52 +34,42 @@
     </head>
     <body>
         {{-- Modals --}}
-        <x-modals modalType="emp-mini-profile-1"/>
-        <x-modals modalType="warning-yn"/>
+        <x-modals modalType="add-dept-position"/>
+        <x-modals modalType="edit-dept-position"/>
+
         <x-modals modalType="success"/>
-        
+        <x-modals modalType="error"/>
+        <x-modals modalType="warning-yn"/>
 
         {{-- Sidenav --}}
-        <x-admin_side_nav activeLink="3"/>
+        <x-admin_side_nav activeLink="4"/>
         
 
         {{-- Navbar --}}
-        <x-admin_navbar title="Employees"/>
+        <x-admin_navbar title="Departments Settings | {{$department->department_name}}"/>
         
 
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
 
-            <div class="long-cont d-flex justify-content-between align-items-center">
-                <div class="d-flex gap3">
-                    <div class="d-flex position-relative align-items-center">
-                        <i class="fa-solid fa-magnifying-glass position-absolute text-m1 padding-start-4"></i>
-                        <input id="search-emp" class="edit-text-2" name="searchEmp" type="text" placeholder="Search Name or ID" autocomplete="off" />
-                    </div>
-                    
-                    <select class="select-med input-light-grey" id="sort-emp">
-                        <option value="all">All</option>
-                        <option value="a-z">a-z</option>
-                        <option value="z-a">z-a</option>
-                    </select>
+            <div class="department-cover-cont d-flex align-items-center">
+                <div class="mar-start-2" style="z-index: 2;">
+                    <div class="text-xl2 fw-bold color-white">{{$department->department_name}} ({{$department->department_tag}})</div>
                 </div>
-
-                <a href="/AdminAddEmployees" class="primary-btn1-small d-flex align-items-center">
-                    <i class="bi bi-person-fill-add mar-end-3 text-m1"></i>
-                    Add Employee
-                </a>
-            </div>
-            
-            <div id="original-emp-cont">
-                <x-TreasuryEmloyeesTable :employees="$employees"/>
-            </div>
-
-            <div id="sort-result-emp-cont">
                 
+                <img class="position-absolute w-100" src="/assets/media/dept-pfp/{{$department->department_pfp}}" />
+                <div class="overlay-blur-dark" style="z-index: 1;"></div>
             </div>
-            
 
+            <div class="long-cont d-flex align-items-center justify-content-between">
+                <div class="text-l2">Department Positions</div>
+                <div class="primary-btn1-small" id="add-position"><i class="bi bi-plus-square-fill mar-end-3"></i>Add Position</div>
+            </div>
 
+            {{-- Render Positions --}}
+            <div class="">
+                <x-admin_render_dept_pos :positions="$positions"/>
+            </div>
         
         </div>
 
@@ -87,11 +78,13 @@
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
     <script>
-        const employeesList = {!! json_encode($employees) !!};
+        const salGrades = @json($salGrades);
+        const deptId = @json($deptId);
+        const positions = @json($positions);
     </script>
-    <script src="/assets/js/employees.js"></script>
+    
+    <script src="/assets/js/admin-dept-settings.js"></script>
 </html>
