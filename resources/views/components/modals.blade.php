@@ -194,6 +194,25 @@
         </div>
     </div>
 
+@elseif($modalType == 'edit-dept-name')
+    <div class="modal1 d-none" id="edit-dept-name-modal">
+        <div class="modal1-box-flexible">
+            <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
+            <div class="modal1-txt-title fw-bold text-l3" id="modal-1-title">
+                Edit Department Name
+                <form method="post">
+                    <div class="d-flex flex-direction-y gap3 mar-top-2">
+                        <div>
+                            <label for="name-in" class="text-m2 mar-bottom-3">Name</label>
+                            <input type="text" class="edit-text-1 w-100" name="" id="name-in">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="primary-btn1-small w-100 mar-top-1 text-center" id="edit-dept-name">Save</div>
+        </div>
+    </div>
+
 
 
 

@@ -175,6 +175,7 @@ Route::post('/AdminDeleteDepartment', [AdminDepartmentsController::class, 'delet
 Route::post('/adminAddDeptPos', [AdminDepartmentsController::class, 'addDeptPos']);
 Route::post('/adminEditDeptPos', [AdminDepartmentsController::class, 'editDeptPos']);
 Route::post('/adminDelDeptPos', [AdminDepartmentsController::class, 'delDeptPos']);
+Route::post('/adminEditDeptInfo', [AdminDepartmentsController::class, 'editDeptInfo']);
 
 // Settings
 Route::get('/AdminSettings', [AdminSettingsController::class, 'index']);

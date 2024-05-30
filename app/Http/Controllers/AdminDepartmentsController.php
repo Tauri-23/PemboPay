@@ -10,6 +10,7 @@ use App\Models\Departments;
 use App\Models\Employees;
 use App\Models\salary_grade;
 use Illuminate\Http\Request;
+use Laravel\Ui\Presets\React;
 
 class AdminDepartmentsController extends Controller
 {
@@ -191,6 +192,34 @@ class AdminDepartmentsController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => 'Position deleted successfully.'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Something went wrong please try again later.'
+            ]);
+        }
+    }
+
+
+    public function editDeptInfo(Request $request) {
+        $isNameExist = Departments::where('department_name', $request->name)->whereNot('id', $request->id)->first();
+
+        if($isNameExist) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Department name already exist.'
+            ]);
+        }
+
+        $dept = Departments::find($request->id);
+        $dept->department_name = $request->name;
+
+        if($dept->save()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Department name changed successfully.'
             ]);
         }
         else {

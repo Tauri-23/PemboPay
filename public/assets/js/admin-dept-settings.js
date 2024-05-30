@@ -1,9 +1,12 @@
 // Btns
 const addPositionBtn = $('#add-position');
+const editDeptNameBtn = $('#edit-dept-name-btn');
 
 // Modals
 const addDeptPositionModal = $('#add-dept-position-modal');
 const editDeptPositionModal = $('#edit-dept-position-modal');
+
+const editDeptNameModal = $('#edit-dept-name-modal');
 
 const warningYNModal = $('.warning-yn-modal');
 const successModal = $('#success-modal');
@@ -93,6 +96,39 @@ warningYNModal.eq(0).find('.yes-btn').click(() => {
     let formData = new FormData();
     formData.append('id', filteredPositions[0].id);
     ajaxDb('/adminDelDeptPos', formData);
+});
+
+
+
+
+
+/*
+|----------------------------------------
+| Department Infos
+|----------------------------------------
+*/
+// Inputs
+const editDeptNameIn = editDeptNameModal.find('#name-in');
+editDeptNameBtn.click(() => {
+    editDeptNameIn.val(dept.department_name);
+    showModal(editDeptNameModal);
+    closeModal(editDeptNameModal, false);
+});
+editDeptNameModal.find('#edit-dept-name').click(() => {
+    if(isEmptyOrSpaces(editDeptNameIn.val())) {
+        return;
+    }
+
+    if(dept.department_name != editDeptNameIn.val()) {
+        let formData = new FormData();
+        formData.append('id', deptId);
+        formData.append('editType', 'name');
+        formData.append('name', editDeptNameIn.val());
+        
+        ajaxDb('/adminEditDeptInfo', formData);
+    }
+
+    
 });
 
 

@@ -37,6 +37,8 @@
         <x-modals modalType="add-dept-position"/>
         <x-modals modalType="edit-dept-position"/>
 
+        <x-modals modalType="edit-dept-name"/>
+
         <x-modals modalType="warning-yn"/>
         <x-modals modalType="success"/>
         <x-modals modalType="error"/>
@@ -53,15 +55,6 @@
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
 
-            {{-- <div class="department-cover-cont d-flex align-items-center">
-                <div class="mar-start-2" style="z-index: 2;">
-                    <div class="text-xl2 fw-bold color-white">{{$department->department_name}} ({{$department->department_tag}})</div>
-                </div>
-                
-                <img class="position-absolute w-100" src="/assets/media/dept-pfp/{{$department->department_pfp}}" />
-                <div class="overlay-blur-dark" style="z-index: 1;"></div>
-            </div> --}}
-
             {{-- Information --}}
             <div class="d-flex flex-direction-y gap2" id="position-cont">
                 <div class="long-cont d-flex flex-direction-y gap2">
@@ -70,7 +63,7 @@
                         <div class="text-m3">Department Name</div>
                         <div class="d-flex gap2 align-items-center">
                             <div class="text-l3">{{$department->department_name}}</div>
-                            <i class="bi bi-pencil-square" id="edit-dept-name"></i>
+                            <i class="bi bi-pencil-square" id="edit-dept-name-btn"></i>
                         </div>
                     </div>
                     <div>
@@ -117,6 +110,7 @@
         const salGrades = @json($salGrades);
         const deptId = @json($deptId);
         const positions = @json($positions);
+        const dept = @json($department);
     </script>
     
     <script src="/assets/js/admin-dept-settings.js"></script>
