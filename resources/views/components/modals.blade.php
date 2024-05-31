@@ -312,7 +312,7 @@
         <div class="modal1-box-flexible">
             <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
             <div class="modal1-txt-title fw-bold text-l3" id="modal-1-title">
-                Add Tax Column
+                Add Tax Row
                 <form method="post">
                     <div class="d-flex flex-direction-y gap3 mar-top-2">
                         <div class="flex-grow-1">
@@ -361,7 +361,7 @@
         <div class="modal1-box-flexible">
             <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
             <div class="modal1-txt-title fw-bold text-l3" id="modal-1-title">
-                Add Tax Column
+                Edit Tax Row
                 <form method="post">
                     <div class="d-flex flex-direction-y gap3 mar-top-2">
                         <div class="flex-grow-1">

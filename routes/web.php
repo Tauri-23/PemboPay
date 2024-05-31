@@ -166,8 +166,15 @@ Route::post('/adminEditDeptPos', [AdminDepartmentsController::class, 'editDeptPo
 Route::post('/adminDelDeptPos', [AdminDepartmentsController::class, 'delDeptPos']);
 Route::post('/adminEditDeptInfo', [AdminDepartmentsController::class, 'editDeptInfo']);
 
+
+
 // Settings
 Route::get('/AdminSettings', [AdminSettingsController::class, 'index']);
+Route::get('/AdminViewTaxExemptTable/{id}', [AdminSettingsController::class, 'taxExemptTable']);
+
 Route::post('/adminAddSalGrade', [AdminSettingsController::class, 'addSalGradePost']);
 Route::post('/adminEditSalGrade', [AdminSettingsController::class, 'editSalGradePost']);
 Route::post('/adminDelSalGrade', [AdminSettingsController::class, 'deleteSalGradePost']);
+
+Route::post('/AdminAddTaxExemptRow', [AdminSettingsController::class, 'addTaxExemptPost']);
+Route::post('/AdminEditTaxExemptRow', [AdminSettingsController::class, 'editTaxExemptPost']);

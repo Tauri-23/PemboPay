@@ -3,15 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\salary_grade;
+use App\Models\tax_exempt;
+use App\Models\tax_exempt_values;
 use Illuminate\Http\Request;
 
 class AdminSettingsController extends Controller
 {
     public function index() {
         $salGrades = salary_grade::orderBy('value', 'ASC')->get();
+        $taxExempts = tax_exempt::all();
 
         return view('UserAdmin.Settings.index', [
-            'salGrades' => $salGrades
+            'salGrades' => $salGrades,
+            'taxExempts' => $taxExempts
+        ]);
+    }
+
+    public function taxExemptTable($id) {
+        $taxExemptRows = tax_exempt_values::where('tax_exempt', $id)->get();
+        $taxExempt = tax_exempt::find($id);
+
+        return view('UserAdmin.Settings.taxExemptTable', [
+            'taxExemptRows' => $taxExemptRows,
+            'taxExempt' => $taxExempt
         ]);
     }
 
@@ -67,6 +81,49 @@ class AdminSettingsController extends Controller
         $salGrade = salary_grade::find($request->id);
 
         if($salGrade->delete()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success.'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Something went wrong please try again later.'
+            ]);
+        }
+    }
+
+    public function addTaxExemptPost(Request $request) {
+        $taxExempt = new tax_exempt_values;
+        $taxExempt->tax_exempt = $request->taxId;
+        $taxExempt->price_percent = $request->valuePercent;
+        $taxExempt->price_amount = $request->valueAmt;
+        $taxExempt->threshold_min = $request->thresholdMin;
+        $taxExempt->threshold_max = $request->thresholdMax;
+
+        if($taxExempt->save()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success.'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Something went wrong please try again later.'
+            ]);
+        }
+    }
+
+    public function editTaxExemptPost(Request $request) {
+        $taxExempt = tax_exempt_values::find($request->taxColId);
+        $taxExempt->price_percent = $request->valuePercent;
+        $taxExempt->price_amount = $request->valueAmt;
+        $taxExempt->threshold_min = $request->thresholdMin;
+        $taxExempt->threshold_max = $request->thresholdMax;
+
+        if($taxExempt->save()) {
             return response()->json([
                 'status' => 200,
                 'message' => 'Success.'
