@@ -162,7 +162,7 @@ Route::get('/AdminAccountantLogs', [AdminDashController::class, 'AccountantLogs'
 
 //Employees
 Route::get('/AdminEmployees', [AdminEmployeesController::class, 'index']);
-Route::get('/AdminAddEmployees', [AdminEmployeesController::class, 'addEmployee']);
+Route::get('/AdminAddEmployees/{deptId}', [AdminEmployeesController::class, 'addEmployee']);
 
 
 // Departments

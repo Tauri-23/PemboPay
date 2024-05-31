@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('timesheets', function (Blueprint $table) {
             $table->id();
-            $table->string('employee', 6)->nullable();
+            $table->string('employee', 9)->nullable();
             $table->dateTime('time_in');
             $table->dateTime('time_out')->nullable();
             $table->date('created_at')->useCurrent();

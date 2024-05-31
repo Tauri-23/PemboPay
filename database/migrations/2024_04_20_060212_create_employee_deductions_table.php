@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('employee_deductions', function (Blueprint $table) {
             $table->string('id', 6)->primary();
-            $table->string('employee', 6)->nullable();
+            $table->string('employee', 9)->nullable();
             $table->string('deduction_name');
             $table->float('deduction_price');
             $table->string('deduction_type');

@@ -72,7 +72,7 @@
                 <form method="post">
                     @csrf
                     <div class="d-flex gap3">
-                        <a href="/TreasuryAddEmployees" class="primary-btn3-small">
+                        <a href="/AdminAddEmployees/{{$department->id}}" class="primary-btn3-small">
                             <i class="bi bi-person-plus-fill mar-end-3"></i>Add Employee
                         </a>
 

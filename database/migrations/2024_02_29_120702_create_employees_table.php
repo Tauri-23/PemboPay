@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->string('id', 6)->primary();
+            $table->string('id', 9)->primary();
             $table->string('firstname');
             $table->string('middlename')->nullable();
             $table->string('lastname');
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('phone');
             $table->dateTime('birth_date');
             $table->string('pfp');
-            $table->string('hourly_rate_mode', 6)->nullable();
+            $table->unsignedBigInteger('salary_grade')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
@@ -50,9 +50,9 @@ return new class extends Migration
                 ->nullOnDelete()
                 ->cascadeOnUpdate();
 
-            $table->foreign('hourly_rate_mode')
+            $table->foreign('salary_grade')
                 ->references('id')
-                ->on('compensation')
+                ->on('salary_grades')
                 ->nullOnDelete()
                 ->cascadeOnUpdate();
         });

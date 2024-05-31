@@ -1,6 +1,7 @@
 $(document).ready(function() {
     const addressScript = new AddressHandler(brgys);
     const payInfoScript = new PayInfoHandler();
+    const departmentScript = new DepartmentEvents(selectedDept);
     const formValidatorScript = new FormValidator(payInfoScript);
 });
 
@@ -162,6 +163,24 @@ class PayInfoHandler extends Main {
 
         this.hourlyBtn.addClass(btnActive === 1 ? 'active' : '');
         this.salaryBtn.addClass(btnActive === 2 ? 'active' : '');
+    }
+}
+
+
+
+
+
+/*
+|----------------------------------------
+|Department Events
+|----------------------------------------
+*/
+class DepartmentEvents extends Main {
+    constructor(selectedDept) {
+        super();
+
+        this.deptIn.val(selectedDept.id);
+        console.log(selectedDept.id);
     }
 }
 

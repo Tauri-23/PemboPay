@@ -43,7 +43,7 @@
         
 
         {{-- Navbar --}}
-        <x-admin_navbar title="Employees"/>
+        <x-admin_navbar title="Add Employees"/>
         
 
         {{-- Content --}}
@@ -230,8 +230,9 @@
     <script>
         // Define a JavaScript variable and initialize it with PHP data
         const brgys = {!! json_encode($brgy) !!};
+        const selectedDept = @json($selectedDept);
         formatPhoneNumIn($('#phone-in'));
     </script>
 
-    <script src="/assets/js/add-employee.js"></script>
+    <script src="/assets/js/admin-add-employee.js"></script>
 </html>

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Contracts\IComputePayrollService;
+use App\Contracts\IGenerateEmpIdService;
 use App\Contracts\IGenerateFilenameService;
 use App\Contracts\IGenerateIdService;
 use App\Contracts\IGenerateOTPService;
@@ -13,6 +14,7 @@ use App\Contracts\IRetrieveWhereService;
 use App\Contracts\ISaveAccountantLogsDBService;
 use App\Contracts\ISendEmailService;
 use App\Services\ComputePayrollService;
+use App\Services\GenerateEmpIdService;
 use App\Services\GenerateFilenameService;
 use App\Services\GenerateIdService;
 use App\Services\GenerateOTPService;
@@ -40,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(IGenerateIdService::class, GenerateIdService::class);
         $this->app->bind(IGenerateFilenameService::class, GenerateFilenameService::class);
         $this->app->bind(IGenerateOTPService::class, GenerateOTPService::class);
+        $this->app->bind(IGenerateEmpIdService::class, GenerateEmpIdService::class);
 
         //Process Payroll
         $this->app->bind(IComputePayrollService::class, ComputePayrollService::class);

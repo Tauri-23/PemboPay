@@ -8,8 +8,10 @@ use App\Models\AccountantLogs;
 use App\Models\admin;
 use App\Models\Barangays;
 use App\Models\Cities;
+use App\Models\department_positions;
 use App\Models\Departments;
 use App\Models\Employees;
+use App\Models\salary_grade;
 use Illuminate\Http\Request;
 
 class AdminEmployeesController extends Controller
@@ -36,8 +38,10 @@ class AdminEmployeesController extends Controller
     }
 
 
-    public function addEmployee() {
+    public function addEmployee($deptId) {
         $departments = Departments::all();
+        $selectedDept = Departments::find($deptId);
+        $deptPosition = department_positions::where('department', $deptId);
         $brgy = Barangays::all();
         $cities = Cities::all();
         $admin = admin::find(session('logged_Admin'));
@@ -50,6 +54,8 @@ class AdminEmployeesController extends Controller
             'cities' => $cities,
             'brgy' => $brgy,
             'departments' => $departments,
+            'selectedDept' => $selectedDept,
+            'deptPosition' => $deptPosition
         ]);
     }
 }

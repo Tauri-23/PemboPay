@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('employee_allowances', function (Blueprint $table) {
             $table->string('id', 6)->primary();
-            $table->string('employee', 6)->nullable();
+            $table->string('employee', 9)->nullable();
             $table->string('allowance_name');
             $table->float('allowance_price');
             $table->string('allowance_type');

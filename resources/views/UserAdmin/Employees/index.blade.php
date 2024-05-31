@@ -36,6 +36,7 @@
         <x-modals modalType="emp-mini-profile-1"/>
         <x-modals modalType="warning-yn"/>
         <x-modals modalType="success"/>
+        <x-modals modalType="error"/>
         
 
         {{-- Sidenav --}}
