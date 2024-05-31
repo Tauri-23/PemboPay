@@ -95,11 +95,10 @@ Route::post('/AccountantAddTaxCol', [AccountantPaySettingsController::class, 'ad
 Route::post('/AccountantEditTaxCol', [AccountantPaySettingsController::class, 'editTaxColumnPost']);
 Route::post('/AccountantDelTaxCol', [AccountantPaySettingsController::class, 'delTaxColumnPost']);
 
-Route::post('/AddAllowancePost', [AccountantPaySettingsController::class, 'AddAllowancePost']);
-Route::post('/AddDeductionPost', [AccountantPaySettingsController::class, 'AddDeductionsPost']);
+
+
 Route::post('/DelTaxPost', [AccountantPaySettingsController::class, 'DelTaxPost']);
-Route::post('/DelAllowancenPost', [AccountantPaySettingsController::class, 'DelAllowancenPost']);
-Route::post('/DelDeductionPost', [AccountantPaySettingsController::class, 'DelDeductionPost']);
+
 
 
 
@@ -176,5 +175,14 @@ Route::post('/adminAddSalGrade', [AdminSettingsController::class, 'addSalGradePo
 Route::post('/adminEditSalGrade', [AdminSettingsController::class, 'editSalGradePost']);
 Route::post('/adminDelSalGrade', [AdminSettingsController::class, 'deleteSalGradePost']);
 
-Route::post('/AdminAddTaxExemptRow', [AdminSettingsController::class, 'addTaxExemptPost']);
-Route::post('/AdminEditTaxExemptRow', [AdminSettingsController::class, 'editTaxExemptPost']);
+Route::post('/adminAddTaxExempt', [AdminSettingsController::class, 'addTaxExemptPost']);
+Route::post('/adminDelTaxExemptPost', [AdminSettingsController::class, 'delTaxExemptPost']);
+
+Route::post('/AdminAddTaxExemptRow', [AdminSettingsController::class, 'addTaxExemptRowPost']);
+Route::post('/AdminEditTaxExemptRow', [AdminSettingsController::class, 'editTaxExemptRowPost']);
+
+Route::post('/AddAllowancePost', [AdminSettingsController::class, 'AddAllowancePost']);
+Route::post('/DelAllowancenPost', [AdminSettingsController::class, 'DelAllowancenPost']);
+
+Route::post('/AddDeductionPost', [AdminSettingsController::class, 'AddDeductionsPost']);
+Route::post('/DelDeductionPost', [AdminSettingsController::class, 'DelDeductionPost']);

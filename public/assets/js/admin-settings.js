@@ -1,16 +1,88 @@
 // Btns
 const addSalGradeBtn = $('#add-sal-grade-btn');
+const addTaxExemptBtn = $('#add-tax-exempt-btn');
+
+const salGradeBtn = $('#sal-grade-btn');
+const taxExemptBtn = $('#tax-exempt-btn');
+const allowanceBtn = $('#allowance-btn');
+const deductionsBtn = $('#deductions-btn');
+const payperiodBtn = $('#payperiod-btn');
+
+const delTaxExemptBtns = $('.del-tax-exempt-btn');
+
+const addAllowanceBtn = $('#add-allowance-btn');
+const addDeductionsBtn = $('#add-deduction-btn');
+
+const deleteAllowances = $('.del-btn-Allowances');
+const deleteDeductions = $('.del-btn-Deductions');
+
 
 // Rows
 const salGradeRows = $('.salary-grade-row');
 
+
 // Modals
 const addSalGradeModal = $('#add-sal-grade-modal');
 const editSalGradeModal = $('#edit-sal-grade-modal');
+const addTaxExemptModal = $('#add-tax-exempt-modal');
+
+const addAllowanceModal = $('#add-allowance-modal');
+const addDeductionModal = $('#add-deduction-modal');
 
 const warningYNModal = $('.warning-yn-modal');
 const successModal = $('#success-modal');
 const errorModal = $('#error-modal');
+
+
+// Container
+const salGradeTable = $('#sal-grade-table');
+const taxExemptTable = $('#tax-exempt-table');
+const allowancesTable = $('#allowances-table');
+const deductionsTable = $('#deductions-table');
+const payrollPeriodTable = $('#payroll-period-table');
+
+
+
+
+
+/*
+|----------------------------------------
+| Container Events
+|----------------------------------------
+*/
+salGradeBtn.click(() => {
+    changeActiveContainer(salGradeBtn, salGradeTable);
+});
+taxExemptBtn.click(() => {
+    changeActiveContainer(taxExemptBtn, taxExemptTable);
+});
+allowanceBtn.click(() => {
+    changeActiveContainer(allowanceBtn, allowancesTable);
+});
+deductionsBtn.click(() => {
+    changeActiveContainer(deductionsBtn, deductionsTable);
+});
+payperiodBtn.click(() => {
+    changeActiveContainer(payperiodBtn, payrollPeriodTable);
+});
+
+function changeActiveContainer(activeBtn, activeCont) {
+    salGradeBtn.removeClass('active');
+    taxExemptBtn.removeClass('active');
+    allowanceBtn.removeClass('active');
+    deductionsBtn.removeClass('active');
+    payperiodBtn.removeClass('active');
+
+    salGradeTable.addClass('d-none');
+    taxExemptTable.addClass('d-none');
+    allowancesTable.addClass('d-none');
+    deductionsTable.addClass('d-none');
+    payrollPeriodTable.addClass('d-none');
+
+    activeBtn.addClass('active');
+    activeCont.removeClass('d-none');
+}
+
 
 
 
@@ -81,6 +153,150 @@ warningYNModal.eq(0).find('.yes-btn').click(() => {
     formData.append('id', filteredSalGrades[0].id);
     ajaxDb('/adminDelSalGrade', formData);
 });
+
+
+
+
+
+/*
+|----------------------------------------
+| Tax Exempt
+|----------------------------------------
+*/
+// Input
+const addTaxExemptNameIn = addTaxExemptModal.find('#tax-name-in');
+const addTaxExemptPeriodIn = addTaxExemptModal.find('#tax-period-in');
+
+let filteredTaxExempt = [];
+
+// ADD
+addTaxExemptBtn.click(() => {
+    showModal(addTaxExemptModal);
+    closeModal(addTaxExemptModal, false);
+});
+addTaxExemptModal.find('#add-tax').click(() => {
+    if(isEmptyOrSpaces(addTaxExemptNameIn.val())) {
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append('name', addTaxExemptNameIn.val());
+    formData.append('period', addTaxExemptPeriodIn.val());
+
+    ajaxDb('/adminAddTaxExempt', formData);
+});
+
+// DELETE
+delTaxExemptBtns.click(function() {
+    filteredTaxExempt = taxExempts.filter(col => col.id == $(this).data('id'));
+
+    warningYNModal.eq(1).find('.modal1-txt').html(`Do you want to delete Tax-exempt ${filteredTaxExempt[0].name}?`);
+    showModal(warningYNModal.eq(1));
+    closeModal(warningYNModal.eq(1), false);
+});
+warningYNModal.eq(1).find('.yes-btn').click(() => {
+    let formData = new FormData();
+    formData.append('id', filteredTaxExempt[0].id);
+    ajaxDb('/adminDelTaxExemptPost', formData);
+});
+
+
+
+
+
+/*
+|----------------------------------------
+| Allowance
+|----------------------------------------
+*/
+const allowanceNameIn = $('#allowance-name-in');
+const allowanceTypeIn = $('#allowance-type-in');
+const allowancePriceIn = $('#allowance-price-in');
+const allowancePeriodIn = $('#allowance-period-in');
+
+let filteredAllowance = [];
+// ADD
+addAllowanceBtn.click(() => {
+    showModal(addAllowanceModal);
+    closeModal(addAllowanceModal, false);
+});
+addAllowanceModal.find('#add-allowance').click(() => {
+    if(isEmptyOrSpaces(allowanceNameIn.val()) || isEmptyOrSpaces(allowancePriceIn.val())) {
+        return;
+    }
+    formData = new FormData();
+    formData.append('name', allowanceNameIn.val());
+    formData.append('type', allowanceTypeIn.val());
+    formData.append('price', allowancePriceIn.val());
+    formData.append('period', allowancePeriodIn.val());
+
+    ajaxDb("/AddAllowancePost", formData);
+});
+deleteAllowances.click(function() {
+    filteredAllowance = allowances.filter(col => col.id == $(this).attr('id'));
+    warningYNModal.eq(2).find('.modal1-txt').html(`Do you want to delete Allowance ${filteredAllowance[0].name}?`);
+    showModal(warningYNModal.eq(2));
+    closeModal(warningYNModal.eq(2), false);
+});
+warningYNModal.eq(2).find('.yes-btn').click(() => {
+    formData = new FormData();
+    formData.append('id', filteredAllowance[0].id);
+    ajaxDb("/DelAllowancenPost", formData);
+});
+
+
+
+
+
+/*
+|----------------------------------------
+| Deductions
+|----------------------------------------
+*/
+const deductionNameIn = $('#deduction-name-in');
+const deductionTypeIn = $('#deduction-type-in');
+const deductionPriceIn = $('#deduction-price-in');
+const deductionPeriodIn = $('#deduction-period-in');
+
+let filteredDeduction = [];
+
+// ADD
+addDeductionsBtn.click(() => {
+    showModal(addDeductionModal);
+    closeModal(addDeductionModal, false);
+})
+addDeductionModal.find('#add-deduction').click(() => {
+    if(isEmptyOrSpaces(deductionNameIn.val()) || isEmptyOrSpaces(deductionPriceIn.val())) {
+        return;
+    }
+    formData = new FormData();
+    formData.append('name', deductionNameIn.val());
+    formData.append('type', deductionTypeIn.val());
+    formData.append('price', deductionPriceIn.val());
+    formData.append('period', deductionPeriodIn.val());
+
+    ajaxDb("/AddDeductionPost", formData);
+});
+
+// DELETE
+deleteDeductions.click(function() {
+    filteredDeduction = deductions.filter(col => col.id == $(this).attr('id'));
+
+    warningYNModal.eq(3).find('.modal1-txt').html(`Do you want to delete Deduction ${filteredDeduction[0].name}?`);
+    showModal(warningYNModal.eq(3));
+    closeModal(warningYNModal.eq(3), false);
+
+    
+});
+warningYNModal.eq(3).find('.yes-btn').click(() => {
+    formData = new FormData();
+    formData.append('id', filteredDeduction[0].id);
+
+    ajaxDb("/DelDeductionPost", formData);
+});
+
+
+
 
 
 

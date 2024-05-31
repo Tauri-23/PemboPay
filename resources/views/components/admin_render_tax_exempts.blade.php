@@ -21,7 +21,7 @@
             <small class="form-data-col">{{$elm->name}}</small>
             <small class="form-data-col">{{$elm->period_of_deduction}}</small>
             <div class="form-data-col d-flex justify-content-end gap3">
-                <a class="primary-btn2-small del-btn" data-id="{{$elm->id}}">
+                <a class="primary-btn2-small del-tax-exempt-btn" data-id="{{$elm->id}}">
                     <i class="bi bi-trash"></i>
                 </a>
                 <a href="/AdminViewTaxExemptTable/{{$elm->id}}" class="primary-btn1-small" id="{{$elm->id}}">

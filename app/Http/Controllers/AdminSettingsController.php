@@ -2,20 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\IGenerateIdService;
 use App\Models\salary_grade;
+use App\Models\settings_allowance;
+use App\Models\SettingsDeductions;
+use App\Models\SettingsPayrollPeriod;
 use App\Models\tax_exempt;
 use App\Models\tax_exempt_values;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class AdminSettingsController extends Controller
 {
+    protected $generateId;
+
+    public function __construct(IGenerateIdService $generateId) {
+        $this->generateId = $generateId;
+    }
+
     public function index() {
         $salGrades = salary_grade::orderBy('value', 'ASC')->get();
         $taxExempts = tax_exempt::all();
+        $allowances = settings_allowance::all();
+        $deductions = SettingsDeductions::all();
+        $payrollPeriod = SettingsPayrollPeriod::find('493134');
 
         return view('UserAdmin.Settings.index', [
             'salGrades' => $salGrades,
-            'taxExempts' => $taxExempts
+            'taxExempts' => $taxExempts,
+            'allowances' => $allowances,
+            'deductions' => $deductions,
+            'payrollPeriod' => $payrollPeriod
         ]);
     }
 
@@ -94,7 +111,48 @@ class AdminSettingsController extends Controller
         }
     }
 
+
+
     public function addTaxExemptPost(Request $request) {
+        $taxExempt = new tax_exempt;
+
+        $taxExempt->name = $request->name;
+        $taxExempt->period_of_deduction = $request->period;
+        
+
+        if($taxExempt->save()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success.'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Something went wrong please try again later.'
+            ]);
+        }
+
+    }
+
+    public function delTaxExemptPost(Request $request) {
+        $taxExempt = tax_exempt::find($request->id);
+
+        if($taxExempt->delete()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success.'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Something went wrong please try again later.'
+            ]);
+        }
+    }
+
+    public function addTaxExemptRowPost(Request $request) {
         $taxExempt = new tax_exempt_values;
         $taxExempt->tax_exempt = $request->taxId;
         $taxExempt->price_percent = $request->valuePercent;
@@ -116,7 +174,7 @@ class AdminSettingsController extends Controller
         }
     }
 
-    public function editTaxExemptPost(Request $request) {
+    public function editTaxExemptRowPost(Request $request) {
         $taxExempt = tax_exempt_values::find($request->taxColId);
         $taxExempt->price_percent = $request->valuePercent;
         $taxExempt->price_amount = $request->valueAmt;
@@ -133,6 +191,61 @@ class AdminSettingsController extends Controller
             return response()->json([
                 'status' => 400,
                 'message' => 'Something went wrong please try again later.'
+            ]);
+        }
+    }
+
+    public function AddAllowancePost(Request $request) {
+        return $this->AddToDb($request, new settings_allowance());
+    }
+    public function DelAllowancenPost(Request $request) {
+        return $this->DelToDb($request, new settings_allowance);
+    }
+
+    public function AddDeductionsPost(Request $request) {
+        return $this->AddToDb($request, new SettingsDeductions);
+    }
+    public function DelDeductionPost(Request $request) {
+        return $this->DelToDb($request, new SettingsDeductions);
+    }
+
+
+
+
+
+    public function AddToDb(Request $request, Model $model) {
+        $model->id = $this->generateId->generate($model);
+        $model->name = $request->name;
+        $model->price = $request->price;
+        $model->type = $request->type;
+        $model->period = $request->period;
+
+        if($model->save()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'success'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'error'
+            ]);
+        }
+    }
+    public function DelToDb(Request $request, Model $model) {
+        $record = $model::find($request->id);
+
+        if($record->delete()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'success'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'error'
             ]);
         }
     }

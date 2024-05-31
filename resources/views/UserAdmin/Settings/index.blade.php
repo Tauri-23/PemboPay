@@ -36,6 +36,7 @@
         {{-- Modals --}}
         <x-modals modalType="edit-sal-grade"/>
         <x-modals modalType="add-sal-grade"/>
+        <x-modals modalType="add-tax-exempt"/>
 
 
         <x-modals modalType="add-taxes"/>
@@ -43,6 +44,10 @@
         <x-modals modalType="add-deduction"/>
 
         <x-modals modalType="warning-yn"/>
+        <x-modals modalType="warning-yn"/>
+        <x-modals modalType="warning-yn"/>
+        <x-modals modalType="warning-yn"/>
+
         <x-modals modalType="success"/>
         <x-modals modalType="error"/>
 
@@ -62,7 +67,7 @@
                 <div class="text-m2 bold">Category</div>
                 <div class="flex gap3">
                     <a id="sal-grade-btn" class="category-btn-1 active">Salary Grade</a>
-                    <a id="tax-exempt-btn" class="category-btn-1 active">Tax-exempt</a>
+                    <a id="tax-exempt-btn" class="category-btn-1">Tax-exempt</a>
                     <a id="allowance-btn" class="category-btn-1">Allowances</a>
                     <a id="deductions-btn" class="category-btn-1">Deductions</a>
                     <a id="payperiod-btn" class="category-btn-1">Payroll Period</a>
@@ -70,7 +75,7 @@
             </div>
 
             {{-- Salary Grades --}}
-            <div id="sal-grade-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1 d-none">
+            <div id="sal-grade-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1">
                 <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
 
                     <div class="text-l3 bold"> Salary Grade </div>
@@ -90,7 +95,7 @@
 
 
             {{-- Tax Exempt --}}
-            <div id="tax-exempt-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1">
+            <div id="tax-exempt-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1 d-none">
                 <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
 
                     <div class="text-l3 bold"> Tax-exempt </div>
@@ -100,7 +105,7 @@
                     <x-admin_render_tax_exempts :elements="$taxExempts"/>
 
                     <div class="d-flex gap3 mar-top-1 justify-content-end w-100">
-                        <a id="add-sal-grade-btn" class="primary-btn1-long">Add Salary Grade</a>
+                        <a id="add-tax-exempt-btn" class="primary-btn1-long">Add Salary Grade</a>
                     </div>
                 </div>
             </div>
@@ -111,10 +116,11 @@
             <div id="allowances-table" class="d-none long-cont d-flex flex-direction-y gap3 mar-bottom-1">
                 <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
 
-                    <div class="text-m2 bold"> Allowances </div>
+                    <div class="text-l3 bold"> Allowances </div>
                     <div class="line1 mar-bottom-3 mar-top-3"> </div>
 
                     {{-- Render --}}
+                    <x-render-settings-tables :elements="$allowances" elementsName="Allowances"/>
 
                     <div id="save-btn-hrly-rate" class="d-flex gap3 mar-top-1 justify-content-end w-100">
                         <a id="add-allowance-btn" class="primary-btn1-long">Add Allowance</a>
@@ -128,14 +134,33 @@
             <div id="deductions-table" class="d-none long-cont d-flex flex-direction-y gap3 mar-bottom-1">
                 <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
 
-                    <div class="text-m2 bold"> Deductions </div>
+                    <div class="text-l3 bold"> Deductions </div>
                     <div class="line1 mar-bottom-3 mar-top-3"> </div>
 
                     {{-- Render --}}
+                    <x-render-settings-tables :elements="$deductions" elementsName="Deductions"/>
 
                     <div id="save-btn-hrly-rate" class="d-flex gap3 mar-top-1 justify-content-end w-100">
                         <a id="add-deduction-btn" class="primary-btn1-long">Add Deduction</a>
                     </div>
+                </div>
+            </div>
+
+
+
+            {{-- Payroll Period --}}
+            <div id="payroll-period-table" class="d-none long-cont d-flex flex-direction-y gap3 mar-bottom-1">
+                <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
+
+                    <div class="text-l3 bold"> Payroll Period </div>
+                    <div class="line1 mar-bottom-3 mar-top-3"> </div>
+
+                    <div class="text-m1">Payroll Period</div>
+                    <input type="text" class="edit-text-1 w-100" value="{{$payrollPeriod->payroll_Period}}" disabled>
+
+                    <div class="text-m1">Payroll Cutoff (days before payday)</div>
+                    <input type="text" class="edit-text-1 w-100" value="{{$payrollPeriod->payroll_cutoff}}" disabled>
+
                 </div>
             </div>
 
@@ -151,6 +176,9 @@
 
     <script>
         const salGrades = @json($salGrades);
+        const taxExempts = @json($taxExempts);
+        const allowances = @json($allowances);
+        const deductions = @json($deductions);
     </script>
     <script src="/assets/js/admin-settings.js"></script>
     

@@ -274,6 +274,36 @@
     </div>
 
 
+@elseif($modalType == 'add-tax-exempt')
+    <div class="modal1 d-none" id="add-tax-exempt-modal">
+        <div class="modal1-box-small">
+            <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
+            <div class="modal1-txt-title fw-bold text-l3" id="modal-1-title">
+                Add Tax-exempt
+                <form method="post">
+                    <div class="d-flex flex-direction-y gap3 mar-top-2">
+                        <div class="flex-grow-1">
+                            <label for="tax-name-in" class="text-m2 mar-bottom-3">Name</label>
+                            <input class="edit-text-1 w-100" id="tax-name-in" type="text" placeholder="Tax Name" />
+                        </div>
+
+                        <div class="d-flex flex-direction-y gap3 mar-top-3">
+                            <label for="tax-period-in" class="text-m2">Period</label>
+                            <select id="tax-period-in" class="edit-text-1 w-100">
+                                <option value="Every 15">Every 15</option>
+                                <option value="Every End of the Month">Every End of the Month</option>
+                            </select>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+            <button class="primary-btn1-small w-100 mar-top-1" id="add-tax">Add</button>
+        </div>
+    </div>
+
+
 
 
 @elseif($modalType == 'add-taxes')
