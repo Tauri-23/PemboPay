@@ -27,6 +27,14 @@
 
         {{-- Jquery --}}
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+        {{-- Calendar CDN --}}
+        <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js' rel='stylesheet' />
+        <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.13/index.global.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+
+
         
     </head>
     <body>
@@ -300,7 +308,8 @@
     <script src="/assets/js/navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
-
+        const timesheets = @json($timesheetDates);
     </script>
+    {{-- <script src="/assets/js/timesheet-calendar.js"></script> --}}
     <script src="/assets/js/view-employee.js"></script>
 </html>
