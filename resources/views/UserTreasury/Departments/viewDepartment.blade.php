@@ -31,10 +31,13 @@
     </head>
     <body>
         {{-- Modals --}}
+        <x-modals modalType="emp-mini-profile-1"/>
+        <x-modals modalType="close-yn"/>
+        <x-modals modalType="warning-yn"/>
         <x-modals modalType="success"/>
         <x-modals modalType="error"/>
         <x-modals modalType="close"/>
-        <x-modals modalType="close-yn"/>
+        
 
         {{-- Sidenav --}}
         <x-sidenav activeLink="7"/>
@@ -68,29 +71,12 @@
                 <a href="/TreasuryDepartments" class="d-flex gap3 text-black text-decoration-none align-items-center text-m1">
                     <i class="fa-solid fa-chevron-left"></i>Back
                 </a>
-            
-                <form method="post">
-                    @csrf
-                    <div class="d-flex gap3">
-                        <a href="/TreasuryAddEmployees" class="primary-btn3-small">
-                            <i class="bi bi-person-plus-fill mar-end-3"></i>Add Employee
-                        </a>
-
-                        <a href="/AccountantEditDepartment/{{$department->id}}" class="secondary-btn1-small">
-                            <i class="fa-solid fa-pen-to-square mar-end-3"></i>Edit Department
-                        </a>
-                        
-                        <div id="del-dept-btn" class="secondary-btn2-small">
-                            <i class="bi bi-building-fill-x mar-end-3"></i>Delete Department
-                        </div>
-                    </div>
-                </form>
             </div>
 
 
 
             {{-- Render Employees --}}
-            <x-TreasuryEmloyeesTable :employees="$employees"/>
+            <x-accountant_employees_table :employees="$employees"/>
         
         </div>
 
@@ -105,5 +91,5 @@
         const employees = {!! json_encode($employees) !!};
         const deptId = {!! json_encode($department->id) !!}
     </script>
-    <script src="/assets/js/view-department.js"></script>
+    <script src="/assets/js/accountant-employees.js"></script>
 </html>

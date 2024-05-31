@@ -57,17 +57,12 @@
                         <option value="z-a">z-a</option>
                     </select>
                 </div>
-
-                <a href="/TreasuryAddDepartments" class="primary-btn1-small d-flex align-items-center">
-                    <i class="bi bi-building-fill-add mar-end-3 text-m1"></i>
-                    Add Department
-                </a>
             </div>
 
             <div id="results-dept" class="d-flex flex-wrap-cont gap3">
 
                 {{-- Render Departments --}}
-                <x-RenderDepartments :departments="$departments"/>
+                <x-accountant_render_Departments :departments="$departments"/>
             </div>
         
         </div>

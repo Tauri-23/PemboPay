@@ -32,9 +32,10 @@ class Main {
         this.postalIn = $('#postal-in');
 
         this.deptIn = $('#department-in');
+        this.positionIn = $('#position-in');
 
-        this.hourlyIn = $('#hourly-rate');
-        this.salaryIn = $('#salary-rate');
+        // this.hourlyIn = $('#hourly-rate');
+        // this.salaryIn = $('#salary-rate');
 
         //Buttons
         this.addEmpBtn = $('#add-emp-btn');
@@ -52,9 +53,7 @@ class Main {
         this.brgyMsg = $('#brgy-required');
 
         this.deptMsg = $('#department-required');
-
-        this.hrlyRateMsg = $('#hrly-rate-required');
-        this.salRateMsg = $('#sal-rate-required');
+        this.positionMsg = $('#position-required');
 
         this.selectedPayMode = 'hourly';
 
@@ -207,6 +206,20 @@ class FormValidator extends Main{
             return;
         }
 
+        if(calculateAge(this.bdateIn.val()) < 18) {
+            $('#error-modal').find('.modal-text').html('Minimum age requirement is 18.');
+            showModal($('#error-modal'));
+            closeModal($('#error-modal'), false);
+            return;
+        }
+
+        if(!isEmail(this.emailIn.val())) {
+            $('#error-modal').find('.modal-text').html('Invalid Email.');
+            showModal($('#error-modal'));
+            closeModal($('#error-modal'), false);
+            return;
+        }
+
         this.setupConfirmModal();
     }
 
@@ -223,18 +236,14 @@ class FormValidator extends Main{
         this.brgyMsg.toggleClass('d-none', this.brgyIn.val() != 'invalid');
         
         this.deptMsg.toggleClass('d-none', this.deptIn.val() != 'invalid');
-
-        this.hrlyRateMsg.toggleClass('d-none', !isEmptyOrSpaces(this.hourlyIn.val()));
-        this.salRateMsg.toggleClass('d-none', !isEmptyOrSpaces(this.salaryIn.val()));
+        this.positionMsg.toggleClass('d-none', this.positionIn.val() != 'invalid');
     }
 
     ifReadyToSumbit() {
-        let selectedPayModeInput = this.payInfoHandler.selectedPayMode == 'hourly' ? this.hourlyIn.val() : this.salaryIn.val();
-
         return !isEmptyOrSpaces(this.fnameIn.val()) && !isEmptyOrSpaces(this.lnameIn.val()) && !isEmptyOrSpaces(this.bdateIn.val()) &&
         !isEmptyOrSpaces(this.phoneIn.val()) && !isEmptyOrSpaces(this.emailIn.val()) && !isEmptyOrSpaces(this.stAddressIn.val()) &&
         (this.cityIn.val() != 'invalid') && (this.brgyIn.val() != 'invalid') && (this.deptIn.val() != 'invalid') &&
-        !isEmptyOrSpaces(selectedPayModeInput)
+        (this.positionIn.val() != 'invalid');
     }
 
     setupConfirmModal() {
@@ -250,32 +259,31 @@ class FormValidator extends Main{
         formData.append("emp_lname", this.lnameIn.val());
         formData.append("emp_gender", this.genderIn.val());
         formData.append("emp_department", this.deptIn.val());
+        formData.append("emp_position", this.positionIn.val());
         formData.append("emp_city", this.cityIn.val());
         formData.append("emp_brgy", this.brgyIn.val());
         formData.append("emp_st_address", this.stAddressIn.val());
         formData.append("emp_email", this.emailIn.val());
         formData.append("emp_phone", this.phoneIn.val());
         formData.append("emp_bdate", this.bdateIn.val());
-        formData.append("emp_compensation_mode", $('#hourly').hasClass("active") ? 'hourly' : 'salary');
-        formData.append("emp_compensation_value", $('#hourly').hasClass("active") ? this.hourlyIn.val() : this.salaryIn.val()); 
 
         yesBtn.click(function() {
             closeModalNoEvent($('#info-yn-modal'));
             $.ajax({
                 type: "POST",
-                url: "/TreasuryAddEmployeePost",
+                url: "/AdminAddEmployeePost",
                 processData: false,
                 contentType: false,
                 data: formData,
                 success: function(response) {
                     if(response.status == 200) {
-                        $('#success-modal').find('.modal-text').html('Employee added successfully.');
+                        $('#success-modal').find('.modal-text').html(response.message);
                         showModal($('#success-modal'));
-                        closeModalRedirect($('#success-modal'), '/TreasuryEmployees');
+                        closeModalRedirect($('#success-modal'), `/adminViewDept/${selectedDept.id}`);
                     } else {
-                        $('#error-modal').find('.modal-text').html('Failed adding employee please try again later.');
+                        $('#error-modal').find('.modal-text').html(response.message);
                         showModal($('#error-modal'));
-                        closeModalRedirect($('#error-modal'), '/TreasuryEmployees');
+                        closeModal($('#error-modal'), false);
                     }
                 },
                 error: function (xhr, status, error) {

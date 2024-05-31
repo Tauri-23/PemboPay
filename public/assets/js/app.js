@@ -100,6 +100,33 @@ function validationNotEmpty(inputsToValidate) {
 
 
 
+// Calculate age
+function calculateAge(birthDate) {
+    const today = new Date();
+    const birthDateObj = new Date(birthDate);
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+    const monthDifference = today.getMonth() - birthDateObj.getMonth();
+
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDateObj.getDate())) {
+        age--;
+    }
+
+    return age;
+}
+
+
+
+
+
+// Email Validator
+function isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+}
+
+
+
+
 //Basically format the Phone Number input +63
 function formatPhoneNumIn(phoneNum) {
     phoneNum.on('input', function () {

@@ -1,5 +1,5 @@
 //columns
-const employeeColumns = $('.employee-column');
+const employeeRows = $('.employee-row');
 
 //btns
 const generatePayslipBtn = $('#generate-pay-slip');
@@ -66,7 +66,8 @@ function generatePayslip() {
 
 
 //employee colum event
-employeeColumns.click(function() {
+employeeRows.click(function() {
+    console.log($(this).attr('id'));
     let id = $(this).attr('id');
 
     //console.log(id);

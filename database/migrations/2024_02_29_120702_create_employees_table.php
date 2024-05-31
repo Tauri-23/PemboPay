@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('phone');
             $table->dateTime('birth_date');
             $table->string('pfp');
-            $table->unsignedBigInteger('salary_grade')->nullable();
+            $table->unsignedBigInteger('position')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
@@ -50,9 +50,9 @@ return new class extends Migration
                 ->nullOnDelete()
                 ->cascadeOnUpdate();
 
-            $table->foreign('salary_grade')
+            $table->foreign('position')
                 ->references('id')
-                ->on('salary_grades')
+                ->on('department_positions')
                 ->nullOnDelete()
                 ->cascadeOnUpdate();
         });

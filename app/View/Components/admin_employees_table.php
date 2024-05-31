@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class TreasuryEmloyeesTable extends Component
+class admin_employees_table extends Component
 {
     public $employees;
     
@@ -20,6 +20,6 @@ class TreasuryEmloyeesTable extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.treasury-emloyees-table');
+        return view('components.admin_employees_table');
     }
 }

@@ -34,10 +34,14 @@
     </head>
     <body>
         {{-- Modals --}}
+        <x-modals modalType="emp-mini-profile-1"/>
+        <x-modals modalType="close-yn"/>
+        <x-modals modalType="warning-yn"/>
+
         <x-modals modalType="success"/>
         <x-modals modalType="error"/>
         <x-modals modalType="close"/>
-        <x-modals modalType="close-yn"/>
+        
 
         {{-- Sidenav --}}
         <x-admin_side_nav activeLink="4"/>
@@ -94,7 +98,7 @@
 
 
             {{-- Render Employees --}}
-            <x-TreasuryEmloyeesTable :employees="$employees"/>
+            <x-admin_employees_table :employees="$employees"/>
         
         </div>
 
@@ -110,4 +114,5 @@
         const deptId = {!! json_encode($department->id) !!}
     </script>
     <script src="/assets/js/admin-view-department.js"></script>
+    <script src="/assets/js/admin-employees.js"></script>
 </html>

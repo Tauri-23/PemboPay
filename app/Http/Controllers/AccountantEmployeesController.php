@@ -21,7 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class TreasuryEmployeesController extends Controller
+class AccountantEmployeesController extends Controller
 {
     protected $loggedService; //service to retrieve logged accountant data
     protected $retrieveDb; // service to retrieve all from specific table in database
@@ -45,69 +45,10 @@ class TreasuryEmployeesController extends Controller
 
         return view('UserTreasury.Employees.index', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
-            'employees' => Employees::with('department', 'compensation')->get(),
+            'employees' => Employees::with('department', 'department_positions')->get(),
             "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
         ]);
     }
-    
-
-    public function addEmployee() {
-        return view('UserTreasury.Employees.addEmployee', [
-            'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
-            'cities' => $this->retrieveDb->retrieve(Cities::class),
-            'brgy' => $this->retrieveDb->retrieve(Barangays::class),
-            'departments' => $this->retrieveDb->retrieve(Departments::class),
-            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
-        ]);
-    }
-
-
-    public function addEmployeePost(Request $request) {
-        $employeeId = $this->generateId->generate(Employees::class);
-        $compensationId = $this->generateId->generate(Compensation::class);
-
-        //Add Compensation
-        $com = new Compensation();
-        $com->id = $compensationId;
-        $com->compentsation_type = $request->emp_compensation_mode;
-        $com->value = $request->emp_compensation_value;
-        $com->save();
-
-
-        // Employee
-        $emp = new Employees();
-        $emp->id = $employeeId;
-        $emp->firstname = $request->emp_fname;
-        $emp->middlename = $request->emp_mname != null? $request->emp_name : null;
-        $emp->lastname = $request->emp_lname;
-        $emp->gender = $request->emp_gender;
-        $emp->department = $request->emp_department;
-        $emp->city = $request->emp_city;
-        $emp->barangay = $request->emp_brgy;
-        $emp->street_address = $request->emp_st_address;
-        $emp->email = $request->emp_email;
-        $emp->phone = $request->emp_phone;
-        $emp->birth_date = $request->emp_bdate;
-        $emp->pfp = "defaultPFP.png";
-        $emp->hourly_rate_mode = $compensationId;
-
-        if($emp->save()) {
-            // Add logs
-            $this->saveLogDb->saveLog("Added an Employee: ".$request->emp_fname." ".$request->emp_mname." ".$request->emp_lname);
-
-            return response()->json([
-                'status' => 200,
-                'message' => 'success'
-            ]);
-        }
-        else {
-            return response()->json([
-                'status' => 401,
-                'message' => 'error'
-            ]);
-        }
-    }
-
 
     public function viewEmployee($id) {
         $timesheets = timesheet::where('employee', $id)->get();
@@ -152,18 +93,18 @@ class TreasuryEmployeesController extends Controller
             $employee->barangay = $request->brgy;
         }
         else if($request->editType == "Pay Information") {
-            if ($employee->compensation) {
-                // Update compensation attributes if the relationship exists
-                $employee->compensation->compentsation_type = $request->compensation_type;
-                $employee->compensation->value = $request->price;
-                $employee->compensation->save();
-            } else {
-                // Create a new compensation record if it does not exist
-                $compensation = new Compensation();
-                $compensation->compentsation_type = $request->compensation_type;
-                $compensation->value = $request->price;
-                $employee->compensation()->save($compensation);
-            }
+            // if ($employee->compensation) {
+            //     // Update compensation attributes if the relationship exists
+            //     $employee->compensation->compentsation_type = $request->compensation_type;
+            //     $employee->compensation->value = $request->price;
+            //     $employee->compensation->save();
+            // } else {
+            //     // Create a new compensation record if it does not exist
+            //     $compensation = new Compensation();
+            //     $compensation->compentsation_type = $request->compensation_type;
+            //     $compensation->value = $request->price;
+            //     $employee->compensation()->save($compensation);
+            // }
         }
 
         if($employee->save()) {

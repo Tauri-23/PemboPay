@@ -41,7 +41,7 @@ class AdminDepartmentsController extends Controller
 
     public function viewDepartment($id) {
         $department = Departments::find($id);
-        $employees = Employees::where('department', $id)->get();
+        $employees = Employees::with('department', 'department_positions')->where('department', $id)->get();
 
         return view('UserAdmin.Departments.viewDepartment', [
             'department' => $department,

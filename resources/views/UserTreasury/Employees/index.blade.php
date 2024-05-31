@@ -62,15 +62,10 @@
                         <option value="z-a">z-a</option>
                     </select>
                 </div>
-
-                <a href="/TreasuryAddEmployees" class="primary-btn1-small d-flex align-items-center">
-                    <i class="bi bi-person-fill-add mar-end-3 text-m1"></i>
-                    Add Employee
-                </a>
             </div>
             
             <div id="original-emp-cont">
-                <x-TreasuryEmloyeesTable :employees="$employees"/>
+                <x-accountant_employees_table :employees="$employees"/>
             </div>
 
             <div id="sort-result-emp-cont">
@@ -93,5 +88,5 @@
     <script>
         const employeesList = {!! json_encode($employees) !!};
     </script>
-    <script src="/assets/js/employees.js"></script>
+    <script src="/assets/js/accountant-employees.js"></script>
 </html>

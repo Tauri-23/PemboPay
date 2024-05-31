@@ -39,11 +39,11 @@
         <x-modals modalType="info-yn"/>
 
         {{-- Sidenav --}}
-        <x-admin_side_nav activeLink="3"/>
+        <x-admin_side_nav activeLink="4"/>
         
 
         {{-- Navbar --}}
-        <x-admin_navbar title="Add Employees"/>
+        <x-admin_navbar title="Add Employees in {{$selectedDept->department_name}}"/>
         
 
         {{-- Content --}}
@@ -168,19 +168,33 @@
                         <label for="department-in" class="text-m2 mar-bottom-3">
                             Department
                         </label>
-                        <select name="Department" class="select-long2 w-100" id="department-in">
-                            <option value="" selected>Select Departments</option>
+                        <select name="Department" class="select-long2 w-100" id="department-in" disabled>
                             {{-- Create loop here to generate available employees --}}
                             <x-department_select_option :departments="$departments"/>
                         </select>
                         <div class="color-AppRed d-none" id="department-required">Please select Department</div>
                     </div>
 
+                    <div class="d-flex flex-direction-y w-100 mar-top-3">
+                        <label for="position-in" class="text-m2 mar-bottom-3">
+                            Position
+                        </label>
+                        <select name="Position" class="select-long2 w-100" id="position-in">
+                            <option value="invalid" selected>Select Position</option>
+                            {{-- Create loop here to generate available employees --}}
+                            @foreach ($deptPosition as $position)
+                                <option value="{{$position->id}}">{{$position->position}}</option>
+                            @endforeach
+                        </select>
+                        <div class="color-AppRed d-none" id="position-required">Please select Position</div>
+                    </div>
+                    
+
                 </div>
 
 
                 {{-- Pay Information --}}
-                <div class="long-cont d-flex flex-wrap gap3">
+                {{-- <div class="long-cont d-flex flex-wrap gap3">
                     <div class="w-100 text-m1 bold">Pay Information</div>
 
                     <div class="d-flex flex-direction-y w-100 mar-top-3">
@@ -209,7 +223,7 @@
 
                     </div>
                     
-                </div>
+                </div> --}}
 
                 {{-- Add Emp Button --}}
                 <div class="d-flex justify-content-end w-100">

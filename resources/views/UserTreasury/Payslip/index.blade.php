@@ -89,7 +89,7 @@
             </div>
 
             {{-- render employees from db --}}
-            <x-TreasuryEmloyeesTable :employees="$employees"/>
+            <x-accountant_employees_table :employees="$employees"/>
         
         </div>
 

@@ -20,9 +20,9 @@ const sortEmpCont = $('#sort-result-emp-cont');
 
 
 
-let employeeColumn = $(".employee-column");
+let employeeRow = $(".employee-row");
 
-employeeColumn.click(function() {
+employeeRow.click(function() {
     empColumnEvent($(this));
 })
 
@@ -30,6 +30,15 @@ sortEmpCont.on('click', '.table1-data.employee-column', function() {
     empColumnEvent($(this));
 });
 
+
+
+
+
+/*
+|----------------------------------------
+| Sort Search
+|----------------------------------------
+*/
 sortEmp.change(function() {
     const value = $(this).val();
     sortEmpCont.html('');
@@ -72,7 +81,6 @@ searchEmp.on('input',function() {
         sortEmpCont.addClass('d-none'); 
     }
 });
-
 
 function processSearch(value) {
     const filteredEmployeeList = employeesList.filter(emp => {
@@ -135,10 +143,60 @@ function processSearch(value) {
     
 }
 
+function sortDescending() {
+    employeesList.sort(function(a, b) {
+        const firstNameA = a.firstname.toUpperCase();
+        const firstNameB = b.firstname.toUpperCase();
+        const lastNameA = a.lastname.toUpperCase();
+        const lastNameB = b.lastname.toUpperCase();
+
+        if (firstNameA > firstNameB) {
+            return -1;
+        } else if (firstNameA < firstNameB) {
+            return 1;
+        } else {
+            if (lastNameA > lastNameB) {
+                return -1;
+            } else if (lastNameA < lastNameB) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    });
+}
+
+function sortAscending() {
+    employeesList.sort(function(a, b) {
+        const firstNameA = a.firstname.toUpperCase();
+        const firstNameB = b.firstname.toUpperCase();
+        const lastNameA = a.lastname.toUpperCase();
+        const lastNameB = b.lastname.toUpperCase();
+    
+        if (firstNameA < firstNameB) {
+            return -1;
+        } else if (firstNameA > firstNameB) {
+            return 1;
+        } else {
+            if (lastNameA < lastNameB) {
+                return -1;
+            } else if (lastNameA > lastNameB) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    });
+}
 
 
 
 
+/*
+|----------------------------------------
+| Render Employees Row
+|----------------------------------------
+*/
 function renderEmployeesTable() {
     sortEmpCont.append(`
         <div class="table1">
@@ -150,7 +208,7 @@ function renderEmployeesTable() {
                 <small class="text-m2 form-data-col">Employee ID</small>
                 <small class="text-m2 form-data-col">Employee Email</small>
                 <small class="text-m2 form-data-col">Department</small>
-                <small class="text-m2 form-data-col">Compensation Type</small>
+                <small class="text-m2 form-data-col">Position</small>
             </div>
         </div>
         `);
@@ -167,7 +225,7 @@ function renderEmployeesTable() {
                 <small class="text-m3 form-data-col emp-id">${employee.id}</small>
                 <small class="text-m3 form-data-col">${employee.email}</small>
                 <small class="text-m3 form-data-col emp-dept">${employee.department.department_name}</small>
-                <small class="text-m3 form-data-col">${employee.compensation.compentsation_type}</small>
+                <small class="text-m3 form-data-col">${employee.department_positions.position}</small>
             </div>
         `;
 
@@ -176,6 +234,14 @@ function renderEmployeesTable() {
 }
 
 
+
+
+
+/*
+|----------------------------------------
+| Employees onclick
+|----------------------------------------
+*/
 function empColumnEvent(empColumn) {
     const empId = empColumn.find('.emp-id').html();
     const empName = empColumn.find('.emp-name').html();
@@ -194,7 +260,7 @@ function empColumnEvent(empColumn) {
 
     // Handle viewFullProfileBtn click within the modal
     viewFullProfileBtn.on('click', function() {
-        window.location.href = "/TreasuryViewEmployee/" + empId;
+        window.location.href = `/AdminViewTreasury/${empId}`;
     });
 }
 
@@ -244,48 +310,4 @@ delEmpBtn.click(function() {
     
 });
 
-function sortAscending() {
-    employeesList.sort(function(a, b) {
-        const firstNameA = a.firstname.toUpperCase();
-        const firstNameB = b.firstname.toUpperCase();
-        const lastNameA = a.lastname.toUpperCase();
-        const lastNameB = b.lastname.toUpperCase();
-    
-        if (firstNameA < firstNameB) {
-            return -1;
-        } else if (firstNameA > firstNameB) {
-            return 1;
-        } else {
-            if (lastNameA < lastNameB) {
-                return -1;
-            } else if (lastNameA > lastNameB) {
-                return 1;
-            } else {
-                return 0;
-            }
-        }
-    });
-}
 
-function sortDescending() {
-    employeesList.sort(function(a, b) {
-        const firstNameA = a.firstname.toUpperCase();
-        const firstNameB = b.firstname.toUpperCase();
-        const lastNameA = a.lastname.toUpperCase();
-        const lastNameB = b.lastname.toUpperCase();
-
-        if (firstNameA > firstNameB) {
-            return -1;
-        } else if (firstNameA < firstNameB) {
-            return 1;
-        } else {
-            if (lastNameA > lastNameB) {
-                return -1;
-            } else if (lastNameA < lastNameB) {
-                return 1;
-            } else {
-                return 0;
-            }
-        }
-    });
-}

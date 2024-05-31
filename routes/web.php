@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountantEmployeesController;
 use App\Http\Controllers\AccountantPaySettingsController;
 use App\Http\Controllers\AccountantPayslipController;
 use App\Http\Controllers\AccountantProfileController;
@@ -49,12 +50,9 @@ Route::post('/forgotPassword', [ForgotPasswordController::class, 'forgotPassword
 Route::get('/TreasuryDashboard', [TreasuryDashController::class, 'home']);
 
 
-
-
 // Profile
 Route::get('/AccountantViewProfile/{id}', [AccountantProfileController::class, 'index']);
 Route::post('/AccountantEditProfile', [AccountantProfileController::class, 'editProfilePost']);
-
 
 
 //Run Payroll
@@ -63,16 +61,13 @@ Route::post('/AccountantProcessPayroll', [RunPayrollController::class, 'computeP
 Route::post('/AccountantSaveDbPayroll', [RunPayrollController::class, 'addPayrollToDb']);
 
 
-
 //Payroll History
 Route::get('/TreasuryPayrollHistory', [TreasuryDashController::class, 'payrollHistory']);
-
 
 
 //Reports
 Route::get('/TreasuryReports', [AccountantReportController::class, 'reports']);
 Route::get('/AccountantGenerateReport/{payrollPeriod}', [AccountantReportController::class, 'generateReports']);
-
 
 
 //Payslip
@@ -81,28 +76,14 @@ Route::get('/AccountantGeneratePayslip/{ids}/{payrollPeriod}', [AccountantPaysli
 Route::post('/checkPayslipAvailability', [AccountantPayslipController::class, 'checkPayslipExistence']);
 
 
-
 //Employees
-Route::get('/TreasuryEmployees', [TreasuryEmployeesController::class, 'employees']);
-Route::get('/TreasuryAddEmployees', [TreasuryEmployeesController::class, 'addEmployee']);
-Route::post('/TreasuryAddEmployeePost', [TreasuryEmployeesController::class, 'addEmployeePost']);
-Route::get('/TreasuryViewEmployee/{id}', [TreasuryEmployeesController::class, 'viewEmployee']);
-Route::post('/AccountantEditEmpInfo', [TreasuryEmployeesController::class, 'editEmployee']);
-Route::post('/UploadEmpPfp', [TreasuryEmployeesController::class, 'UploadPfpToStorage']);
-Route::post('/UploadEmpPfpToDb', [TreasuryEmployeesController::class, 'UploadpPfpToDb']);
-Route::post('/DeleteEmployee', [TreasuryEmployeesController::class, 'deleteEmpPost']);
-
+Route::get('/TreasuryEmployees', [AccountantEmployeesController::class, 'employees']);
+Route::get('/TreasuryViewEmployee/{id}', [AccountantEmployeesController::class, 'viewEmployee']);
 
 
 //Departments
 Route::get('/TreasuryDepartments', [TreasuryDepartmentsController::class, 'departments']);
-Route::get('/TreasuryAddDepartments', [TreasuryDepartmentsController::class, 'addDepartments']);
 Route::get('/ViewDept/{id}', [TreasuryDepartmentsController::class, 'viewDepartment']);
-Route::get('/AccountantEditDepartment/{id}', [TreasuryDepartmentsController::class, 'editDepartment']);
-Route::post('/TreasuryAddDepartmentPost', [TreasuryDepartmentsController::class, 'addDepartmentPost']);
-Route::post('/TreasuryDeleteDepartment', [TreasuryDepartmentsController::class, 'deleteDepartment']);
-Route::post('/AccountantEditDeptPost', [TreasuryDepartmentsController::class, 'editDepartmentPost']);
-
 
 
 //Payroll Settings
@@ -144,6 +125,11 @@ Route::post('/timeOut', [EmployeesController::class, 'timeOut']);
 
 
 
+
+
+
+
+
 /*
 |----------------------------------------
 | Admin
@@ -163,6 +149,9 @@ Route::get('/AdminAccountantLogs', [AdminDashController::class, 'AccountantLogs'
 //Employees
 Route::get('/AdminEmployees', [AdminEmployeesController::class, 'index']);
 Route::get('/AdminAddEmployees/{deptId}', [AdminEmployeesController::class, 'addEmployee']);
+Route::get('/AdminViewTreasury/{id}', [AdminEmployeesController::class, 'viewEmployee']);
+Route::post('/AdminAddEmployeePost', [AdminEmployeesController::class, 'addEmployeePost']);
+Route::post('/AdminEditEmpInfo', [AdminEmployeesController::class, 'editEmployeePost']);
 
 
 // Departments

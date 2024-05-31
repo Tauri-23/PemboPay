@@ -7,7 +7,7 @@
     </div>
 @else
     @foreach ($departments as $dept)
-        <a href="/adminViewDept/{{$dept->id}}" id="Department_ID" class="departments-cont-box departments">
+        <a href="/ViewDept/{{$dept->id}}" id="Department_ID" class="departments-cont-box departments">
             <div class="department-name" style="z-index: 2;">{{$dept->department_name}} ({{$dept->department_tag}})</div>
             <div class="overlay-blur-dark"></div>
             <img class="department-pic" src="/assets/media/dept-pfp/{{$dept->department_pfp}}" />

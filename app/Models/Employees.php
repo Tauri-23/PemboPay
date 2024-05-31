@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employees extends Model
 {
-    use HasFactory;
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+    
     /**
      * Get the department that the employee belongs to.
      */
@@ -16,8 +19,8 @@ class Employees extends Model
         return $this->belongsTo(Departments::class, 'department', 'id');
     }
 
-    public function compensation() {
-        return $this->belongsTo(Compensation::class, 'hourly_rate_mode', 'id');
+    public function department_positions() {
+        return $this->hasMany(department_positions::class, 'id', 'position');
     }
 
     public function city() {

@@ -15,13 +15,13 @@
             <small class="text-m2 form-data-col">Employee ID</small>
             <small class="text-m2 form-data-col">Employee Email</small>
             <small class="text-m2 form-data-col">Department</small>
-            <small class="text-m2 form-data-col">Compensation Type</small>
+            <small class="text-m2 form-data-col">Position</small>
         </div>
 
 
         {{--Data Fetched from the database this is for ui for now--}}
         @foreach ($employees as $emp)
-            <div  class="table1-data {{ $loop->last ? 'last' : '' }} employee-column" id="{{$emp->id}}">
+            <div  class="table1-data {{ $loop->last ? 'last' : '' }} employee-row" id="{{$emp->id}}">
                 <div class="form-data-col">
                     <div class="table1-PFP-small mar-end-1">
                         <img class="emp-pfp" src="/assets/media/pfp/{{ $emp->pfp }}" alt="">
@@ -32,7 +32,7 @@
                 <small class="form-data-col">{{ $emp->email }}</small>
                 <small class="form-data-col emp-dept">{{ $emp->department()->first()->department_name }}</small>
                 {{-- <small class="form-data-col">{{  dd($emp->toArray())  }} Debug output</small> --}}
-                <small class="form-data-col">{{ $emp->compensation()->first()->compentsation_type }}</small>
+                <small class="form-data-col">{{ $emp->department_positions()->first()->position }}</small>
             </div>
         @endforeach
     </div>
