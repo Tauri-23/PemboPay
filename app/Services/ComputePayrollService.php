@@ -287,6 +287,8 @@ class ComputePayrollService implements IComputePayrollService {
                 $currentDate->addDay(); // Move to the next day
             }
 
+            $workDaysNum - $holidayCount;
+
             $daysAbsent = $workDaysNum - $daysWorked; // Number of Days Absent  
             
             $dayRate = $salaryGrade / $workDaysNum;
