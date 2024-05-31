@@ -96,8 +96,9 @@
                 <div class="table1">
                     <div class="table1-header">
                         <small class="text-m2 form-data-col">Employee ID</small>
-                        <small class="text-m2 form-data-col">Compensation Type</small>
                         <small class="text-m2 form-data-col">Department</small>
+                        <small class="text-m2 form-data-col">Position</small>
+                        <small class="text-m2 form-data-col">Total Absent</small>
                         <small class="text-m2 form-data-col">Gross Pay</small>
                         <small class="text-m2 form-data-col">Net Pay</small>
                     </div>

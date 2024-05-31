@@ -8,6 +8,7 @@ use App\Models\AllowanceRecord;
 use App\Models\AllowanceRecordEmployee;
 use App\Models\DeductionRecord;
 use App\Models\DeductionRecordEmployee;
+use App\Models\employee_absent_deduction_records;
 use App\Models\Employees;
 use App\Models\PayrollRecord;
 use App\Models\tax_record_employees;
@@ -69,7 +70,8 @@ class AccountantPayslipController extends Controller
             "deductionRecord" => DeductionRecord::where('payroll_period', $payrollPeriod)->get(),
             "deductionRecordSelf" => DeductionRecordEmployee::whereIn('employee', $employeeIds)->where('payroll_period', $payrollPeriod)->get(),
             "taxRecord" => tax_record_employees::where('payroll_period', $payrollPeriod)->get(),
-            "deductions" => DeductionRecord::where('payroll_period', $payrollPeriod)->get()
+            "deductions" => DeductionRecord::where('payroll_period', $payrollPeriod)->get(),
+            "absentDeduction" => employee_absent_deduction_records::where('payroll_period', $payrollPeriod)->get()
         ]);
     }
 }

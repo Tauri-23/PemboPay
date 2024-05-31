@@ -142,6 +142,13 @@
                                         @foreach ($deductions as $deduction)
                                             <small>{{$deduction->deduction_name}}</small><br />                                         
                                         @endforeach
+
+                                        {{-- Absent Deduction --}}
+                                        @foreach ($absentDeduction as $deduction)
+                                            @if ($deduction->employee == $emp->id && $deduction->days_absent > 0)
+                                                <small>Absent ({{$deduction->days_absent}} days)</small><br />   
+                                            @endif                               
+                                        @endforeach
                                     </div>
                                     <div class="text-right">
                                         {{-- Taxes Value --}}
@@ -154,6 +161,13 @@
                                         {{-- Deductions value --}}
                                         @foreach ($deductions as $deduction)
                                             <small>{{"₱ " . number_format($deduction->deduction_price, 2, '.', ',')}}</small><br />                                       
+                                        @endforeach
+
+                                        {{-- Absent Deduction Values --}}
+                                        @foreach ($absentDeduction as $deduction)
+                                            @if ($deduction->employee == $emp->id && $deduction->days_absent > 0)
+                                                <small>{{"₱ " . number_format($deduction->deductions, 2, '.', ',')}}</small><br />   
+                                            @endif                               
                                         @endforeach
                                     </div>
                                 </div>

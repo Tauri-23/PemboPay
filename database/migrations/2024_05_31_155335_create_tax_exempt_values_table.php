@@ -22,6 +22,15 @@ return new class extends Migration
             $table->float('threshold_max');
             
             $table->timestamps();
+
+            /**
+             * Foreign Keys
+             */
+            $table->foreign('tax_exempt')
+                ->references('id')
+                ->on('tax_exempts')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
         });
     }
 

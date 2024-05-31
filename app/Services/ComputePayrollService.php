@@ -7,14 +7,18 @@ use App\Models\AllowanceRecord;
 use App\Models\AllowanceRecordEmployee;
 use App\Models\DeductionRecord;
 use App\Models\DeductionRecordEmployee;
+use App\Models\employee_absent_deduction_records;
 use App\Models\employee_allowance;
 use App\Models\employee_deductions;
 use App\Models\Employees;
+use App\Models\Holidays;
 use App\Models\PayrollRecord;
 use App\Models\PayrollRecordSummary;
 use App\Models\settings_allowance;
 use App\Models\SettingsDeductions;
 use App\Models\SettingsPayrollPeriod;
+use App\Models\tax_exempt;
+use App\Models\tax_exempt_values;
 use App\Models\tax_record_employees;
 use App\Models\taxes;
 use App\Models\taxes_record;
@@ -30,6 +34,9 @@ class ComputePayrollService implements IComputePayrollService {
     protected $generateId;
 
     //
+    private $monthPeriod;
+
+    private $holidays;
     private $employees;
     private $timesheet;
     private $settingsPayrollPeriod;
@@ -38,6 +45,7 @@ class ComputePayrollService implements IComputePayrollService {
     private $generalDeduction;
     private $selfDeduction;
     private $generalTaxes;
+    private $generalTaxExempt;
 
     private $payrollRecordSummaries;
 
@@ -49,6 +57,7 @@ class ComputePayrollService implements IComputePayrollService {
     private $temp_deduction_records = [];
     private $temp_deduction_records_employees = [];
     private $temp_taxes_record_employees = [];
+    private $temp_employee_absent_deduction_records = [];
 
     public function __construct(IGenerateIdService $generateId) {
         $this->generateId = $generateId;
@@ -58,6 +67,7 @@ class ComputePayrollService implements IComputePayrollService {
 
         $this->settingsPayrollPeriod = SettingsPayrollPeriod::first(); //Payroll Settings Configurations
 
+        $this->monthPeriod = $period;
 
         $payrollPeriod = $period." ".date('M', mktime(0, 0, 0, $month, 1))." ".$year;
 
@@ -85,6 +95,7 @@ class ComputePayrollService implements IComputePayrollService {
             "temp_deduction_records" => $this->temp_deduction_records,
             "temp_deduction_records_employees" => $this->temp_deduction_records_employees,
             "temp_taxes_record_employees" => $this->temp_taxes_record_employees,
+            "temp_employee_absent_deduction_records" => $this->temp_employee_absent_deduction_records,
             "period" => $payrollPeriod
         ]);
     }
@@ -93,55 +104,114 @@ class ComputePayrollService implements IComputePayrollService {
 
 
 
-    // This Function is responsible for computing the Start Date and End Date
     function ComputePayrollPeriod($month, $period, $year) {
+        // Fetch holidays for the given month and year
+        $holidays = Holidays::whereMonth('holiday_date', $month)
+                            ->whereYear('holiday_date', $year)
+                            ->pluck('holiday_date')
+                            ->toArray();
+    
         $startDate = null;
         $endDate = null;
-        if($period == "1-15") {
+    
+        if ($period == "1-15") {
             $startDate = Carbon::create($year, $month, 1)
                 ->subDays($this->settingsPayrollPeriod->payroll_cutoff);
-
-            //Adjust start date to nearest Sunday before the 1st
-            while($startDate->day > 1 && $startDate->dayOfWeek === Carbon::SUNDAY) {
+    
+            // If the start date is a weekend, adjust to next Monday
+            if ($startDate->isWeekend()) {
+                $startDate->next(Carbon::MONDAY);
+            }
+    
+            // Adjust start date to the nearest Sunday before the 1st if necessary
+            while ($startDate->day > 1 && $startDate->dayOfWeek === Carbon::SUNDAY) {
                 $startDate->subDay();
             }
-
-            //Calculate end date for period "1-15"
+    
+            // Calculate end date for period "1-15"
             $endDate = Carbon::create($year, $month, 15)
                 ->addDay()
                 ->subSeconds(1) // Subtract one second to get the last second of the 15th
                 ->subDays($this->settingsPayrollPeriod->payroll_cutoff);
-
-            // Adjust end date to nearest Sunday before the 15th if necessary
-            while($endDate->day > 1 && $endDate->dayOfWeek === Carbon::SUNDAY) {
+    
+            // Adjust end date to the nearest Sunday before the 15th if necessary
+            while ($endDate->day > 1 && $endDate->dayOfWeek === Carbon::SUNDAY) {
                 $endDate->subDay();
             }
-        }
-        elseif($period == "16-30") {
-            // Calculate start date for period "16-30"
+        } elseif ($period == "16-30") {
             $startDate = Carbon::create($year, $month, 16)
                 ->subDays($this->settingsPayrollPeriod->payroll_cutoff);
-            
-            // Adjust start date to nearest Sunday before the 16th if necessary
+    
+            // If the start date is a weekend, adjust to next Monday
+            if ($startDate->isWeekend()) {
+                $startDate->next(Carbon::MONDAY);
+            }
+    
+            // Adjust start date to the nearest Sunday before the 16th if necessary
             while ($startDate->day > 1 && $startDate->dayOfWeek === Carbon::SUNDAY) {
                 $startDate->subDay();
             }
-
+    
             // Calculate end date for period "16-30"
             $endDate = Carbon::create($year, $month, Carbon::createFromDate($year, $month)->daysInMonth)
                 ->subDays($this->settingsPayrollPeriod->payroll_cutoff);
-
-            // Adjust end date to nearest Sunday before the last day of the month if necessary
+    
+            // Adjust end date to the nearest Sunday before the last day of the month if necessary
+            while ($endDate->day > 1 && $endDate->dayOfWeek === Carbon::SUNDAY) {
+                $endDate->subDay();
+            }
+        } elseif ($period == "1-30") {
+            $startDate = Carbon::create($year, $month, 1)
+                ->subDays($this->settingsPayrollPeriod->payroll_cutoff);
+    
+            // If the start date is a weekend, adjust to next Monday
+            if ($startDate->isWeekend()) {
+                $startDate->next(Carbon::MONDAY);
+            }
+    
+            // Adjust start date to the nearest Sunday before the 1st if necessary
+            while ($startDate->day > 1 && $startDate->dayOfWeek === Carbon::SUNDAY) {
+                $startDate->subDay();
+            }
+    
+            // Calculate end date for period "1-30"
+            $endDate = Carbon::create($year, $month, Carbon::createFromDate($year, $month)->daysInMonth)
+                ->addDay()
+                ->subSeconds(1) // Subtract one second to get the last second of the last day
+                ->subDays($this->settingsPayrollPeriod->payroll_cutoff);
+    
+            // Adjust end date to the nearest Sunday before the last day of the month if necessary
             while ($endDate->day > 1 && $endDate->dayOfWeek === Carbon::SUNDAY) {
                 $endDate->subDay();
             }
         }
-
+    
+        // Adjust start date if it falls on a holiday that is a weekday
+        if (!$startDate->isWeekend()) {
+            while (in_array($startDate->toDateString(), $holidays) && !$startDate->isWeekend()) {
+                $startDate->subDay();
+                // Ensure the new start date is not a Sunday
+                while ($startDate->dayOfWeek === Carbon::SUNDAY) {
+                    $startDate->subDay();
+                }
+            }
+        }
+    
+        // Adjust end date if it falls on a holiday that is a weekday
+        while (in_array($endDate->toDateString(), $holidays) && !$endDate->isWeekend()) {
+            $endDate->subDay();
+            // Ensure the new end date is not a Sunday
+            while ($endDate->dayOfWeek === Carbon::SUNDAY) {
+                $endDate->subDay();
+            }
+        }
+    
         return [
             'startDate' => $startDate->format('Y-m-d H:i:s'),
             'endDate' => $endDate->format('Y-m-d H:i:s'),
         ];
     }
+
 
     
     /*
@@ -155,7 +225,18 @@ class ComputePayrollService implements IComputePayrollService {
         $endDate = Carbon::parse($computedPayrollPeriod['endDate']);
 
         //Populate Properties
+
         $this->employees = Employees::all(); // Get All Employees
+        $this->holidays = Holidays::where(function ($query) use ($startDate) {
+            $query->where(DB::raw('DATE(holiday_date)'), '>=', $startDate->toDateString());
+        })
+        ->where(function ($query) use ($endDate) {
+            $query->where(DB::raw('DATE(holiday_date)'), '<=', $endDate->toDateString());
+        })
+        ->whereYear('holiday_date', $year)
+        ->whereRaw('DAYOFWEEK(holiday_date) NOT IN (1, 7)') // Exclude Saturdays and Sundays
+        ->get();// get the Holidays that meet the payroll period
+        
         $this->timesheet = timesheet::where(function($query) use ($startDate) {
             $query->where(DB::raw('DATE(time_in)'), '>=', $startDate->toDateString());
         })
@@ -164,11 +245,13 @@ class ComputePayrollService implements IComputePayrollService {
         })
         ->whereYear('time_in', $year)
         ->get(); //get the timesheet that meet the payroll period
+
         $this->generalAllowance = settings_allowance::all(); //Get General allowance
         $this->selfAllowance = employee_allowance::all(); //Get Self Allowance
         $this->generalDeduction = SettingsDeductions::all(); //Get General Deductions
         $this->selfDeduction = employee_deductions::all(); //Get Self Deductions
         $this->generalTaxes = taxes::all(); //Get Taxes
+        $this->generalTaxExempt = tax_exempt::where('period_of_deduction', $this->monthPeriod == '1-15' ? 'Every 15': 'Every End of the month')->get(); //Get Tax exempt
 
         $totalHoursWorkedSummary = 0.0;
         $totalDeductionsSummary = 0.0;
@@ -181,11 +264,40 @@ class ComputePayrollService implements IComputePayrollService {
 
 
 
-        foreach($this->employees as $emp) {
+        foreach($this->employees as $emp) { //Employee Iteration compute per employee
 
-            //For Payroll Records
+            $salaryGrade = $emp->department_positions()->first()->salary_grades()->first()->value / 2; //Salary Grade from database
             $hoursWorked = $this->GetHoursWorked($emp->id);
-            $basicPay = $emp->compensation()->first()->compentsation_type == "salary" ? $emp->compensation()->first()->value / 2 : $emp->compensation()->first()->value * $hoursWorked;
+            $daysWorked = $hoursWorked / 8;
+
+            $holidayCount = $this->holidays->count();
+
+            // Number of working days base on the payroll period 
+            // $workDaysNum = $startDate->diffInDaysFiltered(function (Carbon $date) {
+            //     return $date->isWeekday();
+            // }, $endDate);
+
+            $workDaysNum = 0;
+            $currentDate = $startDate->copy();
+
+            while ($currentDate <= $endDate) {
+                if ($currentDate->isWeekday()) {
+                    $workDaysNum++;
+                }
+                $currentDate->addDay(); // Move to the next day
+            }
+
+            $daysAbsent = $workDaysNum - $daysWorked; // Number of Days Absent  
+            
+            $dayRate = $salaryGrade / $workDaysNum;
+
+            $absentDeduction = $dayRate * $daysAbsent;
+
+            
+            
+
+            // $absentDeduction = ;
+            $basicPay = $salaryGrade;
 
             $genAllowance = $this->GetGeneralAllowance($basicPay);
             $selfAllowance = $this->GetSelfAllowance($emp->id, $basicPay);
@@ -193,11 +305,15 @@ class ComputePayrollService implements IComputePayrollService {
 
             $genDeductions = $this->GetGeneralDeductions($basicPay);
             $selfDeductions = $this->GetSelfDeductions($emp->id, $basicPay);
+
+            // Taxes
             $genTax = $this->GetGeneralTax($basicPay);
-            $totalDeductions = $genDeductions + $selfDeductions + $genTax;
+            $genTaxExempt = $this->GetGeneralTaxExempt($basicPay);
+
+            $totalDeductions = $genDeductions + $selfDeductions + $genTax + $genTaxExempt + $absentDeduction;
 
             $grossPay = $basicPay + $totalAllowance;
-            $netPay = $grossPay - $totalDeductions;
+            $netPay = number_format($grossPay - $totalDeductions, 2, '.', '');
 
 
             //For Payroll Summary
@@ -214,7 +330,8 @@ class ComputePayrollService implements IComputePayrollService {
                 "payroll_period" => $payrollPeriod,
                 "employee" => $emp->id,
                 "department" => $emp->department()->first()->department_name,
-                "compensation_type" => $emp->compensation()->first()->compentsation_type,
+                "position" => $emp->department_positions()->first()->position,
+                "total_absent" => $daysAbsent,
                 "hours_worked" => $hoursWorked,
                 "deductions" => $totalDeductions,
                 "allowance" => $totalAllowance,
@@ -223,30 +340,55 @@ class ComputePayrollService implements IComputePayrollService {
                 "basic_pay" => $basicPay
             ];
 
+            $temp_employee_absent_deduction_record = [
+                "id" => $this->generateId->generate(employee_absent_deduction_records::class),
+                "payroll_period" => $payrollPeriod,
+                "employee" => $emp->id,
+                "days_absent" => $daysAbsent,
+                "deductions" => $absentDeduction
+            ];
+
+
+
             // TODO::
             //All Tax Record Per Employee
             foreach($this->generalTaxes as $tax) {
                 $totalTax = 0.0;
 
-                if($this->generalTaxes == null) {
-                    $totalTax = 0.0;
-                }
+                $taxTable = TaxValues::where('tax', $tax->id)->get();
 
-                foreach($this->generalTaxes as $taxes) {
-                    $taxTable = TaxValues::where('tax', $taxes->id)->get(); // Get the tax table in the tax
-
-                    $excessTaxable = 0;
-
-                    foreach($taxTable as $taxTbl) {
-                        
-                        if($basicPay > $taxTbl->threshold_min && $basicPay < $taxTbl->threshold_max) {
-                            $excessTaxable = $basicPay - $taxTbl->threshold_min;
-                            $totalTax += ($excessTaxable * ($taxTbl->price_percent / 100)) - $taxTbl->price_amount;
-                        }
+                $excessTaxable = 0;
+                foreach($taxTable as $taxTbl) {
+                    
+                    if($basicPay > $taxTbl->threshold_min && $basicPay < $taxTbl->threshold_max) {
+                        $excessTaxable = $basicPay - $taxTbl->threshold_min;
+                        $totalTax += ($excessTaxable * ($taxTbl->price_percent / 100)) - $taxTbl->price_amount;
                     }
-
                 }
 
+                $temp_tax_record_employee = [
+                    "id" => $this->generateId->generate(tax_record_employees::class),
+                    "employee" => $emp->id,
+                    "payroll_period" => $payrollPeriod,
+                    "tax_name" => $tax->name,
+                    "tax_price" => $totalTax,
+                ];
+
+                $this->temp_taxes_record_employees[] = $temp_tax_record_employee;
+            }
+
+            // For TaxExempt
+            foreach($this->generalTaxExempt as $tax) {
+                $totalTax = 0.0;
+
+                $taxTable = tax_exempt_values::where('tax_exempt', $tax->id)->get();
+
+                foreach($taxTable as $taxTbl) {
+                    
+                    if($basicPay > $taxTbl->threshold_min && $basicPay < $taxTbl->threshold_max) {
+                        $totalTax += ($basicPay * ($taxTbl->price_percent /100)) + $taxTbl->price_amount;
+                    }
+                }
 
                 $temp_tax_record_employee = [
                     "id" => $this->generateId->generate(tax_record_employees::class),
@@ -263,6 +405,7 @@ class ComputePayrollService implements IComputePayrollService {
             $this->getAllowanceRecordEmp($emp->id, $payrollPeriod); //Allowance Record specific employee
             $this->getDeductionRecordEmp($emp->id, $payrollPeriod); //Deduction Record specific employee
             $this->temp_payroll_records[] = $temp_payroll_record; //Payroll Record specific employee
+            $this->temp_employee_absent_deduction_records[] = $temp_employee_absent_deduction_record; //Absent Record for Archive Purposes
         }
 
         //payroll record overall
@@ -343,7 +486,7 @@ class ComputePayrollService implements IComputePayrollService {
 
     /*
     |----------------------------------------
-    | Allowances And Deductions | Tax for computation
+    | Allowances And Deductions 
     |----------------------------------------
     */
     function GetGeneralAllowance($basicPay) {
@@ -403,7 +546,35 @@ class ComputePayrollService implements IComputePayrollService {
         return $totalDeductions;
     }
 
-    function GetGeneralTax($basicPay) {
+    function GetSelfDeductions($id, $basicPay) {
+        $totalDeductions = 0.0;
+
+        if($this->selfDeduction == null) {
+            return $totalDeductions;
+        }
+
+        foreach($this->selfDeduction as $deduction) {
+            if($deduction->employee == $id) {
+                $totalDeductions += $deduction->deduction_period == "Monthly" ? $deduction->deduction_price / 2 : $deduction->deduction_price;
+            }
+            else {
+                $totalDeductions += $deduction->deduction_period == "Monthly" ? (($deduction->deduction_price / 2) * $basicPay) / 100 : ($deduction->deduction_price * $basicPay) / 100;
+            }
+        }
+
+        return $totalDeductions;
+    }
+
+
+
+
+
+    /*
+    |----------------------------------------
+    | Taxes and Contributions
+    |----------------------------------------
+    */
+    function GetGeneralTax($basicPay) { //Get General Tax From DB
         $totalTax = 0.0;
 
         if($this->generalTaxes == null) {
@@ -427,24 +598,30 @@ class ComputePayrollService implements IComputePayrollService {
         return $totalTax;
     }
 
-    function GetSelfDeductions($id, $basicPay) {
-        $totalDeductions = 0.0;
+    function GetGeneralTaxExempt($basicPay) { //Get General Tax From DB
+        $totalTax = 0.0;
 
-        if($this->selfDeduction == null) {
-            return $totalDeductions;
+        if($this->generalTaxExempt == null) {
+            return $totalTax;
         }
 
-        foreach($this->selfDeduction as $deduction) {
-            if($deduction->employee == $id) {
-                $totalDeductions += $deduction->deduction_period == "Monthly" ? $deduction->deduction_price / 2 : $deduction->deduction_price;
+        foreach($this->generalTaxExempt as $taxes) {
+            $taxTable = tax_exempt_values::where('tax_exempt', $taxes->id)->get();
+
+            foreach($taxTable as $taxTbl) {
+                
+                if($basicPay > $taxTbl->threshold_min && $basicPay < $taxTbl->threshold_max) {
+                    $totalTax += ($basicPay * ($taxTbl->price_percent /100)) + $taxTbl->price_amount;
+                }
             }
-            else {
-                $totalDeductions += $deduction->deduction_period == "Monthly" ? (($deduction->deduction_price / 2) * $basicPay) / 100 : ($deduction->deduction_price * $basicPay) / 100;
-            }
+
         }
 
-        return $totalDeductions;
+        return $totalTax;
     }
+
+
+    
 
 
 

@@ -50,9 +50,10 @@ runPayrollBtn.click(() => {
                     payrollPreviewColumns.append(`<div  class="table1-data employee-column">
                         <small class="form-data-col emp-id">${element.employee}</small>
                         <small class="form-data-col emp-dept">${element.department}</small>
-                        <small class="form-data-col">${element.compensation_type}</small>
-                        <small class="form-data-col">${element.gross_pay}</small>
-                        <small class="form-data-col">${element.net_pay}</small>
+                        <small class="form-data-col">${element.position}</small>
+                        <small class="form-data-col">${element.total_absent} Days</small>
+                        <small class="form-data-col">₱ ${element.gross_pay.toLocaleString()}</small>
+                        <small class="form-data-col">₱ ${element.net_pay.toLocaleString()}</small>
                     </div>`);
                 });
                 approvePayroll(response);
@@ -122,6 +123,7 @@ function approvePayroll(response) {
             formData.append('temp_deduction_records', JSON.stringify(response.temp_deduction_records));
             formData.append('temp_deduction_records_employees', JSON.stringify(response.temp_deduction_records_employees));
             formData.append('temp_taxes_record_employees', JSON.stringify(response.temp_taxes_record_employees));
+            formData.append('temp_employee_absent_deduction_records', JSON.stringify(response.temp_employee_absent_deduction_records));
             
 
             savePayrollToDB(formData, function(response) {

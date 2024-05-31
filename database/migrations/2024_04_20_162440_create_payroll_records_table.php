@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('payroll_records', function (Blueprint $table) {
             $table->string('id', 6)->primary();
             $table->string('payroll_period');
-            $table->string('employee', 6)->nullable();
+            $table->string('employee', 9)->nullable();
             $table->float('hours_worked');
-            $table->float('deductions');
+            $table->integer('days_absent');
+            $table->float('deductions');            
             $table->float('allowance');
             $table->float('gross_pay');
             $table->float('net_pay');

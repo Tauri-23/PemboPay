@@ -8,6 +8,7 @@ use App\Models\AllowanceRecord;
 use App\Models\AllowanceRecordEmployee;
 use App\Models\DeductionRecord;
 use App\Models\DeductionRecordEmployee;
+use App\Models\employee_absent_deduction_records;
 use App\Models\PayrollRecord;
 use App\Models\PayrollRecordSummary;
 use App\Models\tax_record_employees;
@@ -38,6 +39,7 @@ class RunPayrollController extends Controller
         $tempDeductionRecords = json_decode($request->input('temp_deduction_records'), true);
         $tempDeductionRecordsEmployees = json_decode($request->input('temp_deduction_records_employees'), true);
         $tempTaxesRecordEmployees = json_decode($request->input('temp_taxes_record_employees'), true);
+        $tempEmployeeAbsentDeductionRecords = json_decode($request->input('temp_employee_absent_deduction_records'), true);
 
         foreach($tempPayrollRecords as $tempPayroll) {
             $payrollRecords = new PayrollRecord;
@@ -45,6 +47,7 @@ class RunPayrollController extends Controller
             $payrollRecords->payroll_period = $tempPayroll['payroll_period'];
             $payrollRecords->employee = $tempPayroll['employee'];
             $payrollRecords->hours_worked = $tempPayroll['hours_worked'];
+            $payrollRecords->days_absent = $tempPayroll['total_absent'];
             $payrollRecords->deductions = $tempPayroll['deductions'];
             $payrollRecords->allowance = $tempPayroll['allowance'];
             $payrollRecords->gross_pay = $tempPayroll['gross_pay'];
@@ -52,6 +55,17 @@ class RunPayrollController extends Controller
             $payrollRecords->basic_pay = $tempPayroll['basic_pay'];
 
             $payrollRecords->save();
+        }
+
+        foreach($tempEmployeeAbsentDeductionRecords as $tempAbsendDeduct) {
+            $absentDeduction = new employee_absent_deduction_records;
+            $absentDeduction->id = $tempAbsendDeduct['id'];
+            $absentDeduction->payroll_period = $tempAbsendDeduct['payroll_period'];
+            $absentDeduction->employee = $tempAbsendDeduct['employee'];
+            $absentDeduction->days_absent = $tempAbsendDeduct['days_absent'];
+            $absentDeduction->deductions = $tempAbsendDeduct['deductions'];
+
+            $absentDeduction->save();
         }
 
         foreach($tempPayrollRecordSummaries as $empPaySummaries) {

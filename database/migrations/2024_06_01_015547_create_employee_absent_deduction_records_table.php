@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tax_record_employees', function (Blueprint $table) {
+        Schema::create('employee_absent_deduction_records', function (Blueprint $table) {
             $table->string('id', 6)->primary();
-            $table->string('employee', 9)->nullable();
-            $table->string('payroll_period');
-            $table->string('tax_name');
-            $table->float('tax_price');
 
+            $table->string('payroll_period');
+            $table->string('employee', 9)->nullable();
+            $table->integer('days_absent');
+            $table->float('deductions');  
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tax_record_employees');
+        Schema::dropIfExists('employee_absent_deduction_records');
     }
 };
