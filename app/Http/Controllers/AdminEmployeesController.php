@@ -48,7 +48,7 @@ class AdminEmployeesController extends Controller
     public function addEmployee($deptId) {
         $departments = Departments::all();
         $selectedDept = Departments::find($deptId);
-        $deptPosition = department_positions::where('department', $deptId)->get();
+        $deptPosition = department_positions::with('salary_grades')->where('department', $deptId)->get();
         $brgy = Barangays::all();
         $cities = Cities::all();
         $admin = admin::find(session('logged_Admin'));

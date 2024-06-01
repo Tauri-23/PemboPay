@@ -34,6 +34,9 @@ class Main {
         this.deptIn = $('#department-in');
         this.positionIn = $('#position-in');
 
+        this.salGradeIn = $('#sal-grade-in');
+        this.salGradeValIn = $('#sal-grade-val-in');
+
         // this.hourlyIn = $('#hourly-rate');
         // this.salaryIn = $('#salary-rate');
 
@@ -180,6 +183,19 @@ class DepartmentEvents extends Main {
 
         this.deptIn.val(selectedDept.id);
         console.log(selectedDept.id);
+
+        let filteredPosition = [];
+
+        // Bind the correct context to the event handler
+        this.positionIn.change(this.positionHandler.bind(this));
+    }
+
+    positionHandler() {
+        const filteredPosition = deptPosition.filter(col => col.id == this.positionIn.val());
+        if (filteredPosition.length > 0) {
+            this.salGradeIn.val(filteredPosition[0].salary_grades.grade);
+            this.salGradeValIn.val(filteredPosition[0].salary_grades.value);
+        }
     }
 }
 

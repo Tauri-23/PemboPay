@@ -175,20 +175,38 @@
                         <div class="color-AppRed d-none" id="department-required">Please select Department</div>
                     </div>
 
-                    <div class="d-flex flex-direction-y w-100 mar-top-3">
-                        <label for="position-in" class="text-m2 mar-bottom-3">
-                            Position
-                        </label>
-                        <select name="Position" class="select-long2 w-100" id="position-in">
-                            <option value="invalid" selected>Select Position</option>
-                            {{-- Create loop here to generate available employees --}}
-                            @foreach ($deptPosition as $position)
-                                <option value="{{$position->id}}">{{$position->position}}</option>
-                            @endforeach
-                        </select>
-                        <div class="color-AppRed d-none" id="position-required">Please select Position</div>
+
+                    <div class="d-flex gap1 w-100">
+                        <div class="d-flex flex-direction-y w-100 mar-top-3">
+                            <label for="position-in" class="text-m2 mar-bottom-3">
+                                Position
+                            </label>
+                            <select name="Position" class="select-long2 w-100" id="position-in">
+                                <option value="invalid" selected>Select Position</option>
+                                {{-- Create loop here to generate available employees --}}
+                                @foreach ($deptPosition as $position)
+                                    <option value="{{$position->id}}">{{$position->position}}</option>
+                                @endforeach
+                            </select>
+                            <div class="color-AppRed d-none" id="position-required">Please select Position</div>
+                        </div>
+
+
+                        <div class="d-flex flex-direction-y w-100 mar-top-3">
+                            <label for="sal-grade-in" class="text-m2 mar-bottom-3">
+                                Salary Grade
+                            </label>
+                            <input type="text" class="select-long2 w-100" id="sal-grade-in" disabled>
+                        </div>
+                        
+                        
+                        <div class="d-flex flex-direction-y w-100 mar-top-3">
+                            <label for="sal-grade-val-in" class="text-m2 mar-bottom-3">
+                                Salary
+                            </label>
+                            <input type="text" class="select-long2 w-100" id="sal-grade-val-in" disabled>
+                        </div>
                     </div>
-                    
 
                 </div>
 
@@ -245,6 +263,7 @@
         // Define a JavaScript variable and initialize it with PHP data
         const brgys = {!! json_encode($brgy) !!};
         const selectedDept = @json($selectedDept);
+        const deptPosition = @json($deptPosition);
         formatPhoneNumIn($('#phone-in'));
     </script>
 
