@@ -50,9 +50,18 @@
                     @php
                         foreach ($payrollRecordsEmp as $payrecord) {
                             if ($payrecord->employee == $emp->id) {
+                                $hoursWorked = $payrecord->hours_worked;
                                 $basicPay = $payrecord->basic_pay;
                                 $grossPay = $payrecord->gross_pay;
                                 $netPay = $payrecord->net_pay;
+                                $overTimeRecord = $payrecord->over_time;
+                            }
+                        }
+
+                        foreach ($overtime as $ot) {
+                            if ($ot->employee == $emp->id) {
+                                $basicPay -= $ot->overtime_price;
+                                $overtime_price = $ot->overtime_price;
                             }
                         }
                     @endphp
@@ -80,6 +89,15 @@
                             <small>Employee ID: <span id="emp-id">{{$emp->id}}</span></small><br />
                             <small>Department: <span id="emp-dept">{{$emp->Department()->first()->department_name}}</span></small>
                         </div>
+
+                        <div class="text-m2">
+                            <small>Hours Worked: <span id="emp-hours-worked">{{$hoursWorked}} h</span></small><br />
+
+                            @if ($overTimeRecord > 0)
+                                <small>Overtime: <span id="emp-hours-worked">{{$overTimeRecord}} h</span></small><br />
+                            @endif
+                            
+                        </div>
                 
                 
                         <div class="d-flex w-100 justify-content-between">
@@ -89,6 +107,13 @@
                                     <div>
                                         {{-- Basic Pay names --}}
                                         <small>Basic Pay: </small><br />
+
+                                        {{-- Overtime if it has --}}
+                                        @if ($overtime_price > 0)
+                                            <small>Overtime: </small><br />  
+                                        @endif
+                                        
+
                                         {{-- General Allowance names --}}
                                         @foreach ($allowanceRecord as $allowance)
                                             <small>{{$allowance->allowance_name}}</small><br />
@@ -103,6 +128,11 @@
                                     <div class="text-right">
                                         {{-- Basic Pay Value --}}
                                         <small>{{"₱ " . number_format($basicPay, 2, '.', ',')}}</small><br />
+
+                                        {{-- Overtime if it has --}}
+                                        @if ($overtime_price > 0)
+                                            <small>{{"₱ " . number_format($overtime_price, 2, '.', ',')}}</small><br />  
+                                        @endif
 
                                         {{-- General Allowance Value --}}
                                         @foreach ($allowanceRecord as $allowance)
@@ -142,13 +172,6 @@
                                         @foreach ($deductions as $deduction)
                                             <small>{{$deduction->deduction_name}}</small><br />                                         
                                         @endforeach
-
-                                        {{-- Absent Deduction --}}
-                                        @foreach ($absentDeduction as $deduction)
-                                            @if ($deduction->employee == $emp->id && $deduction->days_absent > 0)
-                                                <small>Absent ({{$deduction->days_absent}} days)</small><br />   
-                                            @endif                               
-                                        @endforeach
                                     </div>
                                     <div class="text-right">
                                         {{-- Taxes Value --}}
@@ -161,13 +184,6 @@
                                         {{-- Deductions value --}}
                                         @foreach ($deductions as $deduction)
                                             <small>{{"₱ " . number_format($deduction->deduction_price, 2, '.', ',')}}</small><br />                                       
-                                        @endforeach
-
-                                        {{-- Absent Deduction Values --}}
-                                        @foreach ($absentDeduction as $deduction)
-                                            @if ($deduction->employee == $emp->id && $deduction->days_absent > 0)
-                                                <small>{{"₱ " . number_format($deduction->deductions, 2, '.', ',')}}</small><br />   
-                                            @endif                               
                                         @endforeach
                                     </div>
                                 </div>

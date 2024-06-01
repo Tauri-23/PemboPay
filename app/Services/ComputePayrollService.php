@@ -10,6 +10,7 @@ use App\Models\DeductionRecordEmployee;
 use App\Models\employee_absent_deduction_records;
 use App\Models\employee_allowance;
 use App\Models\employee_deductions;
+use App\Models\employee_overtime_records;
 use App\Models\Employees;
 use App\Models\Holidays;
 use App\Models\PayrollRecord;
@@ -58,6 +59,7 @@ class ComputePayrollService implements IComputePayrollService {
     private $temp_deduction_records_employees = [];
     private $temp_taxes_record_employees = [];
     private $temp_employee_absent_deduction_records = [];
+    private $temp_employee_overtime_records = [];
 
     public function __construct(IGenerateIdService $generateId) {
         $this->generateId = $generateId;
@@ -96,6 +98,7 @@ class ComputePayrollService implements IComputePayrollService {
             "temp_deduction_records_employees" => $this->temp_deduction_records_employees,
             "temp_taxes_record_employees" => $this->temp_taxes_record_employees,
             "temp_employee_absent_deduction_records" => $this->temp_employee_absent_deduction_records,
+            'temp_employee_overtime_records' => $this->temp_employee_overtime_records,
             "period" => $payrollPeriod
         ]);
     }
@@ -266,17 +269,10 @@ class ComputePayrollService implements IComputePayrollService {
 
         foreach($this->employees as $emp) { //Employee Iteration compute per employee
 
+            $holidayCount = $this->holidays->count(); // Holidays in this period
             $salaryGrade = $emp->department_positions()->first()->salary_grades()->first()->value / 2; //Salary Grade from database
-            $hoursWorked = $this->GetHoursWorked($emp->id);
-            $daysWorked = $hoursWorked / 8;
 
-            $holidayCount = $this->holidays->count();
-
-            // Number of working days base on the payroll period 
-            // $workDaysNum = $startDate->diffInDaysFiltered(function (Carbon $date) {
-            //     return $date->isWeekday();
-            // }, $endDate);
-
+            // Working Days
             $workDaysNum = 0;
             $currentDate = $startDate->copy();
 
@@ -286,12 +282,23 @@ class ComputePayrollService implements IComputePayrollService {
                 }
                 $currentDate->addDay(); // Move to the next day
             }
-
             $workDaysNum -= $holidayCount;
 
-            $daysAbsent = $workDaysNum - $daysWorked; // Number of Days Absent  
+            // Hours Worked and Days Work of the Employee
+            $hoursWorked = $this->GetHoursWorked($emp->id);
+            $daysWorked = floor($hoursWorked / 8);
+            
+            $underTime = $this->GetUnderTime($emp->id);
+            $overtime = $this->GetOvertime($emp->id);
+            
+            // Number of Days Absent 
+            $daysAbsent = $this->GetAbsent($emp->id, $startDate, $endDate);  
             
             $dayRate = $salaryGrade / $workDaysNum;
+            $hourlyRate = $dayRate / 8;
+
+            $overtimeRate = $hourlyRate * $overtime;
+            $underTimeRate = $hourlyRate * $underTime;
 
             $absentDeduction = $dayRate * $daysAbsent;
 
@@ -299,7 +306,7 @@ class ComputePayrollService implements IComputePayrollService {
             
 
             // $absentDeduction = ;
-            $basicPay = $salaryGrade;
+            $basicPay = $salaryGrade - $absentDeduction - $underTimeRate + $overtimeRate;
 
             $genAllowance = $this->GetGeneralAllowance($basicPay);
             $selfAllowance = $this->GetSelfAllowance($emp->id, $basicPay);
@@ -312,7 +319,7 @@ class ComputePayrollService implements IComputePayrollService {
             $genTax = $this->GetGeneralTax($basicPay);
             $genTaxExempt = $this->GetGeneralTaxExempt($basicPay);
 
-            $totalDeductions = $genDeductions + $selfDeductions + $genTax + $genTaxExempt + $absentDeduction;
+            $totalDeductions = $genDeductions + $selfDeductions + $genTax + $genTaxExempt;
 
             $grossPay = $basicPay + $totalAllowance;
             $netPay = $grossPay - $totalDeductions;
@@ -335,11 +342,20 @@ class ComputePayrollService implements IComputePayrollService {
                 "position" => $emp->department_positions()->first()->position,
                 "total_absent" => $daysAbsent,
                 "hours_worked" => $hoursWorked,
+                "over_time" => $overtime,
                 "deductions" => $totalDeductions,
                 "allowance" => $totalAllowance,
                 "gross_pay" => $grossPay,
                 "net_pay" => $netPay,
                 "basic_pay" => $basicPay
+            ];
+
+            $temp_employee_overtime_record = [
+                "id" => $this->generateId->generate(employee_overtime_records::class),
+                "payroll_period" => $payrollPeriod,
+                "employee" => $emp->id,
+                "overtime" => $overtime,
+                "overtime_price" => $overtimeRate
             ];
 
             $temp_employee_absent_deduction_record = [
@@ -408,6 +424,7 @@ class ComputePayrollService implements IComputePayrollService {
             $this->getDeductionRecordEmp($emp->id, $payrollPeriod); //Deduction Record specific employee
             $this->temp_payroll_records[] = $temp_payroll_record; //Payroll Record specific employee
             $this->temp_employee_absent_deduction_records[] = $temp_employee_absent_deduction_record; //Absent Record for Archive Purposes
+            $this->temp_employee_overtime_records[] = $temp_employee_overtime_record;
         }
 
         //payroll record overall
@@ -481,6 +498,115 @@ class ComputePayrollService implements IComputePayrollService {
 
         return $hoursWorked;
     }
+
+    function GetOvertime($id) {
+        if ($id === null) {
+            return 0;
+        }
+    
+        $timeSheets = $this->timesheet->where("employee", $id);
+    
+        if (empty($timeSheets)) {
+            return 0;
+        }
+    
+        $overtime = 0;
+    
+        foreach ($timeSheets as $timesheet) {
+            $timeIn = Carbon::parse($timesheet->time_in);
+            $timeOut = Carbon::parse($timesheet->time_out);
+    
+            $hours = ($timeOut->diffInMinutes($timeIn) / 60) - 1; // Deduct 1 hour break
+    
+            if ($hours > 8) {
+                $overtime += $hours - 8; // Overtime is hours beyond 8 hours
+            }
+        }
+    
+        return $overtime;
+    }
+
+    function GetUnderTime($id) {
+        if ($id === null) {
+            return 0;
+        }
+    
+        $timeSheets = $this->timesheet->where("employee", $id);
+    
+        if (empty($timeSheets)) {
+            return 0;
+        }
+    
+        $undertime = 0;
+    
+        foreach ($timeSheets as $timesheet) {
+            $timeIn = Carbon::parse($timesheet->time_in);
+            $timeOut = Carbon::parse($timesheet->time_out);
+    
+            // Define 5 PM as a cutoff time
+            $cutoffTime = Carbon::parse($timeOut->format('Y-m-d') . ' 17:00:00');
+    
+            // Only calculate undertime if timeOut is before 5 PM
+            if ($timeOut < $cutoffTime) {
+                $hours = ($timeOut->diffInMinutes($timeIn) / 60) - 1; // Deduct 1 hour break
+    
+                // Calculate undertime only if worked hours are less than 8
+                if ($hours < 8) {
+                    $undertime += 8 - $hours; // Undertime is the difference to 8 hours
+                }
+            }
+        }
+    
+        return $undertime;
+    }
+
+    function GetAbsent($id, $startDate, $endDate) {
+        if ($id === null) {
+            return 0;
+        }
+    
+        // Parse the start and end dates
+        $startDate = Carbon::parse($startDate);
+        $endDate = Carbon::parse($endDate);
+    
+        // Fetch holidays for the given date range from the database
+        $holidays = $this->holidays->pluck('holiday_date')->map(function($date) {
+            return Carbon::parse($date)->format('Y-m-d');
+        })->toArray();
+    
+        // Fetch timesheets for the given employee within the date range
+        $timeSheets = $this->timesheet->where("employee", $id);
+    
+        // Generate list of working days excluding weekends and holidays
+        $workingDays = [];
+        for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+            if ($date->isWeekend() || in_array($date->format('Y-m-d'), $holidays)) {
+                continue;
+            }
+            $workingDays[] = $date->format('Y-m-d');
+        }
+    
+        // Create a list of days the employee has timesheets for
+        $timesheetDays = [];
+        foreach ($timeSheets as $timesheet) {
+            $timesheetDate = Carbon::parse($timesheet->time_in)->format('Y-m-d');
+            $timesheetDays[] = $timesheetDate;
+        }
+    
+        // Calculate absent days
+        $absentDays = 0;
+        foreach ($workingDays as $workingDay) {
+            if (!in_array($workingDay, $timesheetDays)) {
+                $absentDays++;
+            }
+        }
+    
+        return $absentDays;
+    }
+    
+    
+    
+    
 
     
 

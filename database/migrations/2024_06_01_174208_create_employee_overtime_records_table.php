@@ -11,19 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payroll_records', function (Blueprint $table) {
+        Schema::create('employee_overtime_records', function (Blueprint $table) {
             $table->string('id', 6)->primary();
+
             $table->string('payroll_period');
             $table->string('employee', 9)->nullable();
-            $table->float('hours_worked');
-            $table->float('over_time');
-            $table->integer('days_absent');
-            $table->float('deductions');            
-            $table->float('allowance');
-            $table->float('gross_pay');
-            $table->float('net_pay');
-            $table->float('basic_pay');
-
+            $table->integer('overtime');
+            $table->float('overtime_price');  
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
@@ -43,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payroll_records');
+        Schema::dropIfExists('employee_overtime_records');
     }
 };

@@ -9,6 +9,7 @@ use App\Models\AllowanceRecordEmployee;
 use App\Models\DeductionRecord;
 use App\Models\DeductionRecordEmployee;
 use App\Models\employee_absent_deduction_records;
+use App\Models\employee_overtime_records;
 use App\Models\PayrollRecord;
 use App\Models\PayrollRecordSummary;
 use App\Models\tax_record_employees;
@@ -40,6 +41,7 @@ class RunPayrollController extends Controller
         $tempDeductionRecordsEmployees = json_decode($request->input('temp_deduction_records_employees'), true);
         $tempTaxesRecordEmployees = json_decode($request->input('temp_taxes_record_employees'), true);
         $tempEmployeeAbsentDeductionRecords = json_decode($request->input('temp_employee_absent_deduction_records'), true);
+        $temp_employee_overtime_records = json_decode($request->input('temp_employee_overtime_records'), true);
 
         foreach($tempPayrollRecords as $tempPayroll) {
             $payrollRecords = new PayrollRecord;
@@ -47,6 +49,7 @@ class RunPayrollController extends Controller
             $payrollRecords->payroll_period = $tempPayroll['payroll_period'];
             $payrollRecords->employee = $tempPayroll['employee'];
             $payrollRecords->hours_worked = $tempPayroll['hours_worked'];
+            $payrollRecords->over_time = $tempPayroll['over_time'];
             $payrollRecords->days_absent = $tempPayroll['total_absent'];
             $payrollRecords->deductions = $tempPayroll['deductions'];
             $payrollRecords->allowance = $tempPayroll['allowance'];
@@ -55,6 +58,17 @@ class RunPayrollController extends Controller
             $payrollRecords->basic_pay = $tempPayroll['basic_pay'];
 
             $payrollRecords->save();
+        }
+
+        foreach($temp_employee_overtime_records as $tempOTRecord) {
+            $overtimeRecord = new employee_overtime_records;
+            $overtimeRecord->id = $tempOTRecord['id'];
+            $overtimeRecord->payroll_period = $tempOTRecord['payroll_period'];
+            $overtimeRecord->employee = $tempOTRecord['employee'];
+            $overtimeRecord->overtime = $tempOTRecord['overtime'];
+            $overtimeRecord->overtime_price = $tempOTRecord['overtime_price'];
+
+            $overtimeRecord->save();
         }
 
         foreach($tempEmployeeAbsentDeductionRecords as $tempAbsendDeduct) {

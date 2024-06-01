@@ -125,7 +125,7 @@ function approvePayroll(response) {
             formData.append('temp_deduction_records_employees', JSON.stringify(response.temp_deduction_records_employees));
             formData.append('temp_taxes_record_employees', JSON.stringify(response.temp_taxes_record_employees));
             formData.append('temp_employee_absent_deduction_records', JSON.stringify(response.temp_employee_absent_deduction_records));
-            
+            formData.append('temp_employee_overtime_records', JSON.stringify(response.temp_employee_overtime_records));
 
             savePayrollToDB(formData, function(response) {
                 if(response.status == 200) {
