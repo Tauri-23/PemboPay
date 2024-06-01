@@ -6,6 +6,7 @@ use App\Contracts\ILoggedService;
 use App\Models\AccountantLogs;
 use App\Models\Departments;
 use App\Models\Employees;
+use App\Models\PayrollRecord;
 use App\Models\PayrollRecordSummary;
 use App\Models\Treasuries;
 
@@ -39,6 +40,15 @@ class TreasuryDashController extends Controller
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
             'payrolls' => PayrollRecordSummary::orderBy('created_at', 'DESC')->get(),
             "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
+        ]);
+    }
+
+    public function fullPayrollHistory($period) {
+        return view('UserTreasury.PayrollHistory.viewFullPayrollHistory', [
+            'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
+            'payrolls' => PayrollRecord::orderBy('created_at', 'DESC')->where('payroll_period', $period)->get(),
+            "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get(),
+            'period' => $period
         ]);
     }
 }

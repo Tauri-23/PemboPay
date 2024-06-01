@@ -63,6 +63,7 @@ Route::post('/AccountantSaveDbPayroll', [RunPayrollController::class, 'addPayrol
 
 //Payroll History
 Route::get('/TreasuryPayrollHistory', [TreasuryDashController::class, 'payrollHistory']);
+Route::get('/viewFullPayrollHistory/{period}', [TreasuryDashController::class, 'fullPayrollHistory']);
 
 
 //Reports

@@ -287,7 +287,7 @@ class ComputePayrollService implements IComputePayrollService {
                 $currentDate->addDay(); // Move to the next day
             }
 
-            $workDaysNum - $holidayCount;
+            $workDaysNum -= $holidayCount;
 
             $daysAbsent = $workDaysNum - $daysWorked; // Number of Days Absent  
             
@@ -315,7 +315,7 @@ class ComputePayrollService implements IComputePayrollService {
             $totalDeductions = $genDeductions + $selfDeductions + $genTax + $genTaxExempt + $absentDeduction;
 
             $grossPay = $basicPay + $totalAllowance;
-            $netPay = number_format($grossPay - $totalDeductions, 2, '.', '');
+            $netPay = $grossPay - $totalDeductions;
 
 
             //For Payroll Summary

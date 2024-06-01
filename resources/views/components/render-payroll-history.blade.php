@@ -18,7 +18,7 @@
         </div>
 
         @foreach ($payrolls as $item)
-            <a href="" class="table1-data">
+            <a href="/viewFullPayrollHistory/{{$item->payroll_period}}" class="table1-data {{ $loop->last ? 'last' : '' }}">
                 <div class="w-50 flex-grow-1">{{$item->payroll_period}}</div>
                 <div class="w-50 flex-grow-1">{{$item->total_hours_worked}}</div>
                 <div class="w-50 flex-grow-1">{{"₱ " . number_format($item->total_basic_pay, 2, '.', ',')}}</div>

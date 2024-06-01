@@ -71,8 +71,9 @@ runPayrollBtn.click(() => {
 });
 
 cancelPayrollBtn.click(() => {
-    removeAllContainer();
-    runPayrollContainer.removeClass('d-none');
+    location.reload();
+    // removeAllContainer();
+    // runPayrollContainer.removeClass('d-none');
 });
 
 
