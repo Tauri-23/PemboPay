@@ -81,11 +81,11 @@
             
                     {{-- Departments --}}
                     <div class="text-m2 d-flex flex-direction-y gap2">
-                        <div class="bold">
+                        <div class="bold text-l3">
                             Departments
                         </div>
                         @foreach ($departments as $dept)
-                            {{-- @php
+                            @php
                                 $totalCompensation = 0.0;
                         
                                 foreach ($payrollRecords as $pay) {
@@ -94,9 +94,9 @@
                                     }
                                     
                                 }
-                            @endphp --}}
+                            @endphp
                             <div class="text-m2 d-flex flex-direction-y gap4">
-                                <small class="bold mar-start-3">{{$dept->department_name}}</small>
+                                <small class="bold mar-start-3 text-m2">{{$dept->department_name}} ({{$dept->department_tag}})</small>
                                 <div class="d-flex justify-content-between mar-start-2">
                                     <div class="w-50">
                                         <small>Date Established :</small><br />
@@ -107,11 +107,66 @@
                                         <small>{{$dept->created_at->Format('M d, Y h:i a')}}</small><br />
                                         <small>{{\App\Models\Employees::where('department', $dept->id)->count()}}</small><br />
                                         <small>{{"₱ " . number_format($totalCompensation, 2, '.', ',')}}</small>
-                                        
-                                        
                                     </div>
                                 </div>
+
+                                @foreach ($payrollRecords as $pay)
+
+                                    @if ($pay->employee()->first()->department == $dept->id)
+                                        <div class="d-flex flex-direction-y gap4 mar-start-3 mar-top-2">
+                                            <small class="bold mar-start-3">{{$pay->employee()->first()->firstname}} {{$pay->employee()->first()->lastname}} ({{$pay->employee}})</small>
+
+                                            <div class="d-flex justify-content-between mar-start-2">
+                                                <div class="w-50">
+                                                    <small>Hours Worked :</small><br />
+                                                    <small>Overtime :</small><br />
+                                                    <small>Days Absent :</small><br />
+
+                                                    <div class="bold text-m3 mar-top-3 mar-bottom-4">Compensation</div>
+
+                                                    <small class="mar-top-1">Basic Pay :</small><br />
+                                                    <small>Gross Pay :</small><br />
+                                                    <small>Net Pay:</small><br />
+
+                                                    <div class="bold text-m3 mar-top-3 mar-bottom-4">Deductions</div>
+
+                                                    @foreach ($taxes as $tax)
+                                                        @if ($tax->employee == $pay->employee)
+                                                            <small>{{$tax->tax_name}}:</small><br /><br />
+                                                        @endif                                                        
+                                                    @endforeach
+                                                    
+                                                </div>
+                                                <div class="w-50 text-right">
+                                                    <small>{{$pay->hours_worked}} h</small><br />
+                                                    <small>{{$pay->over_time}} h</small><br />
+                                                    <small>{{$pay->days_absent}} h</small><br />
+
+                                                    <div class="text-m3 mar-top-3 mar-bottom-4">------------------</div>
+
+                                                    <small>{{"₱ " . number_format($pay->basic_pay, 2, '.', ',')}}</small><br />
+                                                    <small>{{"₱ " . number_format($pay->gross_pay, 2, '.', ',')}}</small><br />
+                                                    <small>{{"₱ " . number_format($pay->net_pay, 2, '.', ',')}}</small><br />
+
+                                                    <div class="text-m3 mar-top-3 mar-bottom-4">------------------</div>
+
+                                                    @foreach ($taxes as $tax)
+                                                        @if ($tax->employee == $pay->employee)
+                                                            <small>{{"₱ " . number_format($tax->tax_price, 2, '.', ',')}}</small><br /><br />
+                                                        @endif                                                        
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    @endif
+                                    
+                                @endforeach
+                                <hr class="report-hr mar-start-3" />
                             </div>
+
+                            
                         @endforeach
                     </div>
             

@@ -10,6 +10,9 @@ use App\Models\Departments;
 use App\Models\Employees;
 use App\Models\PayrollRecord;
 use App\Models\PayrollRecordSummary;
+use App\Models\tax_exempt;
+use App\Models\tax_record_employees;
+use App\Models\taxes_record;
 use Illuminate\Http\Request;
 
 class AccountantReportController extends Controller
@@ -33,6 +36,8 @@ class AccountantReportController extends Controller
         $allowanceRecords = AllowanceRecord::where('payroll_period', $payrollPeriod)->get();
         $allowanceRecordsEmp = AllowanceRecordEmployee::where('payroll_period', $payrollPeriod)->get();
 
+        $taxes = tax_record_employees::where('payroll_period', $payrollPeriod)->get();
+
         $totalAllowance = PayrollRecord::where('payroll_period', $payrollPeriod)->get()->sum('allowance');
         $totalDeduction = PayrollRecord::where('payroll_period', $payrollPeriod)->get()->sum('deductions');
         $totalCompensation = PayrollRecord::where('payroll_period', $payrollPeriod)->get()->sum('net_pay');
@@ -49,6 +54,7 @@ class AccountantReportController extends Controller
             'totalDeduction' => $totalDeduction,
             'totalCompensation' => $totalCompensation,
             'payrollRecordSummary' => PayrollRecordSummary::where('payroll_period', $payrollPeriod),
+            'taxes' => $taxes,
             "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
         ]);
     }

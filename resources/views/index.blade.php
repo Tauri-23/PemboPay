@@ -17,6 +17,7 @@
 
         {{-- Bootstrap --}}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
         {{-- Font Awesome --}}
         <script src="https://kit.fontawesome.com/04f0992e18.js" crossorigin="anonymous"></script>
@@ -49,8 +50,8 @@
                 @csrf
                 <input id="username" name="username" class="edit-text-1 w-100 mar-top-2" placeholder="Username" type="text" />
                 <div class="d-flex position-relative align-items-center mar-top-2">
-                    <input id="password" name="password" class="edit-text-1 w-100" placeholder="Password" type="password" />
-                    <i class="fa-solid fa-eye position-absolute right3 cursor-pointer" id="show-pass-btn"></i>
+                    <input id="password" name="password" class="edit-text-1 w-100 password-input" placeholder="Password" type="password" />
+                    <i class="bi bi-eye-fill position-absolute right3 cursor-pointer see-pass"></i>
                 </div>
                 <div class="w-100 d-flex justify-content-end mar-top-3">
                     <a class="link-m3" id="forgot-pass-btn">Forgot Password</a>
@@ -78,7 +79,7 @@
             <form method="post" id="treasury-login-form">
                 @csrf
                 <input id="forgot-pass-email-in" class="edit-text-1 w-100 mar-top-2" placeholder="Email" type="text" />
-                <div id="next-btn" class="primary-btn1-small w-100 mar-top-1">Next</div>
+                <div id="next-btn" class="primary-btn1-small w-100 mar-top-1 text-center">Next</div>
             </form>
             
         </div>
@@ -97,7 +98,7 @@
             <form method="post" id="treasury-login-form">
                 @csrf
                 <input id="forgot-pass-otp-in" class="edit-text-1 w-100 mar-top-2" placeholder="OTP" type="text" />
-                <div id="next-btn" class="primary-btn1-small w-100 mar-top-1">Next</div>
+                <div id="next-btn" class="primary-btn1-small w-100 mar-top-1 text-center">Next</div>
             </form>
             
         </div>
@@ -116,14 +117,14 @@
             <form method="post" id="treasury-login-form">
                 @csrf
                 <div class="d-flex position-relative align-items-center mar-top-2">
-                    <input id="new-pass-in" class="edit-text-1 w-100" placeholder="New Password" type="password" />
-                    <i class="fa-solid fa-eye position-absolute right3 cursor-pointer" id="show-pass-btn-newpass"></i>
+                    <input id="new-pass-in" class="edit-text-1 w-100 password-input" placeholder="New Password" type="password" />
+                    <i class="bi bi-eye-fill  position-absolute right3 cursor-pointer see-pass" id="show-pass-btn-newpass"></i>
                 </div>
                 <div class="d-flex position-relative align-items-center mar-top-2">
-                    <input id="con-new-pass-in" class="edit-text-1 w-100" placeholder="Confirm Password" type="password" />
-                    <i class="fa-solid fa-eye position-absolute right3 cursor-pointer" id="show-pass-btn-conpass"></i>
+                    <input id="con-new-pass-in" class="edit-text-1 w-100 password-input" placeholder="Confirm Password" type="password" />
+                    <i class="bi bi-eye-fill position-absolute right3 cursor-pointer see-pass"></i>
                 </div>
-                <div id="change-pass-btn" class="primary-btn1-small w-100 mar-top-1">Change Password</div>
+                <div id="change-pass-btn" class="primary-btn1-small w-100 mar-top-1 text-center">Change Password</div>
             </form>
             
         </div>

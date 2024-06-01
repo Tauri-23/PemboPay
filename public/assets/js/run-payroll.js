@@ -29,6 +29,16 @@ runPayrollBtn.click(() => {
 
     //Run Payroll
     infoYNModals.eq(0).find('.yes-btn').click(() => {
+        const today = new Date();
+
+        if (checkDate() > today) {
+            errorModal.find('.modal1-txt').html(`Computation for period ${monthIn.val()} ${periodIn.val()} ${yearIn.val()} is currently not avaliable.`);
+            showModal(errorModal);
+            closeModal(errorModal, true);
+            return;
+        }
+
+
         closeModalNoEvent(infoYNModals.eq(0));
         
 
@@ -36,6 +46,8 @@ runPayrollBtn.click(() => {
         data.append('month', monthIn.val());
         data.append('period', periodIn.val());
         data.append('year', yearIn.val());
+
+
         
         computePayroll(data, function(response) {
 
@@ -155,4 +167,27 @@ function savePayrollToDB(formData, callback) {
             alert('error');
         }
     });
+}
+
+
+
+// Checkj if > today
+function checkDate() {
+    const selectedYear = parseInt(yearIn.val());
+    const selectedMonth = parseInt(monthIn.val());
+    const selectedPeriod = periodIn.val().split('-').map(Number); // ["1", "15"] -> [1, 15]
+    
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth() + 1; // getMonth() is zero-based
+    const currentDate = today.getDate();
+
+    // Determine the selected period's end date
+    const selectedEndDate = selectedPeriod[1];
+
+    // Create a date object for comparison
+    const selectedDate = new Date(selectedYear, selectedMonth - 1, selectedEndDate); // month is zero-based in Date()
+
+    // Compare dates
+    return selectedDate;
 }

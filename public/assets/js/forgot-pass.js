@@ -29,6 +29,13 @@ forgotPassBtn.click(() => {
 
 // Open OTP Container
 forgotPasswordEmailCont.find('#next-btn').click(() => {
+    if(!isEmail(forgotEmailIn.val())) {
+        errorModal.find('.modal1-txt').html('Invalid email.');
+        showModal(errorModal);
+        closeModal(errorModal, false);
+        return;
+    }
+
     let formData = new FormData();
     formData.append('processType', "sendOTP");
     formData.append('email', forgotEmailIn.val());
@@ -90,10 +97,16 @@ forgotPasswordOtpCont.find('#next-btn').click(() => {
 // Change password
 changePassBtn.click(() => {
     if(isEmptyOrSpaces(newPassIn.val()) || isEmptyOrSpaces(conNewPassIn.val())) {
+        errorModal.find('.modal1-txt').html(`Please fill-up the fields.`);
+        showModal(errorModal);
+        closeModal(errorModal, false);
         return;
     }
 
     if(newPassIn.val() != conNewPassIn.val()) {
+        errorModal.find('.modal1-txt').html(`New password and Confirm password doesn't match.`);
+        showModal(errorModal);
+        closeModal(errorModal, false);
         return;
     }
 

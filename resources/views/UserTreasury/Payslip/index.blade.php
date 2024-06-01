@@ -79,9 +79,9 @@
                         </select>
             
                         <select id="year" class="select-long">
-                            <option value="2023">2023</option>
                             <option value="2024">2024</option>
                             <option value="2025">2025</option>
+                            <option value="2025">2026</option>
                         </select>
                     </div>
                 </div>

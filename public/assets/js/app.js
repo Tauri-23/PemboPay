@@ -127,6 +127,36 @@ function isEmail(email) {
 
 
 
+// Calculate age
+function calculateAge(birthDate) {
+    const today = new Date();
+    const birthDateObj = new Date(birthDate);
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+    const monthDifference = today.getMonth() - birthDateObj.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDateObj.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+
+
+
+// See/Unsee Password
+$('.see-pass').click(function() {
+    let input = $(this).siblings('.password-input');
+    let type = input.attr('type') === 'password' ? 'text' : 'password';
+    if (type === 'password') {
+        $(this).removeClass('bi-eye-slash-fill').addClass('bi-eye-fill');
+    } else {
+        $(this).removeClass('bi-eye-fill').addClass('bi-eye-slash-fill');
+    }
+    input.attr('type', type);
+})
+
+
+
+
 //Basically format the Phone Number input +63
 function formatPhoneNumIn(phoneNum) {
     phoneNum.on('input', function () {

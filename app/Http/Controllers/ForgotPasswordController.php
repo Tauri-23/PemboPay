@@ -23,6 +23,16 @@ class ForgotPasswordController extends Controller
 
     public function forgotPasswordPost(Request $request) {
         if($request->processType == "sendOTP") {
+            $isEmailExist = Treasuries::where('email', $request->email)->first();
+
+            if(!$isEmailExist) {
+                return response()->json([
+                    'status' => 400,
+                    'message' => "Account with email ".$request->email." doesn't exist."
+                ]);
+            }
+
+
             $otp = $this->generateOTP->generate(6);
             $this->sendEmail->send(new forgotPassOTP($otp), $request->email);
 
@@ -34,7 +44,7 @@ class ForgotPasswordController extends Controller
 
             return response()->json([
                 'status' => 200,
-                'message' => 'OTP has been Sent to your email.'
+                'message' => 'OTP has been Sent to '.$request->email.'.'
             ]);
         }
         else if($request->processType == "verifyOTP") {
@@ -71,6 +81,15 @@ class ForgotPasswordController extends Controller
         }
         elseif($request->processType == "changePassword") {
             $accountant = Treasuries::where('email', $request->email)->first();
+
+            if($accountant->password == $request->password) {
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'New password cannot be the old password.'
+                ]);
+            }
+
+
             $accountant->password = $request->password;
 
             if($accountant->save()) {
