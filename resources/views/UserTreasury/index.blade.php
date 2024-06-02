@@ -100,7 +100,7 @@
             
             <div class="flex-wrap-cont mar-bottom-1">
                 {{-- Salary Trend --}}
-                <div class="med-cont-2">
+                {{-- <div class="med-cont-2">
                     <div class="d-flex justify-content-between align-items-center mar-bottom-1">
                         <div class="text-m1 fw-bold">Salary Chart</div>
                         <div>
@@ -113,10 +113,10 @@
 
                     <canvas class="w-100" id="compentsation-chart"></canvas>
         
-                </div>
+                </div> --}}
         
                 {{-- Budget Trend --}}
-                <div class="med-cont-2">
+                {{-- <div class="med-cont-2">
                     <div class="d-flex justify-content-between align-items-center mar-bottom-1">
                         <div class="text-m1 fw-bold">Budget Chart</div>
                         <div>
@@ -128,18 +128,18 @@
                     </div>
 
                     <canvas class="w-100" id="budget-chart"></canvas>
-                </div>
+                </div> --}}
         
                 {{-- Employee Trend --}}
-                <div class="med-cont-2">
+                {{-- <div class="med-cont-2">
                     <div class="d-flex justify-content-between align-items-center mar-bottom-1">
                         <div class="text-m1 fw-bold">Employee Chart</div>
                     </div>
 
                     <canvas class="w-100" id="employee-chart"></canvas>
-                </div>
+                </div> --}}
         
-                <div class="med-cont-2">
+                {{-- <div class="med-cont-2">
                     <div class="flex w-100 justify-content-between align-items-start">
                         <small class="text-m2 bold">Employees in Department</small>
                         <small class="month-year text-m3">@Model.CurrentMonth - @Model.CurrentYear</small>
@@ -149,7 +149,7 @@
                             <canvas id=""></canvas>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 
