@@ -212,9 +212,8 @@
 
                             
                             
-                            <div class="week-label">Week 1</div>
                             @php
-                                $week = 1;
+                                $week = 0;
                             @endphp
                             {{-- Loops to Date in month now --}}
                             @foreach ($datesInRange as $date)  

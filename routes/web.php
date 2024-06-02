@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminDashController;
 use App\Http\Controllers\AdminDepartmentsController;
 use App\Http\Controllers\AdminEmployeesController;
 use App\Http\Controllers\AdminSettingsController;
+use App\Http\Controllers\EmployeePayslipController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\RunPayrollController;
@@ -116,10 +117,20 @@ Route::post('/DelTaxPost', [AccountantPaySettingsController::class, 'DelTaxPost'
 */
 Route::get('/Employee', [EmployeesController::class, 'loginPage']);
 Route::get('/EmployeeDash', [EmployeesController::class, 'dashboard']);
-Route::get('/EmployeeTimesheet', [EmployeesController::class, 'timesheet']);
+
 Route::post('/EmployeeLogin', [EmployeesController::class, 'login']);
 Route::post('/timeIn', [EmployeesController::class, 'timeIn']);
 Route::post('/timeOut', [EmployeesController::class, 'timeOut']);
+
+// Timesheet
+Route::get('/EmployeeTimesheet', [EmployeesController::class, 'timesheet']);
+
+// Payslip
+Route::get('/EmployeePayslip', [EmployeePayslipController::class, 'index']);
+Route::post('/EmployeecheckPayslipAvailability', [EmployeePayslipController::class, 'checkPayslipExistence']);
+Route::get('/EmployeeGeneratePayslip/{payrollPeriod}', [EmployeePayslipController::class, 'GeneratePayslip']);
+
+
 
 
 

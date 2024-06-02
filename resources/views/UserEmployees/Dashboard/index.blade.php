@@ -30,9 +30,10 @@
     </head>
     <body>
         {{-- MOdal --}}
+        <x-modals modalType="info-yn"/>
         <x-modals modalType="success"/>
         <x-modals modalType="error"/>
-        <x-modals modalType="info-yn"/>
+        
 
         {{-- Sidenav --}}
         <x-employee-sidenav activeLink="1"/>
