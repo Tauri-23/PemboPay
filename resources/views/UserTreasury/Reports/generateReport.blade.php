@@ -58,6 +58,39 @@
                             <small class="text-m3">29 Sampaguita Extension 1218 Taguig City, Philippines</small>
                         </div>
                     </div>
+
+
+                    @php
+                        $deptNameTopComp = '';
+                        $deptBiggestComp = 0;
+
+                        $deptNameBotComp = '';
+                        $deptLowestComp = 10000000;
+
+                        
+
+                        foreach ($uniqueDepartments as $dept) {
+                            $deptName = '';
+                            $deptSalary = 0.0;
+                            foreach ($payrollRecords as $pay) {
+                                if($dept == $pay->employee()->first()->department) {
+                                    $deptSalary += $pay->net_pay;
+                                    $deptName = $pay->employee()->first()->department()->first()->department_name;
+                                }
+                            }
+
+                            if($deptSalary > $deptBiggestComp) {
+                                $deptBiggestComp = $deptSalary;
+                                $deptNameTopComp = $deptName;
+                            }
+
+                            if($deptSalary < $deptLowestComp) {
+                                $deptLowestComp = $deptSalary;
+                                $deptNameBotComp = $deptName;
+                            }
+                        }
+                    @endphp
+
             
                     <div class="text-l3 bold">
                         Report for <span id="period">{{$payrollPeriod}}</span>
@@ -66,17 +99,35 @@
                     <div class="text-m2 d-flex justify-content-between">
                         <div class="w-50">
                             <small>Total Employees :</small><br />
-                            <small>Total Departments :</small><br />
-                            <small>New Employees :</small><br />
-                            <small>New Departments :</small><br />
+                            <small>Total Departments :</small><br /><br />
+                            
+                            
+                            <small>Total Allowances :</small><br />
+                            <small>Total Deductions :</small><br />
+                            <small>Total Salary :</small><br /><br />
+
+                            <small>Department with highest Salary :</small><br />
+                            <small>Department Salary :</small><br /><br />
+
+                            <small>Department with lowest Salary :</small><br />
+                            <small>Department Salary :</small><br /><br />
                         </div>
                         <div class="w-50 text-right">
-                            <small>Total Emp of the period</small><br />
-                            <small>Total Depts of the period</small><br />
-                            <small>New Employees of the period</small><br />
-                            <small>New Depts of the period</small><br />
+                            <small>{{$payrollRecords->count()}}</small><br />
+                            <small>{{$uniqueDepartments->count() }}</small><br /><br />
+
+                            <small>{{"₱ " . number_format($totalAllowance, 2, '.', ',')}}</small><br />
+                            <small>{{"₱ " . number_format($totalDeduction, 2, '.', ',')}}</small><br />
+                            <small>{{"₱ " . number_format($payrollRecordSummary->total_net_pay, 2, '.', ',')}}</small><br /><br />
+
+                            <small>{{$deptNameTopComp}}</small><br />
+                            <small>{{"₱ " . number_format($deptBiggestComp, 2, '.', ',')}}</small><br /><br />
+
+                            <small>{{$deptNameBotComp}}</small><br />
+                            <small>{{"₱ " . number_format($deptLowestComp, 2, '.', ',')}}</small><br /><br />
                         </div>
                     </div>
+
                     <hr class="report-hr" />
             
                     {{-- Departments --}}
@@ -92,7 +143,6 @@
                                     if($pay->employee()->first()->department == $dept->id) {
                                         $totalCompensation += $pay->net_pay;
                                     }
-                                    
                                 }
                             @endphp
                             <div class="text-m2 d-flex flex-direction-y gap4">
@@ -101,7 +151,7 @@
                                     <div class="w-50">
                                         <small>Date Established :</small><br />
                                         <small>Total Employees :</small><br />
-                                        <small>Total Compensation :</small>
+                                        <small>Department Compensation :</small>
                                     </div>
                                     <div class="w-50 text-right">
                                         <small>{{$dept->created_at->Format('M d, Y h:i a')}}</small><br />
@@ -197,51 +247,6 @@
 
                             
                         @endforeach
-                    </div>
-            
-                    <hr class="report-hr" />
-            
-                    <div class="text-m2 d-flex flex-direction-y gap3">
-                        <div class="bold">
-                            Employees
-                        </div>
-            
-                        <div class="text-m2">
-                            <div class="d-flex justify-content-between mar-start-3">
-                                <div class="w-50">
-                                    <small>Total Allowances :</small><br />
-                                    <small>Total Deductions :</small><br />
-                                    <small>Total Compensation :</small>
-                                </div>
-                                <div class="w-50 text-right">
-                                    <small>{{"₱ " . number_format($totalAllowance, 2, '.', ',')}}</small><br />
-                                    <small>{{"₱ " . number_format($totalDeduction, 2, '.', ',')}}</small><br />
-                                    <small>{{"₱ " . number_format($totalCompensation, 2, '.', ',')}}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-                    <hr class="report-hr" />
-            
-                    <div class="text-m2 d-flex flex-direction-y gap3">
-                        <div class="bold">
-                            Allowances
-                        </div>
-            
-                        <div class="text-m2 ">
-                            {{-- @foreach(Model.AllowanceRecords)
-                            {
-                                <div class="flex justify-content-between mar-start-3">
-                                    <div class="w-50">
-                                        <small>@i.Allowance_Name :</small><br />
-                                    </div>
-                                    <div class="w-50 text-right">
-                                        <small>@string.Format("₱ {0:N2}", i.Allowance_Price)</small><br />
-                                    </div>
-                                </div>
-                            } --}}
-                        </div>
                     </div>
             
                     <hr class="report-hr" />

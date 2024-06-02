@@ -35,8 +35,15 @@ class AccountantReportController extends Controller
     public function generateReports($payrollPeriod) {
         $employees = Employees::all();
         $departments = Departments::all();
+        
 
         $payrollRecords = PayrollRecord::where('payroll_period', $payrollPeriod)->get();
+
+        $uniqueDepartments = Employees::whereIn('id', $payrollRecords->pluck('employee'))
+        ->distinct()
+        ->pluck('department');
+
+
         $allowanceRecords = AllowanceRecord::where('payroll_period', $payrollPeriod)->get();
         $allowanceRecordsEmp = AllowanceRecordEmployee::where('payroll_period', $payrollPeriod)->get();
 
@@ -63,7 +70,8 @@ class AccountantReportController extends Controller
             'totalAllowance' => $totalAllowance,
             'totalDeduction' => $totalDeduction,
             'totalCompensation' => $totalCompensation,
-            'payrollRecordSummary' => PayrollRecordSummary::where('payroll_period', $payrollPeriod),
+            'payrollRecordSummary' => PayrollRecordSummary::where('payroll_period', $payrollPeriod)->first(),
+            'uniqueDepartments' => $uniqueDepartments,           
 
             'taxes' => $taxes,
             "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
