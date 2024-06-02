@@ -151,7 +151,7 @@
                                     <div class="w-50">
                                         <small>Date Established :</small><br />
                                         <small>Total Employees :</small><br />
-                                        <small>Department Compensation :</small>
+                                        <small>Department Salary :</small>
                                     </div>
                                     <div class="w-50 text-right">
                                         <small>{{$dept->created_at->Format('M d, Y h:i a')}}</small><br />
