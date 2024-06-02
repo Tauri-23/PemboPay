@@ -67,7 +67,7 @@
                 <div class="text-m2 bold">Category</div>
                 <div class="flex gap3">
                     <a id="sal-grade-btn" class="category-btn-1 active">Salary Grade</a>
-                    <a id="tax-exempt-btn" class="category-btn-1">Tax-exempt</a>
+                    <a id="tax-exempt-btn" class="category-btn-1">Contributions</a>
                     <a id="allowance-btn" class="category-btn-1">Allowances</a>
                     <a id="deductions-btn" class="category-btn-1">Deductions</a>
                     <a id="payperiod-btn" class="category-btn-1">Payroll Period</a>
@@ -98,14 +98,14 @@
             <div id="tax-exempt-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1 d-none">
                 <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
 
-                    <div class="text-l3 bold"> Tax-exempt </div>
+                    <div class="text-l3 bold"> Contributions </div>
                     <div class="line1 mar-bottom-3 mar-top-3"> </div>
 
                     {{-- Render --}}
                     <x-admin_render_tax_exempts :elements="$taxExempts"/>
 
                     <div class="d-flex gap3 mar-top-1 justify-content-end w-100">
-                        <a id="add-tax-exempt-btn" class="primary-btn1-long">Add Salary Grade</a>
+                        <a id="add-tax-exempt-btn" class="primary-btn1-long">Add Contribution</a>
                     </div>
                 </div>
             </div>

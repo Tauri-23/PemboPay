@@ -10,7 +10,7 @@
 
 <div class="table1">
     <div class="table1-header">
-        <small class="text-m2 form-data-col">Tax name</small>
+        <small class="text-m2 form-data-col">Contribution name</small>
         <small class="text-m2 form-data-col">Period</small>
         <small class="text-m2 form-data-col d-flex justify-content-end">Action</small>
     </div>

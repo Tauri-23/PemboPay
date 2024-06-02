@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->string('payroll_period');
             $table->string('employee', 9)->nullable();
-            $table->integer('overtime');
+            $table->float('overtime');
             $table->float('overtime_price');  
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();

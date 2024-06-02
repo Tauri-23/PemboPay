@@ -110,7 +110,21 @@
                                     </div>
                                 </div>
 
+                                {{-- Employees in Departments --}}
                                 @foreach ($payrollRecords as $pay)
+
+
+                                    {{-- GET THE OVERTIME OF THE EMPLOYEE --}}
+                                    @php
+                                        $overtimePrice = 0;
+
+                                        foreach ($overTimeRecords as $ot) {
+                                            if ($ot->employee == $pay->employee) {
+                                                $overtimePrice += $ot->overtime_price;
+                                            }
+                                        }
+
+                                    @endphp
 
                                     @if ($pay->employee()->first()->department == $dept->id)
                                         <div class="d-flex flex-direction-y gap4 mar-start-3 mar-top-2">
@@ -125,6 +139,7 @@
                                                     <div class="bold text-m3 mar-top-3 mar-bottom-4">Compensation</div>
 
                                                     <small class="mar-top-1">Basic Pay :</small><br />
+                                                    <small class="mar-top-1">Overtime Pay :</small><br />
                                                     <small>Gross Pay :</small><br />
                                                     <small>Net Pay:</small><br />
 
@@ -132,19 +147,26 @@
 
                                                     @foreach ($taxes as $tax)
                                                         @if ($tax->employee == $pay->employee)
-                                                            <small>{{$tax->tax_name}}:</small><br /><br />
+                                                            <small>{{$tax->tax_name}}:</small><br />
                                                         @endif                                                        
+                                                    @endforeach
+
+                                                    <div class="bold text-m3 mar-top-3 mar-bottom-4">Allowances</div>
+
+                                                    @foreach ($allowanceRecords as $allowance)
+                                                        <small>{{$allowance->allowance_name}}:</small><br />                                                      
                                                     @endforeach
                                                     
                                                 </div>
                                                 <div class="w-50 text-right">
                                                     <small>{{$pay->hours_worked}} h</small><br />
                                                     <small>{{$pay->over_time}} h</small><br />
-                                                    <small>{{$pay->days_absent}} h</small><br />
+                                                    <small>{{$pay->days_absent}} d</small><br />
 
                                                     <div class="text-m3 mar-top-3 mar-bottom-4">------------------</div>
 
-                                                    <small>{{"₱ " . number_format($pay->basic_pay, 2, '.', ',')}}</small><br />
+                                                    <small>{{"₱ " . number_format($pay->basic_pay - $overtimePrice, 2, '.', ',')}}</small><br />
+                                                    <small>{{"₱ " . number_format($overtimePrice, 2, '.', ',')}}</small><br />
                                                     <small>{{"₱ " . number_format($pay->gross_pay, 2, '.', ',')}}</small><br />
                                                     <small>{{"₱ " . number_format($pay->net_pay, 2, '.', ',')}}</small><br />
 
@@ -152,8 +174,14 @@
 
                                                     @foreach ($taxes as $tax)
                                                         @if ($tax->employee == $pay->employee)
-                                                            <small>{{"₱ " . number_format($tax->tax_price, 2, '.', ',')}}</small><br /><br />
+                                                            <small>{{"₱ " . number_format($tax->tax_price, 2, '.', ',')}}</small><br />
                                                         @endif                                                        
+                                                    @endforeach
+
+                                                    <div class="text-m3 mar-top-3 mar-bottom-4">------------------</div>
+
+                                                    @foreach ($allowanceRecords as $allowance)
+                                                        <small>{{"₱ " . number_format($allowance->allowance_price, 2, '.', ',')}}</small><br />                                                      
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -163,7 +191,8 @@
                                     @endif
                                     
                                 @endforeach
-                                <hr class="report-hr mar-start-3" />
+                                {{-- <hr class="report-hr mar-start-3" /> --}}
+                                <div class="mar-start-3">----------------------------------------------------------------------------------</div>
                             </div>
 
                             
