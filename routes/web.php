@@ -130,6 +130,14 @@ Route::get('/EmployeePayslip', [EmployeePayslipController::class, 'index']);
 Route::post('/EmployeecheckPayslipAvailability', [EmployeePayslipController::class, 'checkPayslipExistence']);
 Route::get('/EmployeeGeneratePayslip/{payrollPeriod}', [EmployeePayslipController::class, 'GeneratePayslip']);
 
+// Profile
+Route::get('/EmployeeViewProfile/{id}', [EmployeesController::class, 'viewProfile']);
+
+
+// Employee TimeIn/Out Express
+Route::get('/EmployeeTimeIn', [EmployeesController::class, 'publicAttendance']);
+Route::post('/timeInExpressPost', [EmployeesController::class, 'attendanceExpressPost']);
+
 
 
 

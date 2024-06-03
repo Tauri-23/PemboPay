@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\IGenerateIdService;
+use App\Models\Barangays;
+use App\Models\Cities;
 use App\Models\Employees;
 use App\Models\Holidays;
 use App\Models\timesheet;
@@ -26,6 +28,16 @@ class EmployeesController extends Controller
             'todayTimeIn' => timesheet::where('employee', session('logged_employee'))
                 ->whereDate('created_at', Carbon::now()->toDateString())
                 ->first(),
+        ]);
+    }
+
+    public function viewProfile($id) {
+        return view('UserEmployees.Profile.index', [
+            'loggedEmployee' => Employees::find(session('logged_employee')),
+            'employee' => Employees::find($id),
+            'cities' => Cities::all(),
+            'brgys' => Barangays::all(),
+            'empId' => $id,
         ]);
     }
 
@@ -58,7 +70,71 @@ class EmployeesController extends Controller
     }
 
 
+    public function publicAttendance() {
+        return view('UserEmployees.publicAttendance');
+    }
 
+    public function attendanceExpressPost(Request $request) {
+        $message = '';
+        $emp = Employees::find($request->empId);
+        $timesheet = Timesheet::where('employee', $request->empId)
+                      ->whereDate('created_at', Carbon::now()->toDateString())
+                      ->first();
+
+        if(!$emp) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Invalid Id'
+            ]);
+        }
+
+        if(!$timesheet) {
+            $timesheet = new timesheet;
+            $timesheet->id = $this->generateId->generate(timesheet::class);
+            $timesheet->employee = $request->empId;
+            $timesheet->time_in = $request->timeInOut;
+
+            $message = 'Time in success.';
+
+            if($timesheet->save()) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => $message
+                ]);
+            }
+            else {
+                return response()->json([
+                    'status', 400,
+                    'message' => 'Something went wrong please try again later.'
+                ]);
+            }
+        }
+
+        if($timesheet && $timesheet->time_out == null) {
+            $timesheet->time_out = $request->timeInOut;
+            $message = 'Time out success.';
+
+            if($timesheet->save()) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => $message
+                ]);
+            }
+            else {
+                return response()->json([
+                    'status', 400,
+                    'message' => 'Something went wrong please try again later.'
+                ]);
+            }
+        }
+
+        if($timesheet && $timesheet->time_out != null) {
+            return response()->json([
+                'status', 400,
+                'message' => 'Attendance Completed Today.'
+            ]);
+        }
+    }
 
 
     public function login(Request $request) {

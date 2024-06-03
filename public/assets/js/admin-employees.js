@@ -105,7 +105,7 @@ function processSearch(value) {
                     <small class="text-m2 form-data-col">Employee ID</small>
                     <small class="text-m2 form-data-col">Employee Email</small>
                     <small class="text-m2 form-data-col">Department</small>
-                    <small class="text-m2 form-data-col">Compensation Type</small>
+                    <small class="text-m2 form-data-col">Position</small>
                 </div>
             </div>
             `);
@@ -122,7 +122,7 @@ function processSearch(value) {
                     <small class="text-m3 form-data-col emp-id">${employee.id}</small>
                     <small class="text-m3 form-data-col">${employee.email}</small>
                     <small class="text-m3 form-data-col emp-dept">${employee.department.department_name}</small>
-                    <small class="text-m3 form-data-col">${employee.compensation.compentsation_type}</small>
+                    <small class="text-m3 form-data-col">${employee.department_positions[0].position}</small>
                 </div>
             `;
 

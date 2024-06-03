@@ -56,11 +56,14 @@
                 <div class="w-100 d-flex justify-content-end mar-top-3">
                     <a class="link-m3" id="forgot-pass-btn">Forgot Password</a>
                 </div>
-                <button id="login-btn" class="primary-btn1-small w-100 mar-top-1">Login</button>
+                <div class="d-flex flex-direction-y gap3 mar-top-1">
+                    <button id="login-btn" class="primary-btn1-small w-100">Login</button>
+                    <a href="/EmployeeTimeIn" class="secondary-btn3-small w-100 text-center">Employee Time in/out</a>
+                </div>
             </form>
 
             <div class="w-100 d-flex flex-direction-y align-items-center mar-top-3">
-                <a href="/Employee" class="link-m3">Employee Timesheet Login</a>
+                <a href="/Employee" class="link-m3">Employee Login</a>
             </div>
             
         </div>
