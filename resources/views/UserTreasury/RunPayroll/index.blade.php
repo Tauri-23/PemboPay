@@ -49,7 +49,7 @@
         
 
         {{-- Content --}}
-        <div class="content-cont-1">
+        <div class="content-cont-1" style="padding-bottom: 50px">
             <div class="long-cont" id="run-payroll">
                 <div class="d-flex w-100 justify-content-between align-items-center">
                     <small class="text-m1 bold">Payroll Period</small>

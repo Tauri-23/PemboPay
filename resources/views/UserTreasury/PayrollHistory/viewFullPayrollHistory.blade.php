@@ -41,7 +41,7 @@
         
 
         {{-- Content --}}
-        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
+        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative" style="padding-bottom: 50px">
             
             {{-- Render Payroll History --}}
             <x-render_payroll_history_full :payrolls="$payrolls"/>

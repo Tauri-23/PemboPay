@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="/assets/css/navbar.css">
         <link rel="stylesheet" href="/assets/css/treasury-dash.css">
         <link rel="stylesheet" href="/assets/css/forms.css">
+        <link rel="stylesheet" href="/assets/css/tables.css">
 
         {{-- Icon --}}
         <link rel="icon" href="/assets/media/logos/mwp-pembo.png" type="image/x-icon" />
@@ -42,18 +43,16 @@
         
 
         {{-- Content --}}
-        <div class="content-cont-1 d-flex flex-direction-y gap2">
+        <div class="content-cont-1 d-flex flex-direction-y gap2" style="padding-bottom: 50px">
             
-            <div class="long-cont d-flex justify-content-between align-items-center">
+            {{-- <div class="long-cont d-flex justify-content-between align-items-center">
                 <div class="text-m1 fw-bold">Payroll Year</div>
                 <select id="select-year" class="select-med">
                     <option value="all-time" selected>All time</option>
-                    <option value="2023">2023</option>
+                    <option value="2024">2023</option>
                     <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
                 </select>
-            </div>
+            </div> --}}
 
             <div class="w-100 d-flex gap2">
                 <div class="dash-short-cont flex-grow-1">
@@ -84,73 +83,59 @@
                 </div>
 
 
-                {{-- <div class="dash-short-cont">
+                <div class="dash-short-cont">
                     <div class="d-flex align-items-center gap2">
                         <div class="small-icon-cont-circle bg-AppGoldLight1">
                             <i class="bi bi-bank2 color-AppGold"></i>
                         </div>
-                        <div class="text-m1 fw-bold">Budget</div>
+                        <div class="text-m1 fw-bold">Total Salary</div>
                     </div>
                     <div class="line1 mar-top-3 mar-bottom-3"></div>
                     <div class="text-l3 fw-bold">
-                        ₱ 1,000,000.00
+                        {{"₱ " . number_format($totalSal, 2, '.', ',')}}
                     </div>
-                </div> --}}
+                </div>
             </div>
             
-            <div class="flex-wrap-cont mar-bottom-1">
+            <div class="flex-wrap-cont">
                 {{-- Salary Trend --}}
-                {{-- <div class="med-cont-2">
+                <div class="med-cont-2">
                     <div class="d-flex justify-content-between align-items-center mar-bottom-1">
-                        <div class="text-m1 fw-bold">Salary Chart</div>
-                        <div>
+                        <div class="text-m1 fw-bold">Employee Salary Chart</div>
+                        {{-- <div>
                             <select id="select-mode" class="select-med">
                                 <option value="all" selected>Gross</option>
                                 <option value="2023">Regular</option>
                             </select>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <canvas class="w-100" id="compentsation-chart"></canvas>
         
-                </div> --}}
+                </div>
         
                 {{-- Budget Trend --}}
-                {{-- <div class="med-cont-2">
+                <div class="med-cont-2">
                     <div class="d-flex justify-content-between align-items-center mar-bottom-1">
-                        <div class="text-m1 fw-bold">Budget Chart</div>
-                        <div>
+                        <div class="text-m1 fw-bold">Department Salary Chart</div>
+                        {{-- <div>
                             <select id="select-mode" class="select-med">
                                 <option value="all" selected>Gross</option>
                                 <option value="2023">Regular</option>
                             </select>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <canvas class="w-100" id="budget-chart"></canvas>
-                </div> --}}
-        
-                {{-- Employee Trend --}}
-                {{-- <div class="med-cont-2">
-                    <div class="d-flex justify-content-between align-items-center mar-bottom-1">
-                        <div class="text-m1 fw-bold">Employee Chart</div>
-                    </div>
-
-                    <canvas class="w-100" id="employee-chart"></canvas>
-                </div> --}}
-        
-                {{-- <div class="med-cont-2">
-                    <div class="flex w-100 justify-content-between align-items-start">
-                        <small class="text-m2 bold">Employees in Department</small>
-                        <small class="month-year text-m3">@Model.CurrentMonth - @Model.CurrentYear</small>
-                    </div>
-                    <div class="donut-chart-cont mar-top-2">
-                        <div>
-                            <canvas id=""></canvas>
-                        </div>
-                    </div>
-                </div> --}}
+                </div>
             </div>
+
+            <div class="long-cont d-flex justify-content-between align-items-center">
+                <div class="text-m1 fw-bold">Recent Payrolls</div>
+            </div>
+
+            {{-- Render Payroll History --}}
+            <x-RenderPayrollHistory :payrolls="$Recentpayrolls"/>
         </div>
 
     </body>
@@ -158,6 +143,11 @@
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
+    <script>
+        const empSalaries = @json($empSalaries);
+        const departments = @json($departments);
+        const payrollRecordsEmp = @json($payrollRecordsEmp);
+    </script>
     <script src="/assets/js/treasury-dash.js"></script>
     {{-- bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

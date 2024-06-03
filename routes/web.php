@@ -80,7 +80,7 @@ Route::post('/checkPayslipAvailability', [AccountantPayslipController::class, 'c
 
 //Employees
 Route::get('/TreasuryEmployees', [AccountantEmployeesController::class, 'employees']);
-Route::get('/TreasuryViewEmployee/{id}', [AccountantEmployeesController::class, 'viewEmployee']);
+Route::get('/TreasuryViewEmployee/{id}/{timeSheetMonth}/{activePage}', [AccountantEmployeesController::class, 'viewEmployee']);
 
 
 //Departments
@@ -123,7 +123,7 @@ Route::post('/timeIn', [EmployeesController::class, 'timeIn']);
 Route::post('/timeOut', [EmployeesController::class, 'timeOut']);
 
 // Timesheet
-Route::get('/EmployeeTimesheet', [EmployeesController::class, 'timesheet']);
+Route::get('/EmployeeTimesheet/{timeSheetMonth}', [EmployeesController::class, 'timesheet']);
 
 // Payslip
 Route::get('/EmployeePayslip', [EmployeePayslipController::class, 'index']);

@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@php
+    use Carbon\Carbon; 
+@endphp
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -64,14 +67,14 @@
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
 
             <div class="long-cont-nopadding padding-start-4 padding-end-4 d-flex gap3 mar-bottom-3">
-                <div class="nav-link-2 active" id="personal-page">Personal</div>
-                <div class="nav-link-2" id="timesheet-page">Time Sheets</div>
+                <div class="nav-link-2 {{$activePage == 'default' ? 'active' : ''}}" id="personal-page">Personal</div>
+                <div class="nav-link-2 {{$activePage == 'timesheet' ? 'active' : ''}}" id="timesheet-page">Time Sheets</div>
             </div>
 
             
 
             {{-- Personal Profile Container --}}
-            <div class="d-flex gap1 h-100 mar-bottom-1" id="personal-profile-content">
+            <div class="d-flex gap1 h-100 mar-bottom-1 {{$activePage == 'default' ? '' : 'd-none'}}" id="personal-profile-content">
 
                 {{-- Vertical Info Container --}}
                 <div class="long-cont-vertical align-self-start">
@@ -167,35 +170,36 @@
 
 
             {{-- Time sheet Container --}}
-            <div class="mar-bottom-1 d-none" id="timesheet-cont">
+            <div class="mar-bottom-1 {{$activePage == 'default' ? 'd-none' : ''}}" id="timesheet-cont">
                 <div class="d-flex flex-direction-d gap3">
                     <div class="timesheet-cont">
                         <div class="timesheet-head">
                             <small class="text-m2 bold">Time Sheet</small>
-                            {{-- <div class="d-flex gap2">
+                            <div class="d-flex gap2">
+
+                                @php
+                                    $monthToday = $endDate->format('m');
+                                @endphp
+
                                 <select class="select-long2" id="timesheet-months">
-                                    <option value="January">January</option>
-                                    <option value="February">February</option>
-                                    <option value="February">March</option>
-                                    <option value="February">April</option>
-                                    <option value="February">May</option>
-                                    <option value="February">June</option>
-                                    <option value="February">July</option>
-                                    <option value="February">August</option>
-                                    <option value="February">September</option>
-                                    <option value="February">October</option>
-                                    <option value="February">November</option>
-                                    <option value="February">December</option>
+                                    <option value="1" {{$monthToday == "1" ? "selected" : ""}}>January</option>
+                                    <option value="2" {{$monthToday == "2" ? "selected" : ""}}>February</option>
+                                    <option value="3" {{$monthToday == "3" ? "selected" : ""}}>March</option>
+                                    <option value="4" {{$monthToday == "4" ? "selected" : ""}}>April</option>
+                                    <option value="5" {{$monthToday == "5" ? "selected" : ""}}>May</option>
+                                    <option value="6" {{$monthToday == "6" ? "selected" : ""}}>June</option>
+                                    <option value="7" {{$monthToday == "7" ? "selected" : ""}}>July</option>
+                                    <option value="8" {{$monthToday == "8" ? "selected" : ""}}>August</option>
+                                    <option value="9" {{$monthToday == "9" ? "selected" : ""}}>September</option>
+                                    <option value="10" {{$monthToday == "10" ? "selected" : ""}}>October</option>
+                                    <option value="11" {{$monthToday == "11" ? "selected" : ""}}>November</option>
+                                    <option value="12" {{$monthToday == "12" ? "selected" : ""}}>December</option>
                                 </select>
 
                                 <select class="select-long2" id="timesheet-year">
-                                    <option value="2023">2023</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                    <option value="2027">2027</option>
+                                    <option value="2024" {{Carbon::now()->format('y') == "2024" ? "selected" : ""}}>2024</option>
                                 </select>
-                            </div> --}}
+                            </div>
                         </div>
 
                         <div class="line1 mar-top-3 mar-bottom-3"></div>
@@ -208,6 +212,7 @@
                                 <small class="form-data-col fw-bold">Time-in</small>
                                 <small class="form-data-col fw-bold">Time-out</small>
                                 <small class="form-data-col fw-bold">Status</small>
+                                <small class="form-data-col fw-bold"></small>
                             </div>
 
                             
@@ -226,7 +231,9 @@
                                     @php
                                         $week ++;
                                     @endphp
-                                    <div class="week-label">week {{$week}}</div>
+                                    @if (!$loop->last)
+                                        <div class="week-label">week {{$week}}</div>
+                                    @endif
                                     @continue;
                                 @endif
 
@@ -260,6 +267,7 @@
                                         <small class="form-data-col">-:-- --</small>
                                         <small class="form-data-col">-:-- --</small>
                                         <small class="form-data-col">------</small>
+                                        <small class="form-data-col"></small>
                                     </div>  
                                 @else
                                     <div class="timesheet-table-data {{$isHoliday ? 'holiday' : ($isPresent ? 'good' : 'bad')}}">
@@ -268,12 +276,22 @@
                                             <small class="form-data-col">-:-- --</small>
                                             <small class="form-data-col">-:-- --</small>
                                             <small class="form-data-col">Holiday</small>
+                                            <small class="form-data-col"></small>
                                         @elseif($isPresent)
                                             @foreach ($timesheetDates as $time)
                                                 @if ($time->created_at->format('Y-m-d') == $dateString)
-                                                    <small class="form-data-col">{{ \Carbon\Carbon::parse($time->time_in)->format('g:i a') }}</small>
-                                                    <small class="form-data-col">{{ $time->time_out ? \Carbon\Carbon::parse($time->time_out)->format('g:i a') : '--:-- --' }}</small>
+
+                                                    @php
+                                                        $timeIn = Carbon::parse($time->time_in);
+                                                        $timeOut = Carbon::parse($time->time_out);
+
+                                                        $hours = ($timeOut->diffInMinutes($timeIn) / 60) - 1;
+                                                    @endphp
+
+                                                    <small class="form-data-col">{{ Carbon::parse($time->time_in)->format('g:i a') }}</small>
+                                                    <small class="form-data-col">{{ $time->time_out ? Carbon::parse($time->time_out)->format('g:i a') : '--:-- --' }}</small>
                                                     <small class="form-data-col">Present</small>
+                                                    <small class="form-data-col">{{$hours > 8 ? 'Overtime' : ($hours < 8 ? 'Undertime' : '')}}</small>
                                                     @break
                                                 @endif
                                             @endforeach
@@ -281,6 +299,7 @@
                                             <small class="form-data-col">-:-- --</small>
                                             <small class="form-data-col">-:-- --</small>
                                             <small class="form-data-col">Absent</small>
+                                            <small class="form-data-col"></small>
                                         @endif
                                     </div>                             
                                 @endif
@@ -308,7 +327,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
         const timesheets = @json($timesheetDates);
+        const empId = @json($empId);
     </script>
     {{-- <script src="/assets/js/timesheet-calendar.js"></script> --}}
     <script src="/assets/js/view-employee.js"></script>
+    <script src="/assets/js/accountant-employee-timesheet.js"></script>
 </html>

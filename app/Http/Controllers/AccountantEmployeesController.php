@@ -50,13 +50,19 @@ class AccountantEmployeesController extends Controller
         ]);
     }
 
-    public function viewEmployee($id) {
+    public function viewEmployee($id, $timeSheetMonth, $activePage) {
         $timesheets = timesheet::where('employee', $id)->get();
         $holidays = Holidays::all();
 
-        // Generate a range of dates to display in the calendar (e.g., current month)
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate = Carbon::now()->endOfMonth();
+        if($timeSheetMonth == 'null') {
+            $startDate = Carbon::now()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+        }
+        else {
+            $startDate = Carbon::now()->month($timeSheetMonth)->startOfMonth();
+            $endDate = Carbon::now()->month($timeSheetMonth)->endOfMonth();
+        }
+        
         $datesInRange = [];
 
         for($date = $startDate; $date->lte($endDate); $date->addDay()) {
@@ -71,7 +77,10 @@ class AccountantEmployeesController extends Controller
             'brgys' => Barangays::all(),
             'timesheetDates' => $timesheets,
             'datesInRange' => $datesInRange,
-            'holidays' => $holidays
+            'holidays' => $holidays,
+            'activePage' => $activePage,
+            'empId' => $id,
+            'endDate' => $endDate
         ]);
 
     }

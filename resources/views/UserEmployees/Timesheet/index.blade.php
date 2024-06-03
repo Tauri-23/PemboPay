@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@php
+    use Carbon\Carbon;
+@endphp
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -60,30 +63,31 @@
                             <div class="timesheet-cont">
                                 <div class="timesheet-head">
                                     <small class="text-m2 bold">Time Sheet</small>
-                                    {{-- <div class="d-flex gap2">
+                                    <div class="d-flex gap2">
+
+                                        @php
+                                            $monthToday = $endDate->format('m');
+                                        @endphp
+        
                                         <select class="select-long2" id="timesheet-months">
-                                            <option value="January">January</option>
-                                            <option value="February">February</option>
-                                            <option value="February">March</option>
-                                            <option value="February">April</option>
-                                            <option value="February">May</option>
-                                            <option value="February">June</option>
-                                            <option value="February">July</option>
-                                            <option value="February">August</option>
-                                            <option value="February">September</option>
-                                            <option value="February">October</option>
-                                            <option value="February">November</option>
-                                            <option value="February">December</option>
+                                            <option value="1" {{$monthToday == "1" ? "selected" : ""}}>January</option>
+                                            <option value="2" {{$monthToday == "2" ? "selected" : ""}}>February</option>
+                                            <option value="3" {{$monthToday == "3" ? "selected" : ""}}>March</option>
+                                            <option value="4" {{$monthToday == "4" ? "selected" : ""}}>April</option>
+                                            <option value="5" {{$monthToday == "5" ? "selected" : ""}}>May</option>
+                                            <option value="6" {{$monthToday == "6" ? "selected" : ""}}>June</option>
+                                            <option value="7" {{$monthToday == "7" ? "selected" : ""}}>July</option>
+                                            <option value="8" {{$monthToday == "8" ? "selected" : ""}}>August</option>
+                                            <option value="9" {{$monthToday == "9" ? "selected" : ""}}>September</option>
+                                            <option value="10" {{$monthToday == "10" ? "selected" : ""}}>October</option>
+                                            <option value="11" {{$monthToday == "11" ? "selected" : ""}}>November</option>
+                                            <option value="12" {{$monthToday == "12" ? "selected" : ""}}>December</option>
                                         </select>
         
                                         <select class="select-long2" id="timesheet-year">
-                                            <option value="2023">2023</option>
-                                            <option value="2024">2024</option>
-                                            <option value="2025">2025</option>
-                                            <option value="2026">2026</option>
-                                            <option value="2027">2027</option>
+                                            <option value="2024" {{Carbon::now()->format('y') == "2024" ? "selected" : ""}}>2024</option>
                                         </select>
-                                    </div> --}}
+                                    </div>
                                 </div>
         
                                 <div class="line1 mar-top-3 mar-bottom-3"></div>
@@ -192,7 +196,7 @@
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
-    <script src="/assets/js/employee-dash.js"></script>
+    <script src="/assets/js/employee-timesheet.js"></script>
     {{-- bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </html>

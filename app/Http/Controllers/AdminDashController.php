@@ -22,7 +22,7 @@ class AdminDashController extends Controller
 
     public function index() {
         $accountants = Treasuries::all();
-        $logs = AccountantLogs::orderBy('created_at', 'DESC')->get();
+        $logs = AccountantLogs::orderBy('created_at', 'DESC')->take(10)->get();
         return view('UserAdmin.index', [
             'accountants' => $accountants,
             'logs' => $logs
@@ -39,7 +39,7 @@ class AdminDashController extends Controller
 
     public function AccountantView($id) {
         $accountant = Treasuries::find($id);
-        $logs = AccountantLogs::where('accountant', $id)->orderBy('created_at', 'DESC')->get();
+        $logs = AccountantLogs::where('accountant', $id)->orderBy('created_at', 'DESC')->take(5)->get();
 
         return view('UserAdmin.Accountants.view', [
             'accountant' => $accountant,

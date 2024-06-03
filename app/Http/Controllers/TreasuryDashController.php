@@ -20,10 +20,18 @@ class TreasuryDashController extends Controller
 
 
     public function home(){
+        $empSalaries = PayrollRecordSummary::all();
+
+        $totalSal = $empSalaries->sum('total_net_pay');
+        
         return view('UserTreasury.index', [
             'loggedTreasury' => $this->loggedService->retrieveLoggedAccountant(session('logged_treasury')),
             "employees" => Employees::all(),
             "departments" => Departments::all(),
+            'empSalaries' => $empSalaries,
+            'payrollRecordsEmp' => PayrollRecord::with('employee')->get(),
+            'Recentpayrolls' => PayrollRecordSummary::orderBy('created_at', 'DESC')->take(5)->get(),
+            'totalSal' => $totalSal,
             "logs" => AccountantLogs::orderBy('created_at', 'DESC')->get()
         ]);
     }

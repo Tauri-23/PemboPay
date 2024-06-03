@@ -368,7 +368,7 @@ class ComputePayrollService implements IComputePayrollService {
 
 
 
-            // TODO::
+            
             //All Tax Record Per Employee
             foreach($this->generalTaxes as $tax) {
                 $totalTax = 0.0;

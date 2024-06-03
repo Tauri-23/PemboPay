@@ -1,5 +1,5 @@
 //modals
-const miniProfileModal = $("#emp-mini-profile-1-modal");
+const miniProfileModal = $("#emp-mini-profile-2-modal");
 const warningYNModal = $('#warning-yn-modal');
 const successModal = $('#success-modal');
 
@@ -105,7 +105,7 @@ function processSearch(value) {
                     <small class="text-m2 form-data-col">Employee ID</small>
                     <small class="text-m2 form-data-col">Employee Email</small>
                     <small class="text-m2 form-data-col">Department</small>
-                    <small class="text-m2 form-data-col">Compensation Type</small>
+                    <small class="text-m2 form-data-col">Position</small>
                 </div>
             </div>
             `);
@@ -122,7 +122,7 @@ function processSearch(value) {
                     <small class="text-m3 form-data-col emp-id">${employee.id}</small>
                     <small class="text-m3 form-data-col">${employee.email}</small>
                     <small class="text-m3 form-data-col emp-dept">${employee.department.department_name}</small>
-                    <small class="text-m3 form-data-col">${employee.compensation.compentsation_type}</small>
+                    <small class="text-m3 form-data-col">${employee.department_positions.position}</small>
                 </div>
             `;
 
@@ -260,7 +260,7 @@ function empColumnEvent(empColumn) {
 
     // Handle viewFullProfileBtn click within the modal
     viewFullProfileBtn.on('click', function() {
-        window.location.href = `/TreasuryViewEmployee/${empId}`;
+        window.location.href = `/TreasuryViewEmployee/${empId}/null/default`;
     });
 }
 

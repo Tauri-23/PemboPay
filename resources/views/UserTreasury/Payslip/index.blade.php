@@ -45,7 +45,7 @@
         
 
         {{-- Content --}}
-        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
+        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative" style="padding-bottom: 50px">
             <div class="long-cont">
                 <div class="d-flex justify-content-between align-items-center">
                     <p class="text-m1 bold">Generate Pay Slip</p>

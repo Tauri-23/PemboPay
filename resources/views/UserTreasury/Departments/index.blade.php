@@ -42,7 +42,7 @@
         
 
         {{-- Content --}}
-        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
+        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative" style="padding-bottom: 50px">
 
             <div class="long-cont d-flex justify-content-between align-items-center">
                 <div class="d-flex gap3">

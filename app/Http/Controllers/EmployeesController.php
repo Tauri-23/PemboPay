@@ -29,13 +29,18 @@ class EmployeesController extends Controller
         ]);
     }
 
-    public function timesheet() {
+    public function timesheet($timeSheetMonth) {
         $timesheets = timesheet::where('employee', session('logged_employee'))->get();
         $holidays = Holidays::all();
 
-        // Generate a range of dates to display in the calendar (e.g., current month)
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate = Carbon::now()->endOfMonth();
+        if($timeSheetMonth == 'null') {
+            $startDate = Carbon::now()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+        }
+        else {
+            $startDate = Carbon::now()->month($timeSheetMonth)->startOfMonth();
+            $endDate = Carbon::now()->month($timeSheetMonth)->endOfMonth();
+        }
         $datesInRange = [];
 
         for($date = $startDate; $date->lte($endDate); $date->addDay()) {
@@ -47,9 +52,14 @@ class EmployeesController extends Controller
             'loggedEmployee' => Employees::find(session('logged_employee')),
             'timesheetDates' => $timesheets,
             'datesInRange' => $datesInRange,
-            'holidays' => $holidays
+            'holidays' => $holidays,
+            'endDate' => $endDate
         ]);
     }
+
+
+
+
 
     public function login(Request $request) {
         $employee = Employees::where('id', $request->userid)->first();
@@ -68,6 +78,9 @@ class EmployeesController extends Controller
             ]);
         }
     }
+
+
+
 
     public function timeIn(Request $request) {
         $timeInId = $this->generateId->generate(timesheet::class);

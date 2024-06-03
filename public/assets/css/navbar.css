@@ -11,6 +11,7 @@
     justify-content: space-between;
     align-items: center;
     background: var(--white);
+    filter: drop-shadow(0 0 1px var(--grey1));
     position: sticky;
     top:0;
     padding: 30px;

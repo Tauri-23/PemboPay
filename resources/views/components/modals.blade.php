@@ -134,6 +134,32 @@
             
         </div>
     </div>
+@elseif($modalType == 'emp-mini-profile-2')
+    <div class="modal1 d-none" id="emp-mini-profile-2-modal">
+        <div class="modal1-box-small modal-text d-flex flex-direction-y gap2">
+            <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
+
+            <div class="d-flex gap2">
+                <div class="modal-pfp">
+                    <img class="emp-mini-profile-pfp" src="" alt="employee-profile">
+                </div>
+    
+                <div class="mini-profile-infos">
+                    <input type="hidden" class="mini-profile-id">
+                    <small class="text-l3 mini-profile-name">Name</small><br>
+                    <small class="text-m3 mini-profile-dept">Department</small>
+                </div>
+            </div>
+
+            
+
+            <div class="mini-profile-btns d-flex justify-content-end gap3">
+                <button class="primary-btn1-small" id="view-full-profile-btn"><i class="bi bi-arrows-fullscreen mar-end-3"></i> View full Profile</button>
+            </div>
+            
+        </div>
+    </div>
+
 
 
 

@@ -44,7 +44,7 @@
         
 
         {{-- Content --}}
-        <div class="content-cont-1 d-flex flex-direction-x gap2 position-relative">
+        <div class="content-cont-1 d-flex flex-direction-x gap2 position-relative" style="padding-bottom: 50px">
 
             <div class="d-flex flex-direction-y gap3 align-items-center w-100">
                 <div id="report" class="salary-slip-cont d-flex flex-direction-y gap1">

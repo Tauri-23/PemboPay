@@ -8,6 +8,8 @@ use App\Contracts\IGenerateFilenameService;
 use App\Contracts\IGenerateIdService;
 use App\Contracts\IGenerateOTPService;
 use App\Contracts\ILoggedService;
+use App\Contracts\IPrepareCalendarData;
+use App\Contracts\IPrepareCalendarDataService;
 use App\Contracts\IRetrieveIdService;
 use App\Contracts\IRetrieveService;
 use App\Contracts\IRetrieveWhereService;
@@ -19,6 +21,7 @@ use App\Services\GenerateFilenameService;
 use App\Services\GenerateIdService;
 use App\Services\GenerateOTPService;
 use App\Services\LoggedService;
+use App\Services\prepareCalendarDataService;
 use App\Services\RetrieveService;
 use App\Services\SaveAccountantLogsDBService;
 use App\Services\SendEmailService;
@@ -52,6 +55,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Add Logs To DB
         $this->app->bind(ISaveAccountantLogsDBService::class, SaveAccountantLogsDBService::class);
+
+        $this->app->bind(IPrepareCalendarDataService::class, prepareCalendarDataService::class);
 
     }
 

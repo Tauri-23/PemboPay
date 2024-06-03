@@ -51,7 +51,7 @@
         
 
         {{-- Content --}}
-        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
+        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative" style="padding-bottom: 50px">
 
             <div class="department-cover-cont d-flex align-items-center">
                 <div class="mar-start-2" style="z-index: 2;">

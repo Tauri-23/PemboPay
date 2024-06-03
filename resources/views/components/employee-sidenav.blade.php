@@ -7,7 +7,7 @@
         <i class="bi bi-speedometer side-nav-icon"></i>
         <div class="sidenav-text">Timein / out</div>
     </a>
-    <a href="/EmployeeTimesheet" class="side-nav-links {{$activeLink == 2 ? 'active' : ''}}">
+    <a href="/EmployeeTimesheet/null" class="side-nav-links {{$activeLink == 2 ? 'active' : ''}}">
         <i class="{{$activeLink == 2 ? 'bi bi-calendar-week-fill' : 'bi bi-calendar-week'}} side-nav-icon"></i>
         <div class="sidenav-text">Timesheet</div>
     </a>

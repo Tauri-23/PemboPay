@@ -43,7 +43,7 @@
         
 
         {{-- Content --}}
-        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
+        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative" style="padding-bottom: 50px">
             
             <div id="salary-slip-cont" class="d-flex flex-direction-y gap3 align-items-center">
                 @foreach ($employees as $emp)
