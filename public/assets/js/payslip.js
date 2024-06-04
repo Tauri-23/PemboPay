@@ -31,6 +31,7 @@ generatePayslipBtn.click(function() {
 
     let formData = new FormData();
     formData.append('payPeriod', `${periodIn.val()} ${monthIn.val()} ${yearIn.val()}`);
+    employeeIds.forEach(id => formData.append('employees[]', id));
 
     $.ajax({
         url: '/checkPayslipAvailability',

@@ -42,6 +42,12 @@
 
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative" style="padding-bottom: 50px">
+
+            <div class="d-flex justify-conten-start">
+                <a href="/TreasuryPayrollHistory" class="d-flex gap3 text-black text-decoration-none align-items-center text-m1">
+                    <i class="fa-solid fa-chevron-left"></i>Back
+                </a>
+            </div>
             
             {{-- Render Payroll History --}}
             <x-render_payroll_history_full :payrolls="$payrolls"/>

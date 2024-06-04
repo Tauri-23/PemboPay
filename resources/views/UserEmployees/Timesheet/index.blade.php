@@ -100,6 +100,7 @@
                                         <small class="form-data-col fw-bold">Time-in</small>
                                         <small class="form-data-col fw-bold">Time-out</small>
                                         <small class="form-data-col fw-bold">Status</small>
+                                        <small class="form-data-col fw-bold"></small>
                                     </div>
         
                                     
@@ -152,6 +153,7 @@
                                                 <small class="form-data-col">-:-- --</small>
                                                 <small class="form-data-col">-:-- --</small>
                                                 <small class="form-data-col">------</small>
+                                                <small class="form-data-col"></small>
                                             </div>  
                                         @else
                                             <div class="timesheet-table-data {{$isHoliday ? 'holiday' : ($isPresent ? 'good' : 'bad')}}">
@@ -160,12 +162,28 @@
                                                     <small class="form-data-col">-:-- --</small>
                                                     <small class="form-data-col">-:-- --</small>
                                                     <small class="form-data-col">Holiday</small>
+                                                    <small class="form-data-col"></small>
                                                 @elseif($isPresent)
                                                     @foreach ($timesheetDates as $time)
                                                         @if ($time->created_at->format('Y-m-d') == $dateString)
+
+                                                            @php
+                                                                $timeIn = Carbon::parse($time->time_in);
+                                                                $timeOut = Carbon::parse($time->time_out);
+
+                                                                $hours = ($timeOut->diffInMinutes($timeIn) / 60) - 1;
+                                                            @endphp
+                                                            
                                                             <small class="form-data-col">{{ \Carbon\Carbon::parse($time->time_in)->format('g:i a') }}</small>
                                                             <small class="form-data-col">{{ $time->time_out ? \Carbon\Carbon::parse($time->time_out)->format('g:i a') : '--:-- --' }}</small>
                                                             <small class="form-data-col">Present</small>
+                                                            @php
+                                                                $timeOutTime = Carbon::parse($time->time_out)->format('H:i:s');
+                                                                $timeInTime = Carbon::parse($time->time_in)->format('H:i:s');
+                                                                $fivePmTime = '17:00:00';
+                                                                $eightAmTime = '08:00:00';
+                                                            @endphp
+                                                            <small class="form-data-col">{{$hours > 8 ? 'Overtime' : ($timeOutTime < $fivePmTime ? 'Undertime' : ($timeInTime > $eightAmTime ? 'Late' : ''))}}</small>
                                                             @break
                                                         @endif
                                                     @endforeach
@@ -173,6 +191,7 @@
                                                     <small class="form-data-col">-:-- --</small>
                                                     <small class="form-data-col">-:-- --</small>
                                                     <small class="form-data-col">Absent</small>
+                                                    <small class="form-data-col"></small>
                                                 @endif
                                             </div>                             
                                         @endif

@@ -291,7 +291,13 @@
                                                     <small class="form-data-col">{{ Carbon::parse($time->time_in)->format('g:i a') }}</small>
                                                     <small class="form-data-col">{{ $time->time_out ? Carbon::parse($time->time_out)->format('g:i a') : '--:-- --' }}</small>
                                                     <small class="form-data-col">Present</small>
-                                                    <small class="form-data-col">{{$hours > 8 ? 'Overtime' : ($hours < 8 ? 'Undertime' : '')}}</small>
+                                                    @php
+                                                        $timeOutTime = Carbon::parse($time->time_out)->format('H:i:s');
+                                                        $timeInTime = Carbon::parse($time->time_in)->format('H:i:s');
+                                                        $fivePmTime = '17:00:00';
+                                                        $eightAmTime = '08:00:00';
+                                                    @endphp
+                                                    <small class="form-data-col">{{$hours > 8 ? 'Overtime' : ($timeOutTime < $fivePmTime ? 'Undertime' : ($timeInTime > $eightAmTime ? 'Late' : ''))}}</small>
                                                     @break
                                                 @endif
                                             @endforeach

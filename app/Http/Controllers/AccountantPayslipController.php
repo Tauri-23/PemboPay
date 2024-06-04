@@ -36,7 +36,7 @@ class AccountantPayslipController extends Controller
 
 
     public function checkPayslipExistence(Request $request) {
-        $payrollRecord = PayrollRecord::where('payroll_period', $request->payPeriod)->first();
+        $payrollRecord = PayrollRecord::where('payroll_period', $request->payPeriod)->whereIn('employee', $request->employees)->first();
         
         if(!$payrollRecord) {
             return response()->json([
