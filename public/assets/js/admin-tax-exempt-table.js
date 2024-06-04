@@ -85,7 +85,7 @@ warningYNModal.find('.yes-btn').click(() => {
 
         $.ajax({
             type: "POST",
-            url: "/AccountantDelTaxCol",
+            url: "/AdminDelTaxExemptRow",
             processData: false,
             contentType: false,
             data: formData,

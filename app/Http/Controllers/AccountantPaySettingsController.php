@@ -8,6 +8,8 @@ use App\Contracts\ISaveAccountantLogsDBService;
 use App\Models\AccountantLogs;
 use App\Models\settings_allowance;
 use App\Models\SettingsDeductions;
+use App\Models\tax_exempt;
+use App\Models\tax_exempt_values;
 use App\Models\taxes;
 use App\Models\TaxValues;
 use Illuminate\Database\Eloquent\Model;
@@ -139,7 +141,7 @@ class AccountantPaySettingsController extends Controller
     }
 
     public function delTaxColumnPost(Request $request) {
-        $taxTable = taxes::find($request->taxId);
+        $taxTable = tax_exempt::find($request->taxId);
 
         if(!$taxTable) {
             return response()->json([
@@ -148,7 +150,7 @@ class AccountantPaySettingsController extends Controller
             ]);
         }
 
-        $taxCol = TaxValues::find($request->taxColId);
+        $taxCol = tax_exempt_values::find($request->taxColId);
 
         if($taxCol->delete()) {
             // Add logs

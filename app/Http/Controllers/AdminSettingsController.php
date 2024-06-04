@@ -183,7 +183,42 @@ class AdminSettingsController extends Controller
         }
     }
 
+    public function delTaxExemptRowPost(Request $request) {
+        $taxTable = tax_exempt::find($request->taxId);
+
+        if(!$taxTable) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Invalid Tax Table please try again later.'
+            ]);
+        }
+
+        $taxCol = tax_exempt_values::find($request->taxColId);
+
+        if($taxCol->delete()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success.'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Something went wrong please try again later.'
+            ]);
+        }
+    }
+
     public function editTaxExemptRowPost(Request $request) {
+        $isRangeExist = tax_exempt_values::where('threshold_min', $request->thresholdMin)->where('threshold_max', $request->thresholdMax)->first();
+
+        if($isRangeExist) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Threshold range already exist.'
+            ]);
+        }
+
         $taxExempt = tax_exempt_values::find($request->taxColId);
         $taxExempt->price_percent = $request->valuePercent;
         $taxExempt->price_amount = $request->valueAmt;

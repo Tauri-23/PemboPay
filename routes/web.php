@@ -89,17 +89,17 @@ Route::get('/ViewDept/{id}', [TreasuryDepartmentsController::class, 'viewDepartm
 
 
 //Payroll Settings
-Route::get('/AccountantPayrollSettings', [AccountantPaySettingsController::class, 'payrollSettings']);
-Route::get('/viewTaxTable/{id}', [AccountantPaySettingsController::class, 'viewTaxTable']);
+// Route::get('/AccountantPayrollSettings', [AccountantPaySettingsController::class, 'payrollSettings']);
+// Route::get('/viewTaxTable/{id}', [AccountantPaySettingsController::class, 'viewTaxTable']);
 
-Route::post('/AddTaxPost', [AccountantPaySettingsController::class, 'AddTaxPost']);
-Route::post('/AccountantAddTaxCol', [AccountantPaySettingsController::class, 'addTaxColumnPost']);
-Route::post('/AccountantEditTaxCol', [AccountantPaySettingsController::class, 'editTaxColumnPost']);
-Route::post('/AccountantDelTaxCol', [AccountantPaySettingsController::class, 'delTaxColumnPost']);
+// Route::post('/AddTaxPost', [AccountantPaySettingsController::class, 'AddTaxPost']);
+// Route::post('/AccountantAddTaxCol', [AccountantPaySettingsController::class, 'addTaxColumnPost']);
+// Route::post('/AccountantEditTaxCol', [AccountantPaySettingsController::class, 'editTaxColumnPost']);
+// Route::post('/AccountantDelTaxCol', [AccountantPaySettingsController::class, 'delTaxColumnPost']);
 
 
 
-Route::post('/DelTaxPost', [AccountantPaySettingsController::class, 'DelTaxPost']);
+// Route::post('/DelTaxPost', [AccountantPaySettingsController::class, 'DelTaxPost']);
 
 
 
@@ -201,9 +201,12 @@ Route::post('/adminDelTaxExemptPost', [AdminSettingsController::class, 'delTaxEx
 
 Route::post('/AdminAddTaxExemptRow', [AdminSettingsController::class, 'addTaxExemptRowPost']);
 Route::post('/AdminEditTaxExemptRow', [AdminSettingsController::class, 'editTaxExemptRowPost']);
+Route::post('/AdminDelTaxExemptRow', [AdminSettingsController::class, 'delTaxExemptRowPost']);
 
 Route::post('/AddAllowancePost', [AdminSettingsController::class, 'AddAllowancePost']);
 Route::post('/DelAllowancenPost', [AdminSettingsController::class, 'DelAllowancenPost']);
+
+
 
 Route::post('/AddDeductionPost', [AdminSettingsController::class, 'AddDeductionsPost']);
 Route::post('/DelDeductionPost', [AdminSettingsController::class, 'DelDeductionPost']);
