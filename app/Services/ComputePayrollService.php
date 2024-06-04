@@ -229,7 +229,11 @@ class ComputePayrollService implements IComputePayrollService {
 
         //Populate Properties
 
-        $this->employees = Employees::all(); // Get All Employees
+        $this->employees = Employees::where(function ($query) use ($startDate) {
+            $query->where(DB::raw('DATE(created_at)'), '<=', $startDate->toDateString());
+        })
+        ->get(); // Get All Employees
+
         $this->holidays = Holidays::where(function ($query) use ($startDate) {
             $query->where(DB::raw('DATE(holiday_date)'), '>=', $startDate->toDateString());
         })
