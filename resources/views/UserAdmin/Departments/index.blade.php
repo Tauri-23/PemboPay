@@ -48,10 +48,10 @@
                 <div class="d-flex gap3">
                     <div class="d-flex position-relative align-items-center">
                         <i class="fa-solid fa-magnifying-glass position-absolute text-m1 padding-start-4"></i>
-                        <input id="search-emp" class="edit-text-2" name="searchEmp" type="text" placeholder="Search Departments" autocomplete="off" />
+                        <input id="search-dept" class="edit-text-2" type="text" placeholder="Search Departments" autocomplete="off" />
                     </div>
                     
-                    <select class="select-med input-light-grey">
+                    <select class="select-med input-light-grey" id="sort-dept">
                         <option value="all">All</option>
                         <option value="a-z">a-z</option>
                         <option value="z-a">z-a</option>
@@ -64,10 +64,12 @@
                 </a>
             </div>
 
-            <div id="results-dept" class="d-flex flex-wrap-cont gap3">
-
-                {{-- Render Departments --}}
+            {{-- Render Departments --}}
+            <div class="d-flex flex-wrap-cont gap3" id="original-dept-cont">
                 <x-RenderDepartments :departments="$departments"/>
+            </div>
+
+            <div class="d-flex flex-wrap-cont gap3" id="sort-result-dept-cont">
             </div>
         
         </div>
@@ -77,5 +79,9 @@
     {{-- Scripts --}}
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/navbar.js"></script>
+    <script>
+        const deptList = @json($departments);
+    </script>
+    <script src="/assets/js/department-search-sort.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </html>
