@@ -59,7 +59,7 @@
                     <x-admin_render_tax_exempt_values :elements="$taxExemptRows"/>
 
                     <div class="d-flex gap3 mar-top-1 justify-content-end w-100">
-                        <a id="add-tax-exempt-row-btn" class="primary-btn1-long">Add Tax-exempt Row</a>
+                        <a id="add-tax-exempt-row-btn" class="primary-btn1-long">Add Contribution Row</a>
                     </div>
                 </div>
             </div>

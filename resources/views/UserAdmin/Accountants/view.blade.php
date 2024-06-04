@@ -116,13 +116,13 @@
                     </div>
 
                     {{-- Personal Informations --}}
-                    <div class="long-cont3 d-flex flex-direction-y gap1 position-relative">
+                    {{-- <div class="long-cont3 d-flex flex-direction-y gap1 position-relative">
                         <div class="text-l3 mar-bottom-3 bold">Credentials</div>
                         <div class="d-flex text-m1 align-items-center gap3 mar-start-3 mar-top-3">
                             <small class="w-50">Password:</small>
                             <input type="password" class="edit-text-1 disabled w-100" value="{{$accountant->password}}" id="" disabled>
                         </div>
-                    </div>
+                    </div> --}}
 
                     {{-- Personal Activities --}}
                     <div class="long-cont3 d-flex flex-direction-y gap1 position-relative">

@@ -153,6 +153,15 @@ class AdminSettingsController extends Controller
     }
 
     public function addTaxExemptRowPost(Request $request) {
+        $isRangeExist = tax_exempt_values::where('threshold_min', $request->thresholdMin)->where('threshold_max', $request->thresholdMax)->first();
+
+        if($isRangeExist) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Threshold range already exist.'
+            ]);
+        }
+
         $taxExempt = new tax_exempt_values;
         $taxExempt->tax_exempt = $request->taxId;
         $taxExempt->price_percent = $request->valuePercent;
