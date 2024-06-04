@@ -31,7 +31,7 @@
     </head>
     <body>
         {{-- Modals --}}
-        <x-modals modalType="emp-mini-profile-1"/>
+        <x-modals modalType="emp-mini-profile-2"/>
         <x-modals modalType="close-yn"/>
         <x-modals modalType="warning-yn"/>
         <x-modals modalType="success"/>

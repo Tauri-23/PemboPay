@@ -27,6 +27,10 @@ runPayrollBtn.click(() => {
     showModal(infoYNModals.eq(0));
     closeModal(infoYNModals.eq(0), false);
 
+    infoYNModals.eq(0).find('.modal-close-btn').click(() => {
+        closeModalNoEvent(infoYNModals.eq(0));
+    });
+
     //Run Payroll
     infoYNModals.eq(0).find('.yes-btn').click(() => {
         const today = new Date();
