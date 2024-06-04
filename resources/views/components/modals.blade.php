@@ -288,7 +288,7 @@
                             <label for="value-in" class="text-m2 mar-bottom-3">Value</label>
                             <div class="d-flex align-items-center gap3">
                                 <div>₱</div>
-                                <input class="edit-text-1 w-100" id="value-in" min="0" max="1000000" type="number" step="any"/>
+                                <input class="edit-text-1 w-100" id="value-in" min="0" max="1000000" pattern="\d*" maxlength="6" type="number" step="any"/>
                             </div>
                         </div>
 

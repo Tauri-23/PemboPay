@@ -25,6 +25,9 @@
         {{-- Font Awesome --}}
         <script src="https://kit.fontawesome.com/04f0992e18.js" crossorigin="anonymous"></script>
 
+        {{-- Boxicons --}}
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
         {{-- Jquery --}}
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         
@@ -50,7 +53,12 @@
         
 
         {{-- Content --}}
-        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">            
+        <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
+            <div class="d-flex justify-conten-start">
+                <a href="/AdminEmployees" class="d-flex gap3 text-black text-decoration-none align-items-center text-m1">
+                    <i class="fa-solid fa-chevron-left"></i>Back
+                </a>
+            </div>      
 
             {{-- Personal Profile Container --}}
             <div class="d-flex gap1 h-100 mar-bottom-1" id="personal-profile-content">

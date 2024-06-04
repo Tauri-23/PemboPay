@@ -59,6 +59,11 @@
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
             
+            <div class="d-flex justify-conten-start">
+                <a href="/AdminAccountants" class="d-flex gap3 text-black text-decoration-none align-items-center text-m1">
+                    <i class="fa-solid fa-chevron-left"></i>Back
+                </a>
+            </div>
 
             {{-- Personal Profile Container --}}
             <div class="d-flex gap1 h-100 mar-bottom-1" id="personal-profile-content">

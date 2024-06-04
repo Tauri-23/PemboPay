@@ -66,16 +66,16 @@
             <div class="long-cont d-flex flex-direction-y gap2">
                 <div class="text-m2 bold">Category</div>
                 <div class="flex gap3">
-                    <a id="sal-grade-btn" class="category-btn-1 active">Salary Grade</a>
-                    <a id="tax-exempt-btn" class="category-btn-1">Contributions</a>
-                    <a id="allowance-btn" class="category-btn-1">Allowances</a>
-                    <a id="deductions-btn" class="category-btn-1">Deductions</a>
-                    <a id="payperiod-btn" class="category-btn-1">Payroll Period</a>
+                    <a id="sal-grade-btn" class="category-btn-1 {{$page == 'default' ? 'active' : ''}}">Salary Grade</a>
+                    <a id="tax-exempt-btn" class="category-btn-1 {{$page == 'contributions' ? 'active' : ''}}">Contributions</a>
+                    <a id="allowance-btn" class="category-btn-1 {{$page == 'allowances' ? 'active' : ''}}">Allowances</a>
+                    <a id="deductions-btn" class="category-btn-1 {{$page == 'deductions' ? 'active' : ''}}">Deductions</a>
+                    <a id="payperiod-btn" class="category-btn-1 {{$page == 'payrollperiod' ? 'active' : ''}}">Payroll Period</a>
                 </div>
             </div>
 
             {{-- Salary Grades --}}
-            <div id="sal-grade-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1">
+            <div id="sal-grade-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1 {{$page == 'default' ? '' : 'd-none'}}">
                 <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
 
                     <div class="text-l3 bold"> Salary Grade </div>
@@ -94,8 +94,8 @@
 
 
 
-            {{-- Tax Exempt --}}
-            <div id="tax-exempt-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1 d-none">
+            {{-- Contributions --}}
+            <div id="tax-exempt-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1 {{$page == 'contributions' ? '' : 'd-none'}}">
                 <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
 
                     <div class="text-l3 bold"> Contributions </div>
@@ -113,7 +113,7 @@
 
 
             {{-- Allowances --}}
-            <div id="allowances-table" class="d-none long-cont d-flex flex-direction-y gap3 mar-bottom-1">
+            <div id="allowances-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1 {{$page == 'allowances' ? '' : 'd-none'}}">
                 <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
 
                     <div class="text-l3 bold"> Allowances </div>
@@ -131,7 +131,7 @@
 
 
             {{-- Deductions --}}
-            <div id="deductions-table" class="d-none long-cont d-flex flex-direction-y gap3 mar-bottom-1">
+            <div id="deductions-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1 {{$page == 'deductions' ? '' : 'd-none'}}">
                 <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
 
                     <div class="text-l3 bold"> Deductions </div>
@@ -149,7 +149,7 @@
 
 
             {{-- Payroll Period --}}
-            <div id="payroll-period-table" class="d-none long-cont d-flex flex-direction-y gap3 mar-bottom-1">
+            <div id="payroll-period-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1 {{$page == 'payrollperiod' ? '' : 'd-none'}}">
                 <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">
 
                     <div class="text-l3 bold"> Payroll Period </div>

@@ -57,6 +57,13 @@
 
             {{-- Information --}}
             <div class="d-flex flex-direction-y gap2" id="position-cont">
+                <div class="d-flex justify-conten-start">
+                    <a href="/adminViewDept/{{$department->id}}" class="d-flex gap3 text-black text-decoration-none align-items-center text-m1">
+                        <i class="fa-solid fa-chevron-left"></i>Back
+                    </a>
+                </div>
+                
+
                 <div class="long-cont d-flex flex-direction-y gap2">
                     <div class="text-l2">Department Informations</div>
                     <div>

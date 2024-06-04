@@ -25,6 +25,9 @@
         {{-- Font Awesome --}}
         <script src="https://kit.fontawesome.com/04f0992e18.js" crossorigin="anonymous"></script>
 
+        {{-- Boxicons --}}
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
         {{-- Jquery --}}
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         
@@ -48,6 +51,11 @@
         {{-- Content --}}
         <div class="content-cont-1 d-flex flex-direction-y gap2 position-relative">
 
+            <div class="d-flex justify-conten-start">
+                <a href="/AdminSettings/contributions" class="d-flex gap3 text-black text-decoration-none align-items-center text-m1">
+                    <i class="fa-solid fa-chevron-left"></i>Back
+                </a>
+            </div>
             {{-- Taxes --}}
             <div id="tax-table" class="long-cont d-flex flex-direction-y gap3 mar-bottom-1">
                 <div id="hourly-rate-content" class="d-flex flex-direction-y gap3">

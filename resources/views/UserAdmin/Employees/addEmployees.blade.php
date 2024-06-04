@@ -48,6 +48,11 @@
 
         {{-- Content --}}
         <div class="content-cont-1">
+            <div class="d-flex justify-conten-start">
+                <a href="/adminViewDept/{{$selectedDept->id}}" class="d-flex gap3 text-black text-decoration-none align-items-center text-m1 mar-bottom-2">
+                    <i class="fa-solid fa-chevron-left"></i>Back
+                </a>
+            </div>
 
             {{-- Personal Information --}}
             @csrf

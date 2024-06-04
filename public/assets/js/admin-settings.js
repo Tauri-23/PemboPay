@@ -51,19 +51,24 @@ const payrollPeriodTable = $('#payroll-period-table');
 |----------------------------------------
 */
 salGradeBtn.click(() => {
-    changeActiveContainer(salGradeBtn, salGradeTable);
+    // changeActiveContainer(salGradeBtn, salGradeTable);
+    window.location.href = '/AdminSettings/default';
 });
 taxExemptBtn.click(() => {
-    changeActiveContainer(taxExemptBtn, taxExemptTable);
+    // changeActiveContainer(taxExemptBtn, taxExemptTable);
+    window.location.href = '/AdminSettings/contributions';
 });
 allowanceBtn.click(() => {
-    changeActiveContainer(allowanceBtn, allowancesTable);
+    // changeActiveContainer(allowanceBtn, allowancesTable);
+    window.location.href = '/AdminSettings/allowances';
 });
 deductionsBtn.click(() => {
-    changeActiveContainer(deductionsBtn, deductionsTable);
+    // changeActiveContainer(deductionsBtn, deductionsTable);
+    window.location.href = '/AdminSettings/deductions';
 });
 payperiodBtn.click(() => {
-    changeActiveContainer(payperiodBtn, payrollPeriodTable);
+    // changeActiveContainer(payperiodBtn, payrollPeriodTable);
+    window.location.href = '/AdminSettings/payrollperiod';
 });
 
 function changeActiveContainer(activeBtn, activeCont) {

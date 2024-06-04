@@ -23,7 +23,7 @@
         <i class="{{$activeLink == 5 ? 'bi bi-info-square-fill' : 'bi bi-info-square'}} side-nav-icon"></i>
         <div class="sidenav-text">Accountants Logs</div>
     </a>
-    <a href="/AdminSettings" class="side-nav-links {{$activeLink == 6 ? 'active' : ''}}">
+    <a href="/AdminSettings/default" class="side-nav-links {{$activeLink == 6 ? 'active' : ''}}">
         <i class="{{$activeLink == 6 ? 'bi bi-gear-fill' : 'bi bi-gear'}} side-nav-icon"></i>
         <div class="sidenav-text">Settings</div>
     </a>

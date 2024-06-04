@@ -20,7 +20,7 @@ class AdminSettingsController extends Controller
         $this->generateId = $generateId;
     }
 
-    public function index() {
+    public function index($page) {
         $salGrades = salary_grade::orderBy('value', 'ASC')->get();
         $taxExempts = tax_exempt::all();
         $allowances = settings_allowance::all();
@@ -32,7 +32,8 @@ class AdminSettingsController extends Controller
             'taxExempts' => $taxExempts,
             'allowances' => $allowances,
             'deductions' => $deductions,
-            'payrollPeriod' => $payrollPeriod
+            'payrollPeriod' => $payrollPeriod,
+            'page' => $page
         ]);
     }
 
@@ -153,7 +154,7 @@ class AdminSettingsController extends Controller
     }
 
     public function addTaxExemptRowPost(Request $request) {
-        $isRangeExist = tax_exempt_values::where('threshold_min', $request->thresholdMin)->where('threshold_max', $request->thresholdMax)->first();
+        $isRangeExist = tax_exempt_values::where('tax_exempt', $request->taxId)->where('threshold_min', $request->thresholdMin)->where('threshold_max', $request->thresholdMax)->first();
 
         if($isRangeExist) {
             return response()->json([

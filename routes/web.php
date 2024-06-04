@@ -189,7 +189,7 @@ Route::post('/adminEditDeptInfo', [AdminDepartmentsController::class, 'editDeptI
 
 
 // Settings
-Route::get('/AdminSettings', [AdminSettingsController::class, 'index']);
+Route::get('/AdminSettings/{page}', [AdminSettingsController::class, 'index']);
 Route::get('/AdminViewTaxExemptTable/{id}', [AdminSettingsController::class, 'taxExemptTable']);
 
 Route::post('/adminAddSalGrade', [AdminSettingsController::class, 'addSalGradePost']);
