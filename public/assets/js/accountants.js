@@ -30,6 +30,16 @@ addAccountantBtn.click(() => {
 addAccountantModal.find('#add-accountant').click(() => {
     if(isEmptyOrSpaces(fnameIn.val()) || isEmptyOrSpaces(lnameIn.val()) 
         || isEmptyOrSpaces(unameIn.val()) || isEmptyOrSpaces(emailIn.val()) || isEmptyOrSpaces(phoneIn.val())) {
+        errorModal.find('.modal-text').html('Please fill up all the fields.');
+        showModal(errorModal);
+        closeModal(errorModal, false);
+        return;
+    }
+
+    if(!isEmail(emailIn.val())) {
+        errorModal.find('.modal-text').html('Invalid Email.');
+        showModal(errorModal);
+        closeModal(errorModal, false);
         return;
     }
 
@@ -54,7 +64,7 @@ addAccountantModal.find('#add-accountant').click(() => {
                 showModal(successModal);
                 closeModal(successModal, true);
             } else {
-                errorModal.find('.modal-text').html('Failed adding accountant please try again later.');
+                errorModal.find('.modal-text').html(response.message);
                 showModal(errorModal);
                 closeModal(errorModal, false);
             }

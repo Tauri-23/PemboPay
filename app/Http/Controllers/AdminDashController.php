@@ -48,6 +48,25 @@ class AdminDashController extends Controller
     }
 
     public function AddAccountantPost(Request $request) {
+        $isEmailExist = Treasuries::where('email', $request->email)->first();
+        $isUnameExist = Treasuries::where('username', $request->uname)->first();
+        
+        if($isUnameExist) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Username already exist.'
+            ]);
+        }
+
+        if($isEmailExist) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Email already exist.'
+            ]);
+        }
+
+        
+
         $password = Str::random(8);
 
         $accountant = new Treasuries;
