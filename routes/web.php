@@ -171,6 +171,7 @@ Route::get('/AdminAddEmployees/{deptId}', [AdminEmployeesController::class, 'add
 Route::get('/AdminViewTreasury/{id}', [AdminEmployeesController::class, 'viewEmployee']);
 Route::post('/AdminAddEmployeePost', [AdminEmployeesController::class, 'addEmployeePost']);
 Route::post('/AdminEditEmpInfo', [AdminEmployeesController::class, 'editEmployeePost']);
+Route::post('/DeleteEmployee', [AdminEmployeesController::class, 'deleteEmployeePost']);
 
 
 // Departments

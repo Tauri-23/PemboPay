@@ -197,4 +197,21 @@ class AdminEmployeesController extends Controller
         }
 
     }
+
+    public function deleteEmployeePost(Request $request) {
+        $emp = Employees::find($request->empId);
+
+        if($emp->delete()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success.'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Error.'
+            ]);
+        }
+    }
 }
