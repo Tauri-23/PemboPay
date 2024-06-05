@@ -1,9 +1,11 @@
 // Btns
 const addPositionBtn = $('#add-position');
 const editDeptNameBtn = $('#edit-dept-name-btn');
+const editDeptPicBtn = $('#edit-dept-pic-btn');
 
 // Modals
 const addDeptPositionModal = $('#add-dept-position-modal');
+const editDeptPicModal = $('#edit-dept-pic-modal');
 const editDeptPositionModal = $('#edit-dept-position-modal');
 
 const editDeptNameModal = $('#edit-dept-name-modal');
@@ -15,12 +17,18 @@ const errorModal = $('#error-modal');
 // Rows
 const positionRows = $('.position-row');
 
+// DeptPics
+const overLayAll = $('.deptBgOverlay');
+const deptPics = $('.dept-bg-select-cont');
+const deptPicsOverlay = $('.deptBgOverlay');
+const deptBgIn = $('#dept-bg-in');
+
 
 
 
 /*
 |----------------------------------------
-| Admin
+| Position
 |----------------------------------------
 */
 // Inputs
@@ -97,6 +105,67 @@ warningYNModal.eq(0).find('.yes-btn').click(() => {
     formData.append('id', filteredPositions[0].id);
     ajaxDb('/adminDelDeptPos', formData);
 });
+
+
+
+
+
+/*
+|----------------------------------------
+| Department Pic
+|----------------------------------------
+*/
+editDeptPicBtn.click(() => {
+    deptPics.each(function(index, element) {
+        let bgPicture = $(element).find('.dept-bg-pic').attr('id');
+        if(bgPicture == dept.department_pfp) {
+            $(element).addClass('active');
+            $(element).find('.deptBgOverlay').removeClass('d-none');
+            deptBgIn.attr('value', bgPicture);
+        }
+    });
+
+    showModal(editDeptPicModal);
+    closeModal(editDeptPicModal, false);
+
+    console.log(deptBgIn.val());
+
+});
+
+deptPics.click(function() {
+    let bgPicture = $(this).find('.dept-bg-pic').attr('id');
+
+    removeActiveSelect();
+
+    $(this).addClass('active');
+    $(this).find('.deptBgOverlay').removeClass('d-none');
+    deptBgIn.attr('value', bgPicture);
+
+    console.log(deptBgIn.val());
+});
+
+function removeActiveSelect() {
+    deptPics.removeClass('active');
+    overLayAll.addClass('d-none');
+    deptBgIn.attr('value', '');
+}
+
+editDeptPicModal.find('#edit-dept-pic').click(() => {
+    if(isEmptyOrSpaces(deptBgIn.val())) {
+        return;
+    }
+
+    if(deptBgIn.val() == dept.department_pfp) {
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append('id', dept.id);
+    formData.append('pic', deptBgIn.val());
+
+    ajaxDb('/adminEditDeptPicPost', formData);
+})
+
 
 
 

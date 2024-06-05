@@ -38,6 +38,7 @@
         <x-modals modalType="edit-dept-position"/>
 
         <x-modals modalType="edit-dept-name"/>
+        <x-modals modalType="edit-dept-pic"/>
 
         <x-modals modalType="warning-yn"/>
         <x-modals modalType="success"/>
@@ -84,7 +85,7 @@
                             <div class="dept-bg-select-cont">
                                 <img class="position-absolute w-100 h-100 dept-bg-pic" src="/assets/media/dept-pfp/{{$department->department_pfp}}" alt="" srcset="">
                             </div>
-                            <i class="bi bi-pencil-square" id="edit-dept-pic"></i>  
+                            <i class="bi bi-pencil-square" id="edit-dept-pic-btn"></i>  
                         </div>                    
                     </div>
                 </div>

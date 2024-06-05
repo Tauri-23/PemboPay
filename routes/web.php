@@ -185,6 +185,7 @@ Route::post('/adminAddDeptPos', [AdminDepartmentsController::class, 'addDeptPos'
 Route::post('/adminEditDeptPos', [AdminDepartmentsController::class, 'editDeptPos']);
 Route::post('/adminDelDeptPos', [AdminDepartmentsController::class, 'delDeptPos']);
 Route::post('/adminEditDeptInfo', [AdminDepartmentsController::class, 'editDeptInfo']);
+Route::post('/adminEditDeptPicPost', [AdminDepartmentsController::class, 'editDeptPicPost']);
 
 
 

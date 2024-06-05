@@ -238,6 +238,39 @@
             <div class="primary-btn1-small w-100 mar-top-1 text-center" id="edit-dept-name">Save</div>
         </div>
     </div>
+@elseif($modalType == 'edit-dept-pic')
+    <div class="modal1 d-none" id="edit-dept-pic-modal">
+        <div class="modal1-box-flexible">
+            <i id="modal-close-btn" class="modal1-x-icon fa-solid fa-xmark"></i>
+            <div class="modal1-txt-title fw-bold text-l3" id="modal-1-title">
+                Edit Department Name
+                <form method="post">
+                    <div class="d-flex flex-direction-y gap3 mar-top-2">
+                        <input type="hidden" id="dept-bg-in" value="" placeholder="Department Background" />
+                        <div class="d-flex flex-direction-y gap3 mar-top-1">
+                            <small class="text-m2 bold">Choose Background</small>
+                            <div class="d-flex flex-wrap gap3" style="width: 1000px">
+        
+                                {{-- Enclose with loop --}}
+                                @for ($i = 1; $i < 11; $i++)
+                                    <div class="dept-bg-select-cont" style="">
+                                        <div class="deptBgOverlay d-none">Selected</div>
+                                        <img class="position-absolute w-100 h-100 dept-bg-pic" id="bg{{$i}}.jpg" src="/assets/media/dept-pfp/bg{{$i}}.jpg" loading="lazy" />
+                                    </div>
+                                @endfor
+
+                            </div>
+                            <div class="color-AppRed d-none" id="dept-pic-required">Please select Department Picture</div>
+                            <div class="w-100 d-flex justify-content-end">
+                                <a class="secondary-btn3-small mar-top-1 d-none" id="clear-selection">Clear Selected Background</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="primary-btn1-small w-100 mar-top-1 text-center" id="edit-dept-pic">Save</div>
+        </div>
+    </div>
 
 
 

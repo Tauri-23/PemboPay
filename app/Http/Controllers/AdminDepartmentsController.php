@@ -229,4 +229,22 @@ class AdminDepartmentsController extends Controller
             ]);
         }
     }
+
+    public function editDeptPicPost(Request $request) {
+        $dept = Departments::find($request->id);
+        $dept->department_pfp = $request->pic;
+
+        if($dept->save()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Department pic changed successfully.'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Something went wrong please try again later.'
+            ]);
+        }
+    }
 }
